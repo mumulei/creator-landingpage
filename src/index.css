@@ -422,6 +422,8 @@ button, textarea {
   width: min(100%, 1320px);
   margin: 2.15rem auto 0;
   perspective: 1200px;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .hero-mockup-shell__frame {
@@ -434,6 +436,9 @@ button, textarea {
     0 0 0 1px rgba(255, 255, 255, 0.92),
     0 24px 70px rgba(23, 23, 23, 0.08),
     0 40px 90px rgba(255, 118, 178, 0.08);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 .hero-mockup-image {
