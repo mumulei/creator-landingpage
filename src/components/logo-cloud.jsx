@@ -24,9 +24,7 @@ function LogoCloud() {
   return (
     <section className="trusted-cloud" aria-labelledby="trusted-cloud-title">
       <h2 id="trusted-cloud-title" className="trusted-cloud__title">
-        <span className="is-muted">Trusted by experts.</span>
-        <br />
-        <span className="is-strong">Used by the leaders.</span>
+        <span className="is-strong">Trusted by Top Gaming Publishers</span>
       </h2>
 
       <div className="trusted-cloud__rule" aria-hidden="true" />

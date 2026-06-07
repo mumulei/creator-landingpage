@@ -4,7 +4,7 @@
 :root {
   font-family: "Satoshi", "Inter", "SF Pro Display", "Helvetica Neue", sans-serif;
   color: #171717;
-  background: #f7f7f7;
+  background: #ffffff;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -21,7 +21,7 @@ html, body, #root {
 
 body {
   margin: 0;
-  background: #f7f7f7;
+  background: #ffffff;
 }
 
 a {
@@ -38,7 +38,7 @@ button, textarea {
   min-height: 100vh;
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+  background: #ffffff;
 }
 
 .paico-hero-bg {
@@ -310,9 +310,11 @@ button, textarea {
 
 /* ======== HERO ======== */
 .hero {
+  position: relative;
   height: 100vh;
   padding: 8.2rem 2rem 0;
   overflow: hidden;
+  clip-path: inset(0);
   box-sizing: border-box;
 }
 
@@ -323,7 +325,7 @@ button, textarea {
   right: 0;
   bottom: 0;
   height: 180px;
-  background: linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, #f7f7f7 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
   pointer-events: none;
   z-index: 20;
 }
@@ -421,9 +423,6 @@ button, textarea {
 .hero-mockup-shell {
   width: min(100%, 1320px);
   margin: 2.15rem auto 0;
-  perspective: 1200px;
-  transform-style: preserve-3d;
-  will-change: transform;
 }
 
 .hero-mockup-shell__frame {
@@ -436,9 +435,6 @@ button, textarea {
     0 0 0 1px rgba(255, 255, 255, 0.92),
     0 24px 70px rgba(23, 23, 23, 0.08),
     0 40px 90px rgba(255, 118, 178, 0.08);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform: translate3d(0, 0, 0);
 }
 
 .hero-mockup-image {
@@ -535,11 +531,11 @@ button, textarea {
 @keyframes floatUpPerspective {
   from {
     opacity: 0;
-    transform: translateY(150px) rotateX(15deg) scale(0.95);
+    transform: perspective(1200px) translateY(150px) rotateX(15deg) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(6.9rem) rotateX(0deg) scale(1);
+    transform: perspective(1200px) translateY(6.9rem) rotateX(0deg) scale(1);
   }
 }
 
@@ -600,11 +596,11 @@ button, textarea {
   @keyframes floatUpPerspective {
     from {
       opacity: 0;
-      transform: translateY(100px) rotateX(10deg) scale(0.95);
+      transform: perspective(1200px) translateY(100px) rotateX(10deg) scale(0.95);
     }
     to {
       opacity: 1;
-      transform: translateY(5rem) rotateX(0deg) scale(1);
+      transform: perspective(1200px) translateY(5rem) rotateX(0deg) scale(1);
     }
   }
 
@@ -669,7 +665,7 @@ button, textarea {
   .topnav a {
     width: 100%;
     padding: 1rem;
-    background: #f7f7f7;
+    background: #ffffff;
     border-radius: 8px;
   }
 
@@ -723,11 +719,11 @@ button, textarea {
   @keyframes floatUpPerspective {
     from {
       opacity: 0;
-      transform: translateY(60px) rotateX(5deg) scale(0.95);
+      transform: perspective(1200px) translateY(60px) rotateX(5deg) scale(0.95);
     }
     to {
       opacity: 1;
-      transform: translateY(3rem) rotateX(0deg) scale(1);
+      transform: perspective(1200px) translateY(3rem) rotateX(0deg) scale(1);
     }
   }
 

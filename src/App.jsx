@@ -138,6 +138,23 @@ function App() {
       </section>
 
       <LogoCloud />
+      {/* 
+        Scroll boundary buffer / Features section placeholder
+        彻底远离首屏的 WebGL GPU 边界冲突区，同时为后续的特性展示区做占位
+      */}
+      <section 
+        style={{ 
+          height: "100vh", 
+          display: "flex", 
+          flexDirection: "column",
+          alignItems: "center", 
+          justifyContent: "center",
+          background: "#ffffff"
+        }}
+      >
+        <h2 style={{ fontSize: "2.5rem", fontWeight: "700", color: "#171717", margin: "0 0 1rem 0" }}>More Features Coming Soon</h2>
+        <p style={{ fontSize: "1.125rem", color: "rgba(0, 0, 0, 0.4)", margin: "0" }}>This placeholder section prevents scroll boundary GPU conflicts.</p>
+      </section>
     </main>
   );
 }

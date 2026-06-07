@@ -1,87 +1,60 @@
-# Creator Landing Page (Paico UGC 落地页优化版)
+# Creator Landing Page (Paico Unicorn)
 
-本项目是经过深度视觉升级、响应式改进、性能与 SEO 优化后的 Paico UGC (User Generated Content) 产品落地页。为了让接手的 Agent 或开发者能够快速上手，特在此整理了项目的目录结构、动效规范、响应式裁剪机制等核心开发标准。
+Welcome to the Creator Landing Page project! This repository contains the source code for the high-conversion, visually stunning landing page built with React, Vite, and Unicorn Studio (WebGL).
+
+## 📐 基础规范 (Guidelines)
+
+为了保证后续维护和迭代的顺利进行，接手的开发者（或 Agent）请严格遵守以下开发规范：
+
+### 1. 动效与交互 (Animations & Interactions)
+- **CSS 优先**：所有的微交互和入场动画均通过 CSS `@keyframes` 驱动，位于 `index.css` 底部。
+- **Transform 签名严格对齐 (🚨 关键规则)**：
+  如果一个元素有由 CSS `@keyframes` 驱动的入场动画，请确保 `from` 和 `to` 的 `transform` 函数列表**完全一致**。
+  例如，如果是 3D 透视动画，请这样写：
+  ```css
+  from { transform: perspective(1200px) translateY(150px) rotateX(15deg) scale(0.95); }
+  to   { transform: perspective(1200px) translateY(0) rotateX(0deg) scale(1); }
+  ```
+  **绝对不要**在 `to` 中省略 `perspective` 或 `rotateX` 等属性。否则，浏览器会将其退化为 Matrix 矩阵插值，在 WebGL 画布持续重绘引发复合层重新计算时，会产生肉眼可见的 4-6px 抖动偏移！
+- **可访问性兼容**：所有的动画必须包裹在 `@media (prefers-reduced-motion: no-preference)` 媒体查询中。
+
+### 2. 响应式布局 (Responsive Design)
+- **断点规范**：
+  - Desktop: `> 920px`
+  - Tablet: `≤ 920px` (调整间距、缩放字体)
+  - Mobile: `≤ 640px` (启用汉堡菜单，文字排版重构)
+- **Hero 区域的自动裁剪机制**：
+  首屏 `.hero` 被严格限制为 `height: 100vh` 和 `overflow: hidden; clip-path: inset(0);`。
+  内部的 `.hero-mockup-shell` 没有 `max-height` 限制，超出首屏底部的区域将被自动裁剪。我们利用 `.hero::after` 绝对定位在最底部的纯白渐变遮罩 (`#ffffff`)，实现了截断与背景的完美自然融合。
 
 ---
 
-## 📁 目录结构规范
+## ⚠️ 避坑指南：WebGL 渲染与 GPU 复合边界冲突 (The WebGL Compositor Pitfall)
 
+如果你需要在页面底部添加新内容或修改结构，请务必注意这个曾在本项目中引发过严重“闪烁（Flickering / Jumping）”的底层系统级 Bug！
+
+### 🐛 症状
+当页面滚动到底部极限时，移动鼠标，整个页面的滚动高度会疯狂跳动 30%，产生剧烈闪烁。
+
+### 🔎 原因
+1. **GPU 复合边界突破**：Mockup 区域比首屏大，虽然主线程中它被 `.hero` 的 `overflow: hidden` 裁剪，但由于 Mockup 的动画使用了 3D `transform`，它被提升为一个 GPU 复合层（Composited Layer）。Safari/Chrome 的 GPU 合成引擎在计算页面的“可滚动物理高度”时，把被隐藏的下半部分体积也算进去了（多出约 300px 高度）。
+2. **WebGL 重绘触发重算**：背景层启用了 Unicorn Studio 的 WebGL 鼠标交互，只要鼠标移动，WebGL Canvas 就会高频 requestAnimationFrame 重绘。
+3. **触底弹性冲突**：当用户滚到绝对最底边时，WebGL 的重绘导致 GPU 与主线程在“最大滚动高度”上打架，从而引发滚动锚定（Scroll Anchoring）错误，疯狂把页面往上抬高。
+
+### 🛡️ 防御措施
+为了解决这个问题，我们采取了以下组合拳，**请绝对不要移除它们**：
+1. **GPU 级强裁切**：在 `.hero` 容器上除了 `overflow: hidden`，还必须带有 `clip-path: inset(0);`。这会强制要求 GPU 合成器在计算 bounding box 时无情切断所有逃逸的 3D 层体积。
+2. **防弹跳缓冲占位区 (Scroll Boundary Buffer)**：在 `LogoCloud` 之后，我们**永远**需要一个足够的缓冲空间（比如 `100vh` 的占位屏、或者未来真实的完整 Footer 组件）。这让页面底部边界远离 WebGL 的首屏活动范围，彻底消除底部物理边界带来的弹性碰撞问题。
+
+---
+
+## 🚀 启动项目
 ```bash
-paico-unicorn-landing/
-├── index.html                  # 预连字体、LCP 优化与 SEO Meta 标签
-├── src/
-│   ├── App.jsx                 # 页面主结构、移动端汉堡菜单逻辑与滚动状态监听
-│   ├── main.jsx                # 入口 JS
-│   ├── index.css               # 【核心】全局样式系统、动画定义与响应式媒体查询
-│   ├── assets/                 # 图片及 SVG 图标资源
-│   │   └── Brands.png          # 首屏高清精修版 Mockup 主产品图 (LCP 关键路径)
-│   └── components/
-│       ├── logo-cloud.jsx      # Logo 跑马灯组件 (带悬停暂停功能，防 CLS)
-│       └── blinds-aurora-background.jsx # WebGL 极光流体背景组件 (自适应 100vh)
+npm install
+npm run dev
 ```
 
----
-
-## 🎬 动效与交互规范
-
-动效设计旨在营造高端、生动的 Premium 视觉感，遵循以下过渡规则：
-
-### 1. Hero 文本及 CTA 入场动效
-- **实现方式**：通用 CSS 动画 `@keyframes fadeInUp`，在 0.8 秒内实现透明度 `0 -> 1` 且垂直向上平移 `20px`。
-- **错落感控制**：在 [App.jsx](file:///Users/mulei/Downloads/codex/paico-unicorn-landing/src/App.jsx) 中，对 `h1` 的两行文字、副标题 `p` 和 CTA 按钮区域分别应用了不同的 `animation-delay`（分别为 `0.1s`, `0.25s`, `0.4s`, `0.55s`），形成从上至下平滑入场的视觉流。
-
-### 2. Mockup 3D 透视入场动效
-- **实现方式**：自定义 CSS 动画 `@keyframes floatUpPerspective`，配合父容器 [`.hero-mockup-shell`](file:///Users/mulei/Downloads/codex/paico-unicorn-landing/src/index.css#L408) 上的 3D 透视设定（`perspective: 1200px`）。
-- **动效轨迹**：在 1.2 秒内，从下方向上平移，同时带有 `15deg`（移动端为 `5deg`）的 X 轴 3D 旋转及轻微缩放，最终平滑定位在 `translateY(6.9rem)`（移动端为 `3rem`）处，极具科技感。
-
-### 3. Hover 微交互反馈
-- **按钮上浮**：深色按钮（`.hero-cta--dark`）及品红按钮（`.solid-link--magenta`）在悬停时，会应用 `translateY(-2px)` 的微小上浮，同时其投影范围和扩散度（`box-shadow`）平滑放大，提供清晰的物理点击感。
-- **导航栏悬停**：顶栏导航链接在 Hover 时带有轻微的上滑（`translateY(-1px)`）和文字颜色深浅变化。
-- **跑马灯 Logo 墙**：当鼠标指针悬停在 Logo 跑马灯上时，动画将自动减速暂停（通过 `.logo-marquee:hover .logo-marquee__track { animation-play-state: paused; }` 实现），提升用户探索交互感。
-
-### 4. 减弱动画支持 (A11y)
-- 全局支持媒体查询 `@media (prefers-reduced-motion: reduce)`。当用户在其系统设置中启用了“减弱动态效果”时，所有入场动画、透视和过渡将被禁用，防止产生眩晕感。
-
----
-
-## 📱 响应式与首屏裁剪规范
-
-首屏采用了**父级高度卡死 + 物理裁切 + 底部背景色遮罩**的现代高端布局设计：
-
-### 1. 父级 100vh 物理截断 (100vh Strict Clipping)
-为了在大屏（如 1440x900）以及 Pad 和手机端将 Mockup 控制在首屏的视觉底部，且不压缩变形：
-- [`.hero`](file:///Users/mulei/Downloads/codex/paico-unicorn-landing/src/index.css#L312) 容器在所有设备下均强制设为 `height: 100vh; overflow: hidden;`。
-- 彻底**移除**了 Mockup 图片容器自身的任何 `max-height` 限制，使其自然舒展。
-- 任何超出 `100vh` 首屏边界的 Mockup 底部部分，都会由 `.hero` 容器自动进行物理裁切，确保首屏视觉高度高度一致。
-
-### 2. 全视口底渐变遮罩 (Global Bottom Mask)
-- **定位与层次**：绝对定位在 [`.hero::after`](file:///Users/mulei/Downloads/codex/paico-unicorn-landing/src/index.css#L318) 伪元素上，`bottom: 0` 且 `z-index: 20`（确保浮在 Mockup 图层上方）。
-- **色值融合**：背景为自透明渐变至页面底色 `#f7f7f7` 的 `linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, #f7f7f7 100%)`。此设计可以完美覆盖在 Mockup 截断的下边缘、描边与投影上，使其极其柔和、纯净地融化到页面底色中。
-- **多端遮罩高度自适应**：
-  - **桌面端**：高度为 `180px`
-  - **平板端 (≤ 920px)**：高度为 `120px`
-  - **手机端 (≤ 640px)**：高度为 `80px`
-
-### 3. 多端靠底与排版间距压缩 (Pad/Phone Spacing Adaptation)
-由于平板和手机端屏幕较矮，为了在 `100vh` 范围内完美露出 Mockup 的第一行核心卡片（Spotify, Tiktok 等），我们采取了**压缩上方间距**的机制：
-- **平板端 (≤ 920px)**：`.hero` 的 `padding-top` 压缩至 `6rem`。
-- **手机端 (≤ 640px)**：`.hero` 的 `padding-top` 压缩至 `4.8rem`；`.hero-body` 的 `margin-top` 压缩至 `1rem`；`.hero-mockup-shell` 的 `margin-top` 压缩至 `1.2rem`。
-- **优化效果**：这使得核心卡片在 Pad 和手机首屏底部刚好完美露全，且下方的 Logos 区域（`.trusted-cloud`）紧贴在首屏 `100vh` 边界的下方自然浮现（手机端 `margin-top: 1.5rem`），布局无任何白色空白大断层。
-
-### 4. 极光背景自适应高度
-- 为了在大屏和移动端下避免背景极光在 900px 处被硬生生切断，WebGL 渲染背景容器 [`.paico-hero-bg`](file:///Users/mulei/Downloads/codex/paico-unicorn-landing/src/index.css#L44) 的高度设置为了 `100vh`。WebGL 场景会自动填充首屏，表现极佳。
-
----
-
-## ⚡ 性能、SEO 与无障碍标准
-
-- **LCP 性能优化**：
-  - 主产品 Mockup 图在 [App.jsx](file:///Users/mulei/Downloads/codex/paico-unicorn-landing/src/App.jsx) 中声明了 `fetchPriority="high"`。
-  - 为主图设置了明确的 `width="1320" height="820"`（Logo 图片设置了 `height="40"`），以防止 Cumulative Layout Shift (CLS)。
-  - 在 [index.html](file:///Users/mulei/Downloads/codex/paico-unicorn-landing/index.html) 头部添加了对字体服务器 `api.fontshare.com` 和 `fonts.googleapis.com` 的 `preconnect` 预连接。
-- **SEO Meta 标签**：
-  - 包含了品牌描述性 `<title>` 标题与 `description` 描述。
-  - 规范了 Open Graph 分享协议（`og:title`, `og:description`, `og:image` 等）。
-- **语义化与无障碍**：
-  - 核心模块完全使用 HTML5 语义化元素（`<header>`, `<main>`, `<section>`, `<nav>`）。
-  - 所有交互组件均具备唯一的 `id`，且为图标等提供了适当的 `aria-hidden="true"` 以及无障碍 label。
+构建生产环境：
+```bash
+npm run build
+```
