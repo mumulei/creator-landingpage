@@ -1237,7 +1237,7 @@ button, textarea {
 
 @keyframes cardRotate {
   /* 状态 4 (TikTok / 最前展示，主激活状态) */
-  0%, 15% {
+  0%, 18.67% {
     transform: translate3d(0px, 174px, 0) scale(1);
     z-index: 4;
     --sub-height: 18px;
@@ -1246,11 +1246,12 @@ button, textarea {
     --bar-height: 0px;
     --bar-opacity: 0;
     --bar-margin: 0px;
+    box-shadow: var(--Position-x-md, 0) var(--Position-y-md, 12px) var(--Blur-md, 24px) var(--Spread-md, -4px) var(--Opacity-opactiy-md, rgba(0, 0, 0, 0.05));
     animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
   }
   
   /* 洗牌向右抽出滑走 - 飞出极点，路径更开、弧度更柔和 */
-  19% {
+  21.83% {
     transform: translate3d(180px, 110px, 0) scale(0.85);
     z-index: 4;
     --sub-height: 0px;
@@ -1259,16 +1260,17 @@ button, textarea {
     --bar-height: 10px;
     --bar-opacity: 1;
     --bar-margin: 6px 0 12px 52px;
+    box-shadow: none;
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   
   /* 在开始折回顶部的一瞬间，迅速降级 z-index，让它从最底层滑回 */
-  19.01% {
+  21.84% {
     z-index: 1;
   }
   
   /* 状态 1 (YouTube / 最顶最小状态) */
-  23%, 40% {
+  25%, 43.67% {
     transform: translate3d(35px, 0px, 0) scale(0.787);
     z-index: 1;
     --sub-height: 0px;
@@ -1277,11 +1279,12 @@ button, textarea {
     --bar-height: 10px;
     --bar-opacity: 1;
     --bar-margin: 6px 0 12px 52px;
+    box-shadow: none;
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
   
   /* 过渡到状态 2 */
-  48%, 65% {
+  50%, 68.67% {
     transform: translate3d(22px, 56px, 0) scale(0.866);
     z-index: 2;
     --sub-height: 0px;
@@ -1290,11 +1293,12 @@ button, textarea {
     --bar-height: 10px;
     --bar-opacity: 1;
     --bar-margin: 6px 0 12px 52px;
+    box-shadow: none;
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
   
   /* 过渡到状态 3 */
-  73%, 90% {
+  75%, 93.67% {
     transform: translate3d(9px, 116px, 0) scale(0.945);
     z-index: 3;
     --sub-height: 0px;
@@ -1303,11 +1307,12 @@ button, textarea {
     --bar-height: 10px;
     --bar-opacity: 1;
     --bar-margin: 6px 0 12px 52px;
+    box-shadow: none;
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
   
   /* 回到状态 4 */
-  98%, 100% {
+  100% {
     transform: translate3d(0px, 174px, 0) scale(1);
     z-index: 4;
     --sub-height: 18px;
@@ -1316,6 +1321,7 @@ button, textarea {
     --bar-height: 0px;
     --bar-opacity: 0;
     --bar-margin: 0px;
+    box-shadow: var(--Position-x-md, 0) var(--Position-y-md, 12px) var(--Blur-md, 24px) var(--Spread-md, -4px) var(--Opacity-opactiy-md, rgba(0, 0, 0, 0.05));
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
 }
