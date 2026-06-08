@@ -113,7 +113,10 @@ export default function KeyFeatures() {
                   <div className="social-platform__icon-wrap">
                     <img src={iconYoutube} alt="" className="social-platform__logo" />
                   </div>
-                  <span className="social-platform__name">YouTube</span>
+                  <div className="social-platform__name-group">
+                    <span className="social-platform__name">YouTube</span>
+                    <span className="social-platform__sub">Global Video Sharing & Creator Hub</span>
+                  </div>
                 </div>
                 <div className="social-platform__placeholder-bar" style={{ width: 170 }}></div>
                 <div className="social-platform__stats">
@@ -134,7 +137,10 @@ export default function KeyFeatures() {
                   <div className="social-platform__icon-wrap">
                     <img src={iconFacebook} alt="" className="social-platform__logo" />
                   </div>
-                  <span className="social-platform__name">Facebook</span>
+                  <div className="social-platform__name-group">
+                    <span className="social-platform__name">Facebook</span>
+                    <span className="social-platform__sub">Social Network & Community Marketing</span>
+                  </div>
                 </div>
                 <div className="social-platform__placeholder-bar" style={{ width: 188 }}></div>
                 <div className="social-platform__stats">
@@ -155,7 +161,10 @@ export default function KeyFeatures() {
                   <div className="social-platform__icon-wrap">
                     <img src={iconInstagram} alt="" className="social-platform__logo" />
                   </div>
-                  <span className="social-platform__name">Instagram</span>
+                  <div className="social-platform__name-group">
+                    <span className="social-platform__name">Instagram</span>
+                    <span className="social-platform__sub">Visual Content & Influencer Hub</span>
+                  </div>
                 </div>
                 <div className="social-platform__placeholder-bar" style={{ width: 204 }}></div>
                 <div className="social-platform__stats">
@@ -181,6 +190,7 @@ export default function KeyFeatures() {
                     <span className="social-platform__sub">Digital Entertainment Marketing Business</span>
                   </div>
                 </div>
+                <div className="social-platform__placeholder-bar" style={{ width: 220 }}></div>
                 <div className="social-platform__stats">
                   <div className="stat-pill stat-pill--active">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
