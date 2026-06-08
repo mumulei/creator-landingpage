@@ -3,6 +3,7 @@ import BlindsAuroraBackground from "./components/blinds-aurora-background.jsx";
 import polishedDashboard from "./assets/Brands.png";
 import brandLogo from "./assets/local-logos/brand-logo.svg";
 import LogoCloud from "./components/logo-cloud.jsx";
+import KeyFeatures from "./components/key-features.jsx";
 
 const navItems = ["Home", "About Us", "Creator Library", "Pricing"];
 
@@ -138,22 +139,15 @@ function App() {
       </section>
 
       <LogoCloud />
+      <KeyFeatures />
+      
       {/* 
         Scroll boundary buffer / Features section placeholder
-        彻底远离首屏的 WebGL GPU 边界冲突区，同时为后续的特性展示区做占位
+        用于彻底远离首屏的 WebGL GPU 边界冲突区，采用无描边、无分割线的极简设计，与白色背景融为一体
       */}
-      <section 
-        style={{ 
-          height: "100vh", 
-          display: "flex", 
-          flexDirection: "column",
-          alignItems: "center", 
-          justifyContent: "center",
-          background: "#ffffff"
-        }}
-      >
-        <h2 style={{ fontSize: "2.5rem", fontWeight: "700", color: "#171717", margin: "0 0 1rem 0" }}>More Features Coming Soon</h2>
-        <p style={{ fontSize: "1.125rem", color: "rgba(0, 0, 0, 0.4)", margin: "0" }}>This placeholder section prevents scroll boundary GPU conflicts.</p>
+      <section className="scroll-buffer-section">
+        <h2 className="scroll-buffer-title">More Features Coming Soon</h2>
+        <p className="scroll-buffer-text">We are continuously expanding the creator library and campaign tools.</p>
       </section>
     </main>
   );

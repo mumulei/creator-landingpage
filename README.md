@@ -44,7 +44,7 @@ Welcome to the Creator Landing Page project! This repository contains the source
 ### 🛡️ 防御措施
 为了解决这个问题，我们采取了以下组合拳，**请绝对不要移除它们**：
 1. **GPU 级强裁切**：在 `.hero` 容器上除了 `overflow: hidden`，还必须带有 `clip-path: inset(0);`。这会强制要求 GPU 合成器在计算 bounding box 时无情切断所有逃逸的 3D 层体积。
-2. **防弹跳缓冲占位区 (Scroll Boundary Buffer)**：在 `LogoCloud` 之后，我们**永远**需要一个足够的缓冲空间（比如 `100vh` 的占位屏、或者未来真实的完整 Footer 组件）。这让页面底部边界远离 WebGL 的首屏活动范围，彻底消除底部物理边界带来的弹性碰撞问题。
+2. **防弹跳缓冲占位区 (Scroll Boundary Buffer)**：在 `KeyFeatures` 之后，我们**永远**需要一个足够的缓冲空间（比如 `100vh` 的无描边占位屏、或者未来真实的完整 Footer 组件）。这让页面底部边界远离 WebGL 的首屏活动范围，彻底消除底部物理边界带来的弹性碰撞问题。
 
 ---
 
