@@ -1255,6 +1255,7 @@ button, textarea {
     --bar-height: 0px;
     --bar-opacity: 0;
     --bar-margin: 0px;
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
   }
   
   /* 洗牌向右抽出滑走 */
@@ -1267,6 +1268,7 @@ button, textarea {
     --bar-height: 10px;
     --bar-opacity: 1;
     --bar-margin: 6px 0 12px 52px;
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   
   /* 状态 1 (YouTube / 最顶最小状态) */
@@ -1279,6 +1281,7 @@ button, textarea {
     --bar-height: 10px;
     --bar-opacity: 1;
     --bar-margin: 6px 0 12px 52px;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
   
   /* 过渡到状态 2 */
@@ -1291,6 +1294,7 @@ button, textarea {
     --bar-height: 10px;
     --bar-opacity: 1;
     --bar-margin: 6px 0 12px 52px;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
   
   /* 过渡到状态 3 */
@@ -1303,6 +1307,7 @@ button, textarea {
     --bar-height: 10px;
     --bar-opacity: 1;
     --bar-margin: 6px 0 12px 52px;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
   
   /* 回到状态 4 */
@@ -1315,6 +1320,7 @@ button, textarea {
     --bar-height: 0px;
     --bar-opacity: 0;
     --bar-margin: 0px;
+    animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
 }
 
