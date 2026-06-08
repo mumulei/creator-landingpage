@@ -1104,6 +1104,9 @@ button, textarea {
 
 .social-platform {
   position: absolute;
+  width: 329px;
+  height: 122px;
+  padding: 16px;
   background: #ffffff;
   border: 0.787px solid rgba(0, 0, 0, 0.05);
   border-radius: 12px;
@@ -1111,44 +1114,23 @@ button, textarea {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top left;
+  animation: cardRotate 12s infinite cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, z-index, box-shadow;
 }
 
-.social-platform:hover {
-  transform: translateY(-4px);
-  z-index: 10 !important;
-}
-
-.social-platform--yt {
-  width: 259px;
-  left: 35px;
-  top: 0;
-  padding: 13px;
-  z-index: 1;
-}
-
-.social-platform--fb {
-  width: 285px;
-  left: 22px;
-  top: 56px;
-  padding: 14px;
-  z-index: 2;
-}
-
-.social-platform--ig {
-  width: 311px;
-  left: 9px;
-  top: 116px;
-  padding: 15px;
-  z-index: 3;
-}
-
+/* 4 张卡片通过 animation-delay 错开状态位置 */
 .social-platform--tt {
-  width: 329px;
-  left: 0;
-  top: 174px;
-  padding: 16px;
-  z-index: 4;
+  animation-delay: 0s;
+}
+.social-platform--ig {
+  animation-delay: -9s;
+}
+.social-platform--fb {
+  animation-delay: -6s;
+}
+.social-platform--yt {
+  animation-delay: -3s;
 }
 
 .social-platform__header {
@@ -1162,28 +1144,10 @@ button, textarea {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.social-platform--yt .social-platform__icon-wrap {
-  width: 35px;
-  height: 35px;
-}
-
-.social-platform--fb .social-platform__icon-wrap {
-  width: 38px;
-  height: 38px;
-}
-
-.social-platform--ig .social-platform__icon-wrap {
-  width: 41px;
-  height: 41px;
-}
-
-.social-platform--tt .social-platform__icon-wrap {
   width: 44px;
   height: 44px;
+  border-radius: 11px;
+  overflow: hidden;
 }
 
 .social-platform__logo {
@@ -1198,26 +1162,11 @@ button, textarea {
 }
 
 .social-platform__name {
+  font-size: 18px;
   font-weight: 700;
   color: #1a1a1a;
   font-family: "Satoshi", "Inter", sans-serif;
   line-height: 1.2;
-}
-
-.social-platform--yt .social-platform__name {
-  font-size: 14px;
-}
-
-.social-platform--fb .social-platform__name {
-  font-size: 15.6px;
-}
-
-.social-platform--ig .social-platform__name {
-  font-size: 17px;
-}
-
-.social-platform--tt .social-platform__name {
-  font-size: 18px;
 }
 
 .social-platform__sub {
@@ -1233,30 +1182,26 @@ button, textarea {
   height: 10px;
   background: #f5f5f5;
   border-radius: 4px;
+  margin-left: 52px;
+  margin-top: 6px;
+  margin-bottom: 12px;
 }
-
-.social-platform--yt .social-platform__placeholder-bar { margin-left: 41px; margin-top: 6px; margin-bottom: 12px; }
-.social-platform--fb .social-platform__placeholder-bar { margin-left: 45px; margin-top: 6px; margin-bottom: 12px; }
-.social-platform--ig .social-platform__placeholder-bar { margin-left: 49px; margin-top: 6px; margin-bottom: 12px; }
 
 .social-platform__stats {
   display: flex;
   align-items: center;
   gap: 12px;
+  padding-left: 52px;
 }
-
-.social-platform--yt .social-platform__stats { padding-left: 41px; }
-.social-platform--fb .social-platform__stats { padding-left: 45px; }
-.social-platform--ig .social-platform__stats { padding-left: 49px; }
-.social-platform--tt .social-platform__stats { padding-left: 52px; margin-top: 16px; }
 
 .stat-pill {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 4px 6px;
+  padding: 6px 8px;
   border-radius: 6px;
+  font-size: 12px;
   font-weight: 500;
   font-family: "Satoshi", "Inter", sans-serif;
   text-transform: capitalize;
@@ -1265,23 +1210,6 @@ button, textarea {
 
 .stat-pill svg {
   flex-shrink: 0;
-}
-
-.social-platform--yt .stat-pill {
-  font-size: 9.4px;
-}
-
-.social-platform--fb .stat-pill {
-  font-size: 10.4px;
-}
-
-.social-platform--ig .stat-pill {
-  font-size: 11.3px;
-}
-
-.social-platform--tt .stat-pill {
-  font-size: 12px;
-  padding: 6px 8px;
 }
 
 .stat-pill--active {
@@ -1297,6 +1225,50 @@ button, textarea {
 @keyframes float {
   0%, 100% { transform: translateY(0) scale(0.9); }
   50% { transform: translateY(-8px) scale(0.9); }
+}
+
+@keyframes cardRotate {
+  /* 状态 4 (TikTok / 最前展示) */
+  0%, 20% {
+    transform: translate3d(0px, 174px, 0) scale(1);
+    z-index: 4;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+  
+  /* 洗牌滑出：从最前退到最底 */
+  22.5% {
+    transform: translate3d(160px, 80px, 0) scale(0.787);
+    z-index: 1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  }
+  
+  /* 状态 1 (YouTube / 最顶最小) */
+  25%, 45% {
+    transform: translate3d(35px, 0px, 0) scale(0.787);
+    z-index: 1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  }
+  
+  /* 过渡到状态 2 */
+  50%, 70% {
+    transform: translate3d(22px, 56px, 0) scale(0.866);
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  }
+  
+  /* 过渡到状态 3 */
+  75%, 95% {
+    transform: translate3d(9px, 116px, 0) scale(0.945);
+    z-index: 3;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* 回到状态 4 */
+  100% {
+    transform: translate3d(0px, 174px, 0) scale(1);
+    z-index: 4;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
+  }
 }
 
 @media (max-width: 920px) {
