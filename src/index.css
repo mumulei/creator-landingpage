@@ -1102,7 +1102,6 @@ button, textarea {
   background: #ffffff;
   border: 0.787px solid rgba(0, 0, 0, 0.05);
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -1238,7 +1237,7 @@ button, textarea {
 
 @keyframes cardRotate {
   /* 状态 4 (TikTok / 最前展示，主激活状态) */
-  0%, 17% {
+  0%, 15% {
     transform: translate3d(0px, 174px, 0) scale(1);
     z-index: 4;
     --sub-height: 18px;
@@ -1250,10 +1249,10 @@ button, textarea {
     animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
   }
   
-  /* 洗牌向右抽出滑走 */
-  19.5% {
-    transform: translate3d(160px, 80px, 0) scale(0.787);
-    z-index: 1;
+  /* 洗牌向右抽出滑走 - 飞出极点，路径更开、弧度更柔和 */
+  19% {
+    transform: translate3d(180px, 110px, 0) scale(0.85);
+    z-index: 4;
     --sub-height: 0px;
     --sub-opacity: 0;
     --sub-margin: 0px;
@@ -1263,8 +1262,13 @@ button, textarea {
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
   
+  /* 在开始折回顶部的一瞬间，迅速降级 z-index，让它从最底层滑回 */
+  19.01% {
+    z-index: 1;
+  }
+  
   /* 状态 1 (YouTube / 最顶最小状态) */
-  22%, 42% {
+  23%, 40% {
     transform: translate3d(35px, 0px, 0) scale(0.787);
     z-index: 1;
     --sub-height: 0px;
@@ -1277,7 +1281,7 @@ button, textarea {
   }
   
   /* 过渡到状态 2 */
-  47%, 67% {
+  48%, 65% {
     transform: translate3d(22px, 56px, 0) scale(0.866);
     z-index: 2;
     --sub-height: 0px;
@@ -1290,7 +1294,7 @@ button, textarea {
   }
   
   /* 过渡到状态 3 */
-  72%, 92% {
+  73%, 90% {
     transform: translate3d(9px, 116px, 0) scale(0.945);
     z-index: 3;
     --sub-height: 0px;
@@ -1303,7 +1307,7 @@ button, textarea {
   }
   
   /* 回到状态 4 */
-  97%, 100% {
+  98%, 100% {
     transform: translate3d(0px, 174px, 0) scale(1);
     z-index: 4;
     --sub-height: 18px;
