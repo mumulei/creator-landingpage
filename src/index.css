@@ -1033,7 +1033,7 @@ button, textarea {
   -webkit-backface-visibility: hidden;
   
   /* 默认图标浅色变量 */
-  --icon-filter: none;
+  --icon-color: #F9A6D8;
   --icon-opacity: 0.45;
 }
 
@@ -1057,13 +1057,15 @@ button, textarea {
   justify-content: center;
 }
 
-.pricing-bar__icon img {
+.pricing-bar__icon-mask {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  filter: var(--icon-filter);
+  background-color: var(--icon-color);
+  -webkit-mask: var(--mask-url) no-repeat center / contain;
+  mask: var(--mask-url) no-repeat center / contain;
   opacity: var(--icon-opacity);
-  transition: filter 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .pricing-progress {
@@ -1416,7 +1418,7 @@ button, textarea {
     background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
     border-color: #fdf2f8;
     z-index: 3;
-    --icon-filter: brightness(0.58) saturate(1.5);
+    --icon-color: #F20093;
     --icon-opacity: 1;
   }
   
@@ -1432,7 +1434,7 @@ button, textarea {
     background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
     border-color: #f7f7f7;
     z-index: 1;
-    --icon-filter: none;
+    --icon-color: #F9A6D8;
     --icon-opacity: 0.45;
   }
   
@@ -1443,7 +1445,7 @@ button, textarea {
     background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
     border-color: #f7f7f7;
     z-index: 2;
-    --icon-filter: none;
+    --icon-color: #F9A6D8;
     --icon-opacity: 0.45;
   }
   
@@ -1454,7 +1456,7 @@ button, textarea {
     background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
     border-color: #fdf2f8;
     z-index: 3;
-    --icon-filter: brightness(0.58) saturate(1.5);
+    --icon-color: #F20093;
     --icon-opacity: 1;
   }
 }
