@@ -892,42 +892,21 @@ button, textarea {
   position: relative;
 }
 
-/* Card 1: Built for cross-border growth */
-.feature-card__illustration--map {
+/* Card 1: Built for cross-border growth - Globe Container */
+.feature-card__illustration--globe {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  pointer-events: none;
 }
 
-.map-layer {
+.globe-container {
   position: absolute;
-  inset: 0;
-}
-
-.map-dots-svg {
-  position: absolute;
-  width: 590px;
-  height: 393px;
-  left: -73px;
-  top: 140px;
-  opacity: 0.8;
-}
-
-.map-gradient-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.35) 50.237%, #ffffff 100%);
-  z-index: 2;
-}
-
-.map-vectorized-overlay {
-  position: absolute;
-  width: 414px;
-  height: 310px;
-  left: 0;
-  top: 194px;
-  z-index: 3;
+  width: 380px;
+  height: 380px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -20px;
+  z-index: 1;
 }
 
 .avatar-tag {

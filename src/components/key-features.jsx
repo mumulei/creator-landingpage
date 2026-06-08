@@ -1,8 +1,9 @@
 import React from 'react';
 
+/* 引入动态三维地球组件 */
+import { GlobeInteractive } from './ui/cobe-globe';
+
 /* 从 Figma 导出的真实资源 */
-import worldMapDots from '../assets/features/world-map-dots.svg';
-import image19Vectorized from '../assets/features/image19-vectorized.svg';
 import avatar1 from '../assets/features/avatar-1.png';
 import avatar2 from '../assets/features/avatar-2.png';
 import avatar3 from '../assets/features/avatar-3.png';
@@ -29,15 +30,11 @@ export default function KeyFeatures() {
               <h3>Built for <strong>cross-border</strong> growth</h3>
               <p>Brief, review, and manage campaigns in your own language while working seamlessly with overseas creators.</p>
             </div>
-            <div className="feature-card__illustration feature-card__illustration--map">
-              {/* 世界地图点阵背景 */}
-              <div className="map-layer">
-                <img src={worldMapDots} alt="" className="map-dots-svg" aria-hidden="true" />
+            <div className="feature-card__illustration feature-card__illustration--globe">
+              {/* 三维动态旋转地球背景 */}
+              <div className="globe-container">
+                <GlobeInteractive className="cobe-globe-canvas" />
               </div>
-              {/* 白色渐变遮罩（上白-中透明-下白） */}
-              <div className="map-gradient-overlay"></div>
-              {/* image 19 vectorized 叠加层 */}
-              <img src={image19Vectorized} alt="" className="map-vectorized-overlay" aria-hidden="true" />
 
               {/* 3 个 Avatar 标签 — 与设计稿完全一致 */}
               <div className="avatar-tag avatar-tag--1">
