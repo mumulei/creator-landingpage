@@ -76,17 +76,17 @@ export default function KeyFeatures() {
               <div className="pricing-bars">
                 <div className="pricing-bar pricing-bar--1">
                   <div className="pricing-bar__icon">
-                    <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url(${pricingIcon1})` }}></span>
+                    <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon1}")` }}></span>
                   </div>
                 </div>
                 <div className="pricing-bar pricing-bar--2">
                   <div className="pricing-bar__icon">
-                    <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url(${pricingIcon2})` }}></span>
+                    <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon2}")` }}></span>
                   </div>
                 </div>
                 <div className="pricing-bar pricing-bar--3">
                   <div className="pricing-bar__icon">
-                    <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url(${pricingIcon3})` }}></span>
+                    <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon3}")` }}></span>
                   </div>
                 </div>
               </div>
