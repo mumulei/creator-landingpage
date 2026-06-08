@@ -1011,40 +1011,38 @@ button, textarea {
 }
 
 .pricing-bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 12px;
+  position: relative;
+  height: 215px;
   width: 100%;
 }
 
 .pricing-bar {
-  flex: 1;
+  position: absolute;
+  bottom: 0;
+  width: 114px;
   background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
   border: 1px solid #f7f7f7;
   border-radius: 12px;
   padding: 12px;
   display: flex;
   justify-content: flex-start;
-  transition: transform 0.3s;
   box-sizing: border-box;
-}
-
-.pricing-bar:hover {
-  transform: translateY(-4px);
+  animation: rotatePricing 6s infinite cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: left, height, background, border-color;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .pricing-bar--1 {
-  height: 135px;
+  animation-delay: -2s;
 }
 
 .pricing-bar--2 {
-  height: 175px;
+  animation-delay: -4s;
 }
 
 .pricing-bar--3 {
-  height: 215px;
-  background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
-  border-color: #fdf2f8;
+  animation-delay: 0s;
 }
 
 .pricing-bar__icon {
@@ -1338,8 +1336,15 @@ button, textarea {
     left: 0;
     top: 0;
     width: 100%;
-    height: auto;
+    height: 250px;
     margin-top: 24px;
+  }
+  .pricing-bars {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 366px;
+    height: 215px;
   }
   .feature-card__illustration--social {
     position: relative;
@@ -1394,4 +1399,49 @@ button, textarea {
   color: #7b7b7b;
   margin: 0;
   font-family: "Satoshi", "Inter", sans-serif;
+}
+
+@keyframes rotatePricing {
+  /* 状态 1: 位置 C (最右, 215px, 粉色渐变) */
+  0%, 28.33% {
+    left: 252px;
+    height: 215px;
+    background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
+    border-color: #fdf2f8;
+    z-index: 3;
+  }
+  
+  /* 状态 2: 位置 A (最左, 135px, 灰色渐变) */
+  33.33%, 61.66% {
+    left: 0px;
+    height: 135px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+    border-color: #f7f7f7;
+    z-index: 1;
+  }
+  
+  /* 状态 3: 位置 B (中间, 175px, 灰色渐变) */
+  66.66%, 95% {
+    left: 126px;
+    height: 175px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
+    border-color: #f7f7f7;
+    z-index: 2;
+  }
+  
+  /* 恢复到状态 1 */
+  100% {
+    left: 252px;
+    height: 215px;
+    background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
+    border-color: #fdf2f8;
+    z-index: 3;
+  }
+}
+
+@media (max-width: 400px) {
+  .pricing-bars {
+    transform: translateX(-50%) scale(calc((100vw - 48px) / 366)) !important;
+    transform-origin: top left;
+  }
 }
