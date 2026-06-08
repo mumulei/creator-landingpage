@@ -1027,13 +1027,13 @@ button, textarea {
   display: flex;
   justify-content: flex-start;
   box-sizing: border-box;
-  animation: rotatePricing 6s infinite cubic-bezier(0.65, 0, 0.35, 1);
+  animation: rotatePricing 6s infinite cubic-bezier(0.25, 1, 0.5, 1);
   will-change: left, height, background, border-color;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   
   /* 默认图标浅色变量 */
-  --icon-filter: saturate(0.4) brightness(1.2);
+  --icon-filter: none;
   --icon-opacity: 0.45;
 }
 
@@ -1063,7 +1063,7 @@ button, textarea {
   object-fit: contain;
   filter: var(--icon-filter);
   opacity: var(--icon-opacity);
-  transition: filter 0.3s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: filter 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .pricing-progress {
@@ -1410,40 +1410,40 @@ button, textarea {
 
 @keyframes rotatePricing {
   /* 状态 1: 位置 C (最右, 215px, 粉色渐变，主激活状态) */
-  0%, 28.33% {
+  0%, 22% {
     left: 252px;
     height: 215px;
     background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
     border-color: #fdf2f8;
     z-index: 3;
-    --icon-filter: saturate(2.5) brightness(0.9) contrast(1.1);
+    --icon-filter: brightness(0.58) saturate(1.5);
     --icon-opacity: 1;
   }
   
   /* 在从最右退回到最左的一瞬间，迅速压低 z-index，让它从最底层滑回去 */
-  28.34% {
+  22.01% {
     z-index: 1;
   }
   
   /* 状态 2: 位置 A (最左, 135px, 灰色渐变，次要状态) */
-  33.33%, 61.66% {
+  33.33%, 56% {
     left: 0px;
     height: 135px;
     background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
     border-color: #f7f7f7;
     z-index: 1;
-    --icon-filter: saturate(0.4) brightness(1.2);
+    --icon-filter: none;
     --icon-opacity: 0.45;
   }
   
   /* 状态 3: 位置 B (中间, 175px, 灰色渐变，次要状态) */
-  66.66%, 95% {
+  66.66%, 89% {
     left: 126px;
     height: 175px;
     background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
     border-color: #f7f7f7;
     z-index: 2;
-    --icon-filter: saturate(0.4) brightness(1.2);
+    --icon-filter: none;
     --icon-opacity: 0.45;
   }
   
@@ -1454,7 +1454,7 @@ button, textarea {
     background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
     border-color: #fdf2f8;
     z-index: 3;
-    --icon-filter: saturate(2.5) brightness(0.9) contrast(1.1);
+    --icon-filter: brightness(0.58) saturate(1.5);
     --icon-opacity: 1;
   }
 }
