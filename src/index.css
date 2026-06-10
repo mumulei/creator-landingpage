@@ -1658,7 +1658,7 @@ button, textarea {
 /* Sticky 滚动联动步骤切换（大屏适用） */
 .how-works-sticky-section {
   position: relative;
-  height: 320vh; /* 滑行距离：四张卡片，每张约占用 80vh 的滚动区间 */
+  height: 220vh; /* 压缩滑行距离：总行程约为 120vh，卡片切换更加紧实，彻底消除多余白屏 */
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;

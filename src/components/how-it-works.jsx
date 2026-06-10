@@ -39,7 +39,7 @@ const STEPS = [
 export default function HowItWorks() {
   const sectionRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [stepProgress, setStepProgress] = useState(0); // 当前步骤内的微观进度 (0到1)
   const [isMobile, setIsMobile] = useState(false);
 
   // 监听视口大小，判断是否降级为移动端平铺布局
@@ -52,9 +52,9 @@ export default function HowItWorks() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // 滚动监听计算 activeIndex 和 progress
+  // 滚动监听计算 activeIndex 和 stepProgress
   useEffect(() => {
-    if (isMobile) return; // 移动端使用普通滚动，不启用 sticky 监听
+    if (isMobile) return;
 
     let ticking = false;
 
@@ -66,20 +66,32 @@ export default function HowItWorks() {
           const sectionHeight = rect.height;
           const windowHeight = window.innerHeight;
           
-          // 计算相对于 section 进入/退出视口的绝对滚动进度
-          // 当 section 顶部对齐视口顶部时开始，底部对齐视口底部时结束
-          const scrollStart = 0; // rect.top === 0
+          // 粘性滚动的总可用行程高度
           const scrollDistance = sectionHeight - windowHeight;
+          if (scrollDistance <= 0) return;
 
           // 计算当前滚动进度比例 (0 到 1)
           let progress = -rect.top / scrollDistance;
           progress = Math.max(0, Math.min(1, progress));
-          
-          setScrollProgress(progress);
 
-          // 四等分区间切换
-          const index = Math.min(3, Math.floor(progress * 4));
+          // 核心重构：为了消除卡片底部留出多余空白的空旷感，我们让 4 张卡片的切换活跃期集中在滚动进度的前 88% 内
+          // 最后的 12% 距离作为第四步展示完毕后的缓冲，并顺畅随页面向上滚走
+          const activeRange = 0.88;
+          const progressInActive = Math.min(activeRange, progress) / activeRange; // 归一化到 0 到 1
+
+          // 划分四个卡片对应的区间
+          // 0.0 - 0.25 -> Index 0
+          // 0.25 - 0.5 -> Index 1
+          // 0.5 - 0.75 -> Index 2
+          // 0.75 - 1.0 -> Index 3
+          const index = Math.min(3, Math.floor(progressInActive * 4));
           setActiveIndex(index);
+
+          // 计算当前激活步骤内部的微观百分比进度，用以平滑填充对应步骤底下的进度条线
+          const rangeSize = 0.25;
+          const rangeStart = index * rangeSize;
+          const microProgress = (progressInActive - rangeStart) / rangeSize;
+          setStepProgress(Math.max(0, Math.min(1, microProgress)));
           
           ticking = false;
         });
@@ -88,7 +100,6 @@ export default function HowItWorks() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // 初始化计算一次
     handleScroll();
 
     return () => {
@@ -96,7 +107,7 @@ export default function HowItWorks() {
     };
   }, [isMobile]);
 
-  // 鼠标悬停 3D Tilt 微动效逻辑 (仅在大屏粘性模式下作用于当前激活卡片)
+  // 鼠标悬停 3D Tilt 微动效逻辑
   const handleMouseMove = (e) => {
     if (isMobile) return;
     const card = e.currentTarget;
@@ -118,7 +129,6 @@ export default function HowItWorks() {
     card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
   };
 
-  // 移动端降级渲染普通垂直流
   if (isMobile) {
     return (
       <section className="how-works-section" id="how-it-works">
@@ -154,17 +164,16 @@ export default function HowItWorks() {
     );
   }
 
-  // 大屏端渲染 Sticky 滚动联动步骤切换
   return (
     <section className="how-works-sticky-section" ref={sectionRef} id="how-it-works">
       <div className="how-sticky-container">
-        {/* 固定头部标题栏 */}
+        {/* 固定头部标题栏 - 滚动中始终锁定在视口顶部 */}
         <div className="how-sticky-header">
           <h2 className="how-title">How it works？</h2>
           <p className="how-subtitle">From brief to content, without the chaos.</p>
         </div>
 
-        {/* 粘性左右联动内容区 */}
+        {/* 粘性内容区域 - 除去标题高度后居中锁定 */}
         <div className="how-sticky-content">
           {/* 左侧：步骤文案叠放区 */}
           <div className="how-text-stack">
@@ -183,13 +192,13 @@ export default function HowItWorks() {
                   <h3 className="how-step-title">{item.title}</h3>
                   <p className="how-step-desc">{item.description}</p>
                   
-                  {/* 指示当前进度的小线条 */}
+                  {/* 精细步骤底线进度条 */}
                   <div className="how-progress-line-container">
                     <div 
                       className="how-progress-line-fill" 
                       style={{ 
                         width: index === activeIndex 
-                          ? `${(scrollProgress * 4 - index) * 100}%` 
+                          ? `${stepProgress * 100}%` 
                           : index < activeIndex ? '100%' : '0%' 
                       }}
                     />
