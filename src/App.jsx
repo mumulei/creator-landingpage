@@ -4,7 +4,13 @@ import polishedDashboard from "./assets/Brands.png";
 import brandLogo from "./assets/local-logos/brand-logo.svg";
 import LogoCloud from "./components/logo-cloud.jsx";
 import KeyFeatures from "./components/key-features.jsx";
+import HowItWorks from "./components/how-it-works.jsx";
+import CustomizeUgc from "./components/customize-ugc.jsx";
+import ScaleUgc from "./components/scale-ugc.jsx";
+import CreatorShowcase from "./components/creator-showcase.jsx";
+import ReadyToScale from "./components/ready-to-scale.jsx";
 import ScrollReveal from "./components/ui/scroll-reveal.jsx";
+
 
 const navItems = ["Home", "About Us", "Creator Library", "Pricing"];
 
@@ -141,6 +147,11 @@ function App() {
 
       <LogoCloud />
       <KeyFeatures />
+      <HowItWorks />
+      <CustomizeUgc />
+      <ScaleUgc />
+      <CreatorShowcase />
+      <ReadyToScale />
       
       {/* 
         Scroll boundary buffer / Features section placeholder
