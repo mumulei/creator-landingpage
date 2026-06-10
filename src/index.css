@@ -544,6 +544,13 @@ button, textarea {
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-container:not(.is-visible) .anim-fade-up {
+    opacity: 0 !important;
+    animation: none !important;
+  }
+}
+
 .hero-mockup-shell.anim-fade-up {
   animation: floatUpPerspective 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -829,6 +836,13 @@ button, textarea {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+}
+
+.feature-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
 /* Feature Card Base */

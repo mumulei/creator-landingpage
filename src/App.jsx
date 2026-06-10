@@ -4,6 +4,7 @@ import polishedDashboard from "./assets/Brands.png";
 import brandLogo from "./assets/local-logos/brand-logo.svg";
 import LogoCloud from "./components/logo-cloud.jsx";
 import KeyFeatures from "./components/key-features.jsx";
+import ScrollReveal from "./components/ui/scroll-reveal.jsx";
 
 const navItems = ["Home", "About Us", "Creator Library", "Pricing"];
 
@@ -145,10 +146,10 @@ function App() {
         Scroll boundary buffer / Features section placeholder
         用于彻底远离首屏的 WebGL GPU 边界冲突区，采用无描边、无分割线的极简设计，与白色背景融为一体
       */}
-      <section className="scroll-buffer-section">
-        <h2 className="scroll-buffer-title">More Features Coming Soon</h2>
-        <p className="scroll-buffer-text">We are continuously expanding the creator library and campaign tools.</p>
-      </section>
+      <ScrollReveal className="reveal-container scroll-buffer-section" as="section">
+        <h2 className="scroll-buffer-title anim-fade-up" style={{ animationDelay: "0.1s" }}>More Features Coming Soon</h2>
+        <p className="scroll-buffer-text anim-fade-up" style={{ animationDelay: "0.25s" }}>We are continuously expanding the creator library and campaign tools.</p>
+      </ScrollReveal>
     </main>
   );
 }
