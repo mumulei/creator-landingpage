@@ -16,12 +16,21 @@ import iconFacebook from '../assets/features/icon-facebook.svg';
 import iconInstagram from '../assets/features/icon-instagram.svg';
 import iconTiktok from '../assets/features/icon-tiktok.svg';
 
+const LocIcon = () => (
+  <svg className="avatar-loc-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M2.1665 6.76211C2.1665 3.4961 4.76985 0.833252 7.99984 0.833252C11.2298 0.833252 13.8332 3.4961 13.8332 6.76211C13.8332 8.33885 13.3838 10.0319 12.5895 11.4945C11.7961 12.9553 10.6369 14.2247 9.18684 14.9025C8.43355 15.2546 7.56613 15.2546 6.81283 14.9025C5.36275 14.2247 4.20358 12.9553 3.41021 11.4945C2.61586 10.0319 2.1665 8.33885 2.1665 6.76211ZM7.99984 1.83325C5.33879 1.83325 3.1665 4.03157 3.1665 6.76211C3.1665 8.16016 3.56826 9.69019 4.28897 11.0172C5.01066 12.3461 6.03052 13.433 7.23627 13.9966C7.72121 14.2233 8.27847 14.2233 8.76341 13.9966C9.96916 13.433 10.989 12.3461 11.7107 11.0172C12.4314 9.69019 12.8332 8.16016 12.8332 6.76211C12.8332 4.03157 10.6609 1.83325 7.99984 1.83325ZM7.99984 5.16659C7.17141 5.16659 6.49984 5.83816 6.49984 6.66659C6.49984 7.49501 7.17141 8.16659 7.99984 8.16659C8.82826 8.16659 9.49984 7.49501 9.49984 6.66659C9.49984 5.83816 8.82826 5.16659 7.99984 5.16659ZM5.49984 6.66659C5.49984 5.28587 6.61913 4.16659 7.99984 4.16659C9.38055 4.16659 10.4998 5.28587 10.4998 6.66659C10.4998 8.0473 9.38055 9.16659 7.99984 9.16659C6.61913 9.16659 5.49984 8.0473 5.49984 6.66659Z" fill="#7B7B7B"/>
+  </svg>
+);
+
 export default function KeyFeatures() {
   return (
     <section className="key-features-section">
       <ScrollReveal className="reveal-container key-features-container">
         <header className="key-features-header">
           <h2 className="anim-fade-up" style={{ animationDelay: '0.1s' }}>Key Features</h2>
+          <p className="key-features-subtitle anim-fade-up" style={{ animationDelay: '0.2s' }}>
+            Everything brands need to launch creator campaigns across markets.
+          </p>
         </header>
 
         <div className="key-features-grid">
@@ -42,24 +51,24 @@ export default function KeyFeatures() {
                 <div className="avatar-tag avatar-tag--1">
                   <img src={avatar1} alt="" className="avatar-img" width="44" height="44" />
                   <div className="avatar-info">
-                    <span className="avatar-name">艾莉亚</span>
-                    <span className="avatar-loc">From the United States</span>
+                    <span className="avatar-name">Arya</span>
+                    <span className="avatar-loc"><LocIcon /> Texas, USA</span>
                   </div>
                 </div>
 
                 <div className="avatar-tag avatar-tag--2">
                   <img src={avatar2} alt="" className="avatar-img" width="44" height="44" />
                   <div className="avatar-info">
-                    <span className="avatar-name">艾莉亚</span>
-                    <span className="avatar-loc">From the United States</span>
+                    <span className="avatar-name">Alex</span>
+                    <span className="avatar-loc"><LocIcon /> Peoria, AZ</span>
                   </div>
                 </div>
 
                 <div className="avatar-tag avatar-tag--3">
                   <img src={avatar3} alt="" className="avatar-img" width="44" height="44" />
                   <div className="avatar-info">
-                    <span className="avatar-name">艾莉亚</span>
-                    <span className="avatar-loc">From the United States</span>
+                    <span className="avatar-name">Drake</span>
+                    <span className="avatar-loc"><LocIcon /> Paris, France</span>
                   </div>
                 </div>
               </div>
