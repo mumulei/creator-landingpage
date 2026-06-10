@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import step1Img from '../assets/features/how-works-1.png';
 import step2Img from '../assets/features/how-works-2.png';
 import step3Img from '../assets/features/how-works-3.png';
@@ -37,107 +37,197 @@ const STEPS = [
 ];
 
 export default function HowItWorks() {
-  const containerRef = useRef(null);
+  const sectionRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // 监听视口大小，判断是否降级为移动端平铺布局
   useEffect(() => {
-    // 监听滚动实现卡片视差淡入效果
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.15,
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 920);
     };
-
-    const handleIntersect = (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('how-card-visible');
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersect, observerOptions);
-    const cards = containerRef.current.querySelectorAll('.how-step-card');
-    cards.forEach((card) => observer.observe(card));
-
-    return () => {
-      cards.forEach((card) => observer.unobserve(card));
-    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // 鼠标悬停 3D Tilt 微动效逻辑
-  const handleMouseMove = (e, index) => {
+  // 滚动监听计算 activeIndex 和 progress
+  useEffect(() => {
+    if (isMobile) return; // 移动端使用普通滚动，不启用 sticky 监听
+
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!sectionRef.current) return;
+          const rect = sectionRef.current.getBoundingClientRect();
+          const sectionHeight = rect.height;
+          const windowHeight = window.innerHeight;
+          
+          // 计算相对于 section 进入/退出视口的绝对滚动进度
+          // 当 section 顶部对齐视口顶部时开始，底部对齐视口底部时结束
+          const scrollStart = 0; // rect.top === 0
+          const scrollDistance = sectionHeight - windowHeight;
+
+          // 计算当前滚动进度比例 (0 到 1)
+          let progress = -rect.top / scrollDistance;
+          progress = Math.max(0, Math.min(1, progress));
+          
+          setScrollProgress(progress);
+
+          // 四等分区间切换
+          const index = Math.min(3, Math.floor(progress * 4));
+          setActiveIndex(index);
+          
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // 初始化计算一次
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isMobile]);
+
+  // 鼠标悬停 3D Tilt 微动效逻辑 (仅在大屏粘性模式下作用于当前激活卡片)
+  const handleMouseMove = (e) => {
+    if (isMobile) return;
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left; // 鼠标在元素内的 x 坐标
-    const y = e.clientY - rect.top;  // 鼠标在元素内的 y 坐标
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
-    // 计算偏转角度 (限制在最大 3 度内)
     const xc = rect.width / 2;
     const yc = rect.height / 2;
     const rotateY = ((x - xc) / xc) * 3;
     const rotateX = -((y - yc) / yc) * 3;
 
-    const imgContainer = card.querySelector('.how-img-glass');
-    if (imgContainer) {
-      imgContainer.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    }
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
   };
 
   const handleMouseLeave = (e) => {
+    if (isMobile) return;
     const card = e.currentTarget;
-    const imgContainer = card.querySelector('.how-img-glass');
-    if (imgContainer) {
-      imgContainer.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-    }
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
   };
 
+  // 移动端降级渲染普通垂直流
+  if (isMobile) {
+    return (
+      <section className="how-works-section" id="how-it-works">
+        <div className="how-header-container">
+          <h2 className="how-title">How it works？</h2>
+          <p className="how-subtitle">From brief to content, without the chaos.</p>
+        </div>
+        <div className="how-steps-list">
+          {STEPS.map((item, index) => (
+            <div key={index} className={`how-step-card ${item.bgClass} how-card-visible`}>
+              <div className="how-text-content">
+                <div className="how-step-badge">
+                  <span>{item.step}</span>
+                </div>
+                <h3 className="how-step-title">{item.title}</h3>
+                <p className="how-step-desc">{item.description}</p>
+                <div className="how-arrow-button">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div className="how-image-wrapper">
+                <div className="how-img-glass">
+                  <img src={item.image} alt={item.title} className="how-step-img" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  // 大屏端渲染 Sticky 滚动联动步骤切换
   return (
-    <section className="how-works-section" ref={containerRef} id="how-it-works">
-      {/* 头部区域 */}
-      <div className="how-header-container">
-        <h2 className="how-title">How it works？</h2>
-        <p className="how-subtitle">From brief to content, without the chaos.</p>
-      </div>
+    <section className="how-works-sticky-section" ref={sectionRef} id="how-it-works">
+      <div className="how-sticky-container">
+        {/* 固定头部标题栏 */}
+        <div className="how-sticky-header">
+          <h2 className="how-title">How it works？</h2>
+          <p className="how-subtitle">From brief to content, without the chaos.</p>
+        </div>
 
-      {/* 步骤列表 */}
-      <div className="how-steps-list">
-        {STEPS.map((item, index) => (
-          <div 
-            key={index} 
-            className={`how-step-card ${item.bgClass}`}
-            onMouseMove={(e) => handleMouseMove(e, index)}
-            onMouseLeave={handleMouseLeave}
-          >
-            {/* 左侧文案区 */}
-            <div className="how-text-content">
-              <div className="how-step-badge">
-                <span>{item.step}</span>
-              </div>
-              <h3 className="how-step-title">{item.title}</h3>
-              <p className="how-step-desc">{item.description}</p>
+        {/* 粘性左右联动内容区 */}
+        <div className="how-sticky-content">
+          {/* 左侧：步骤文案叠放区 */}
+          <div className="how-text-stack">
+            {STEPS.map((item, index) => {
+              const status = index === activeIndex 
+                ? 'active' 
+                : index < activeIndex 
+                  ? 'past' 
+                  : 'future';
               
-              {/* 装饰性右箭头按钮 */}
-              <div className="how-arrow-button">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </div>
-            </div>
-
-            {/* 右侧毛玻璃截图区 */}
-            <div className="how-image-wrapper">
-              <div className="how-img-glass">
-                <img 
-                  src={item.image} 
-                  alt={item.title} 
-                  className="how-step-img" 
-                  loading="lazy"
-                />
-              </div>
-            </div>
+              return (
+                <div key={index} className={`how-text-item how-text-item--${status}`}>
+                  <div className="how-step-badge">
+                    <span>{item.step}</span>
+                  </div>
+                  <h3 className="how-step-title">{item.title}</h3>
+                  <p className="how-step-desc">{item.description}</p>
+                  
+                  {/* 指示当前进度的小线条 */}
+                  <div className="how-progress-line-container">
+                    <div 
+                      className="how-progress-line-fill" 
+                      style={{ 
+                        width: index === activeIndex 
+                          ? `${(scrollProgress * 4 - index) * 100}%` 
+                          : index < activeIndex ? '100%' : '0%' 
+                      }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        ))}
+
+          {/* 右侧：产品截图叠放区 */}
+          <div className="how-image-stack">
+            {STEPS.map((item, index) => {
+              const status = index === activeIndex 
+                ? 'active' 
+                : index < activeIndex 
+                  ? 'past' 
+                  : 'future';
+              
+              return (
+                <div 
+                  key={index} 
+                  className={`how-image-item how-image-item--${status} ${item.bgClass}`}
+                  onMouseMove={index === activeIndex ? handleMouseMove : null}
+                  onMouseLeave={index === activeIndex ? handleMouseLeave : null}
+                >
+                  <div className="how-img-glass">
+                    <img 
+                      src={item.image} 
+                      alt={item.title} 
+                      className="how-step-img" 
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );
