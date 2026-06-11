@@ -409,12 +409,14 @@ button, textarea {
 }
 
 .hero h1 span:first-child {
-  font-size: clamp(34px, 3.2vw, 82px);
+  font-size: clamp(30px, 2.24vw, 57.5px);
+  font-weight: 600;
   line-height: 1.2;
 }
 
 .hero h1 span:last-child {
-  font-size: clamp(40px, 3.7vw, 95px);
+  font-size: clamp(36px, 2.84vw, 72.7px);
+  font-weight: 800;
   line-height: 1.2;
 }
 
@@ -520,6 +522,22 @@ button, textarea {
   transform: translateY(-2px);
 }
 
+#nav-cta,
+#hero-cta-start,
+#hero-cta-demo {
+  box-shadow: none !important;
+}
+
+#nav-cta:hover,
+#hero-cta-start:hover,
+#hero-cta-demo:hover {
+  box-shadow: none !important;
+}
+
+#nav-cta {
+  font-family: "Inter", sans-serif !important;
+}
+
 .hero-mockup-shell {
   width: min(100%, 2268px);
   margin: 3.15rem auto 0;
@@ -530,14 +548,21 @@ button, textarea {
   border-radius: 8px;
   padding: 42px 12px 12px 12px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.1);
+  background-color: transparent;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1));
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.2),
-    0 24px 70px rgba(23, 23, 23, 0.08),
-    0 40px 90px rgba(255, 118, 178, 0.08);
+  box-shadow: none;
+  height: 74.1vw;
+  transform: translate(0px, -9.04vw);
+}
+
+@media (min-width: 2560px) {
+  .hero-mockup-shell__frame {
+    height: 1897px;
+    transform: translate(0px, -231.4px);
+  }
 }
 
 /* macOS traffic light controls */
@@ -766,6 +791,7 @@ button, textarea {
 
   .hero-mockup-shell__frame {
     transform: translateY(5rem);
+    height: auto;
   }
 
   .hero::after {
@@ -869,6 +895,7 @@ button, textarea {
   .hero-mockup-shell__frame {
     border-radius: 24px;
     transform: translateY(3rem);
+    height: auto;
   }
 
   .hero::after {
@@ -936,17 +963,20 @@ button, textarea {
 
   .hero-mockup-shell__frame {
     transform: translateY(6.9rem);
+    height: auto;
   }
 
   @media (max-width: 920px) {
     .hero-mockup-shell__frame {
       transform: translateY(5rem);
+      height: auto;
     }
   }
 
   @media (max-width: 640px) {
     .hero-mockup-shell__frame {
       transform: translateY(3rem);
+      height: auto;
     }
   }
 }
