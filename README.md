@@ -18,14 +18,15 @@ Welcome to the Creator Landing Page project! This repository contains the source
   **绝对不要**在 `to` 中省略 `perspective` 或 `rotateX` 等属性。否则，浏览器会将其退化为 Matrix 矩阵插值，在 WebGL 画布持续重绘引发复合层重新计算时，会产生肉眼可见的 4-6px 抖动偏移！
 - **可访问性兼容**：所有的动画必须包裹在 `@media (prefers-reduced-motion: no-preference)` 媒体查询中。
 
-### 2. 响应式布局 (Responsive Design)
-- **断点规范**：
-  - Desktop: `> 920px`
-  - Tablet: `≤ 920px` (调整间距、缩放字体)
-  - Mobile: `≤ 640px` (启用汉堡菜单，文字排版重构)
-- **Hero 区域的自动裁剪机制**：
-  首屏 `.hero` 被严格限制为 `height: 100vh` 和 `overflow: hidden; clip-path: inset(0);`。
-  内部的 `.hero-mockup-shell` 没有 `max-height` 限制，超出首屏底部的区域将被自动裁剪。我们利用 `.hero::after` 绝对定位在最底部的纯白渐变遮罩 (`#ffffff`)，实现了截断与背景的完美自然融合。
+### 2. 响应式与 2K 适配布局 (Responsive & 2K Adaptive Layout)
+- **断点与缩放规范 (Breakpoints & Scaling)**：
+  - **Mobile 移动端 (≤ 640px)**：折叠为全屏汉堡菜单，圆角在任何卡片或图片上强制锁定为 `8px` 以保证视觉一致性。文字大小和行高进行缩减（如 section title 缩至 `28px`），卡片转为单列垂直平铺。安全边距 `--safe-padding` 锁定为 `20px`。
+  - **Tablet 平板端 (641px - 1150px)**：介于 `641px` 与 `1024px` 之间时优化导航栏间距与字号，防止链接溢出换行。安全边距 `--safe-padding` 锁定为 `40px`。
+  - **Desktop 桌面流式缩放端 (1151px - 2560px)**：使用 CSS 变量（如 `--safe-padding: 5.7vw`，以及 `--section-padding-y`、`--title-font-size`、`--scale-grid-gap`、`--scale-card-height` 等）随屏幕宽度等比流式缩放容器、组件间距和字体大小。
+  - **Ultra-Wide 超 2K 极限端 (> 2560px)**：一旦屏幕宽度超出 2K (`2560px`)，所有容器和组件的响应式缩放将**停止**，尺寸锁定（例如安全边距锁定在 `146px`，内容最大宽度锁定在 `2268px` 并水平居中）。此时，**只有左右安全外边距继续向外扩展**以吸收超宽屏的剩余空间，同时各 Section 背景色仍然保持 `100%` 全屏宽度填充，保证视觉背景的连续性。
+- **Hero 区域自动裁剪与缩放**：
+  - 首屏 `.hero` 容器高度限制为 `100vh` 且 `overflow: hidden; clip-path: inset(0);`，通过底部的纯白渐变遮罩与后续 Section 自然融合。
+  - 在桌面端，Hero 内部的文字容器 `.hero-copy`、标题字号 (`clamp`)、CTA 按钮尺寸和 Mockup 外壳 `.hero-mockup-shell` 同样使用流式 Clamp 或百分比设定，随着屏幕宽度在桌面段内等比放大，在超 2K 后锁定最大宽度并居中，确保 1920 屏幕下也能展现极其合理的视觉比例。
 
 ### 3. 精确卡片动效与 CSS 遮罩方案 (Key Features Animations & CSS Mask)
 - **卡片 2 (Flexible pricing) 变色与位移**：

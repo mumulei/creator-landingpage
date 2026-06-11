@@ -73,7 +73,7 @@ const DesktopCard = ({ item, index, progress, total }) => {
       className="how-step-card-desktop"
       style={{
         position: 'absolute',
-        top: '4vh',
+        top: 0,
         left: '50%',
         x: '-50%',
         y,
@@ -118,7 +118,7 @@ export default function HowItWorks() {
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 920);
+      setIsMobile(window.innerWidth <= 1024 || window.innerHeight < 650);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);

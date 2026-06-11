@@ -9,6 +9,61 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --safe-padding: 5.7vw;
+  --section-padding-y: 8.33vw;
+  --title-font-size: 2.5vw;
+  --subtitle-font-size: 1.11vw;
+  --subtitle-max-width: 22.2vw;
+  --section-margin-bottom: 4.44vw;
+  --scale-grid-gap: 2.22vw;
+  --scale-card-height: 13.6vw;
+  --scale-card-padding: 2.22vw;
+  --how-header-padding-top: 5.55vw;
+}
+
+@media (min-width: 2560px) {
+  :root {
+    --safe-padding: 146px;
+    --section-padding-y: 213px;
+    --title-font-size: 64px;
+    --subtitle-font-size: 28.4px;
+    --subtitle-max-width: 568px;
+    --section-margin-bottom: 114px;
+    --scale-grid-gap: 57px;
+    --scale-card-height: 348px;
+    --scale-card-padding: 57px;
+    --how-header-padding-top: 142px;
+  }
+}
+
+@media (max-width: 1150px) {
+  :root {
+    --safe-padding: 40px;
+    --section-padding-y: 100px;
+    --title-font-size: 36px;
+    --subtitle-font-size: 16px;
+    --subtitle-max-width: 320px;
+    --section-margin-bottom: 48px;
+    --scale-grid-gap: 32px;
+    --scale-card-height: 196px;
+    --scale-card-padding: 32px;
+    --how-header-padding-top: 80px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --safe-padding: 20px;
+    --section-padding-y: 60px;
+    --title-font-size: 28px;
+    --subtitle-font-size: 14px;
+    --subtitle-max-width: 100%;
+    --section-margin-bottom: 32px;
+    --scale-grid-gap: 20px;
+    --scale-card-height: auto;
+    --scale-card-padding: 20px;
+    --how-header-padding-top: 40px;
+  }
 }
 
 * {
@@ -115,7 +170,10 @@ button, textarea {
   justify-content: space-between;
   gap: 2rem;
   width: 100%;
-  padding: 0.85rem 2.5rem;
+  max-width: 2560px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.85rem var(--safe-padding);
   background: transparent;
   border-bottom: 0;
   transition: padding 0.3s ease;
@@ -128,19 +186,19 @@ button, textarea {
   top: 0;
   left: 0;
   right: 0;
-  bottom: -40px; /* Extend blur area downwards */
-  z-index: -1;
-  /* Apply the blur */
+  height: 5.5rem;
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   /* Use mask to make the blur fade out at the bottom */
   mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
   pointer-events: none;
+  z-index: -1;
 }
 
 .topbar--scrolled {
-  padding: 0.6rem 2.5rem;
+  padding: 0.6rem var(--safe-padding);
 }
 
 .brand {
@@ -312,7 +370,7 @@ button, textarea {
 .hero {
   position: relative;
   height: 100vh;
-  padding: 8.2rem 2rem 0;
+  padding: 8.2rem var(--safe-padding) 0;
   overflow: hidden;
   clip-path: inset(0);
   box-sizing: border-box;
@@ -331,13 +389,15 @@ button, textarea {
 }
 
 .hero-copy {
-  width: min(100%, 1276px);
+  width: 100%;
+  max-width: 2268px;
   margin: 0 auto;
   text-align: center;
 }
 
 .hero h1 {
-  width: min(100%, 720px);
+  width: 100%;
+  max-width: clamp(720px, 50vw, 1280px);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -349,30 +409,31 @@ button, textarea {
 }
 
 .hero h1 span:first-child {
-  font-size: clamp(34px, 3.2vw, 40px);
-  line-height: 56px;
+  font-size: clamp(34px, 3.2vw, 82px);
+  line-height: 1.2;
 }
 
 .hero h1 span:last-child {
-  font-size: clamp(40px, 3.7vw, 48px);
-  line-height: 56px;
+  font-size: clamp(40px, 3.7vw, 95px);
+  line-height: 1.2;
 }
 
 .hero-body {
-  width: min(100%, 720px);
+  width: 100%;
+  max-width: clamp(720px, 50vw, 1280px);
   margin: 2rem auto 0;
   font-family: "Satoshi", sans-serif;
-  font-size: 16px;
+  font-size: clamp(16px, 1.11vw, 28px);
   font-weight: 500;
-  line-height: 24px;
+  line-height: 1.5;
   color: rgba(0, 0, 0, 0.4);
 }
 
 .hero-cta-row {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
+  gap: clamp(1.5rem, 1.67vw, 2.7rem);
+  margin-top: clamp(1.5rem, 1.67vw, 2.7rem);
 }
 
 .hero-cta {
@@ -380,18 +441,18 @@ button, textarea {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  width: 200px;
-  height: 48px;
-  border-radius: 24px;
+  width: clamp(200px, 13.9vw, 355px);
+  height: clamp(48px, 3.33vw, 85px);
+  border-radius: clamp(24px, 1.67vw, 42px);
   font-family: "Satoshi", sans-serif;
-  font-size: 18px;
+  font-size: clamp(15px, 1.11vw, 28px);
   font-weight: 500;
   line-height: 24px;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .hero-cta span[aria-hidden] {
-  font-size: 24px;
+  font-size: clamp(24px, 1.67vw, 42px);
   line-height: 1;
   transform: translateY(-1px);
 }
@@ -421,7 +482,7 @@ button, textarea {
 }
 
 .hero-mockup-shell {
-  width: min(100%, 1320px);
+  width: min(100%, 2346px);
   margin: 2.15rem auto 0;
 }
 
@@ -446,9 +507,11 @@ button, textarea {
 
 /* ======== TRUSTED CLOUD ======== */
 .trusted-cloud {
-  width: min(100%, 1380px);
+  width: 100%;
+  max-width: 2560px;
   margin: 2rem auto 0;
-  padding: 0 2rem 1.5rem;
+  padding: 0 var(--safe-padding) 1.5rem;
+  box-sizing: border-box;
 }
 
 .trusted-cloud__title {
@@ -564,23 +627,24 @@ button, textarea {
 }
 
 /* ======== RESPONSIVE ======== */
-@media (max-width: 920px) {
+@media (max-width: 1024px) {
   .topbar {
     gap: 1rem;
-    padding: 0.8rem 1.25rem;
+    padding: 0.8rem var(--safe-padding);
   }
 
   .topbar--scrolled {
-    padding: 0.6rem 1.25rem;
+    padding: 0.6rem var(--safe-padding);
   }
 
   .topnav a {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.6rem;
+    font-size: 13px;
   }
 
   .hero {
     height: 100vh;
-    padding: 6rem 1.25rem 0;
+    padding: 6rem var(--safe-padding) 0;
   }
 
   .hero-body {
@@ -621,7 +685,6 @@ button, textarea {
   .trusted-cloud {
     width: min(100%, 1180px);
     margin-top: 2.5rem;
-    padding-inline: 1.25rem;
   }
 }
 
@@ -803,16 +866,18 @@ button, textarea {
    ========================================================================== */
 
 .key-features-section {
-  padding: 2rem 1.5rem 4rem;
+  padding: 2rem var(--safe-padding) 4rem;
   background: #ffffff;
   display: flex;
   justify-content: center;
   position: relative;
   z-index: 10;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .key-features-container {
-  max-width: 1274px;
+  max-width: 2268px;
   width: 100%;
 }
 
@@ -820,12 +885,12 @@ button, textarea {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 48px;
+  margin-bottom: var(--section-margin-bottom);
   text-align: left;
 }
 
 .key-features-header h2 {
-  font-size: 36px;
+  font-size: var(--title-font-size);
   font-weight: 800;
   color: #171717;
   letter-spacing: -0.04em;
@@ -835,10 +900,10 @@ button, textarea {
 }
 
 .key-features-subtitle {
-  font-size: 16px;
+  font-size: var(--subtitle-font-size);
   color: #a3a3a3;
   margin: 0;
-  max-width: 320px;
+  max-width: var(--subtitle-max-width);
   text-align: right;
   line-height: 1.4;
 }
@@ -854,49 +919,45 @@ button, textarea {
   flex-direction: column;
   height: 100%;
   width: 100%;
+  container-type: inline-size;
 }
 
 /* Feature Card Base */
 .feature-card {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 24px;
+  border-radius: 2.89cqw;
+  padding: 5.78cqw;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 0.24cqw solid rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@media (min-width: 921px) {
-  .feature-card {
-    height: 505px;
-  }
+  height: 121.7cqw;
 }
 
 .feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.02);
+  transform: translateY(-0.96cqw);
+  box-shadow: 0 2.89cqw 7.71cqw rgba(0, 0, 0, 0.04), 0 0.96cqw 2.89cqw rgba(0, 0, 0, 0.02);
   border-color: rgba(0, 0, 0, 0.08);
 }
 
 .feature-card__content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 1.93cqw;
   position: relative;
   z-index: 5;
-  height: 120px;
+  height: 28.9cqw;
 }
 
 .feature-card__content h3 {
-  font-size: 18px;
+  font-size: 4.34cqw;
   font-weight: 700;
   color: #171717;
   margin: 0;
-  line-height: 24px;
+  line-height: 5.78cqw;
   font-family: "Satoshi", "Inter", sans-serif;
 }
 
@@ -905,9 +966,9 @@ button, textarea {
 }
 
 .feature-card__content p {
-  font-size: 14px;
+  font-size: 3.37cqw;
   color: #7b7b7b;
-  line-height: 20px;
+  line-height: 4.82cqw;
   margin: 0;
   font-family: "Satoshi", "Inter", sans-serif;
 }
@@ -926,23 +987,23 @@ button, textarea {
 
 .globe-container {
   position: absolute;
-  width: 380px;
-  height: 380px;
+  width: 91.56cqw;
+  height: 91.56cqw;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -20px;
+  bottom: -4.82cqw;
   z-index: 1;
 }
 
 .avatar-tag {
   position: absolute;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(153, 153, 153, 0.1) 100%);
-  padding: 8px 18px 8px 8px;
+  padding: 1.93cqw 4.34cqw 1.93cqw 1.93cqw;
   border-radius: 999px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  border: 1px solid #ffffff;
+  gap: 2.4cqw;
+  border: 0.24cqw solid #ffffff;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transform: scale(0.9);
@@ -952,30 +1013,30 @@ button, textarea {
 }
 
 .feature-card--cross-border:hover .avatar-tag {
-  transform: scale(1) translateY(-5px);
+  transform: scale(1) translateY(-0.96cqw);
 }
 
 .avatar-tag--1 {
-  top: 178px;
-  left: 167px;
+  top: 42.89cqw;
+  left: calc(50% - 9.76cqw);
   animation: float 6s ease-in-out infinite;
 }
 
 .avatar-tag--2 {
-  top: 290px;
-  left: 16px;
+  top: 69.88cqw;
+  left: calc(50% - 46.14cqw);
   animation: float 7s ease-in-out infinite 1s;
 }
 
 .avatar-tag--3 {
-  top: 402px;
-  left: 167px;
+  top: 96.87cqw;
+  left: calc(50% - 9.76cqw);
   animation: float 6s ease-in-out infinite 2s;
 }
 
 .avatar-img {
-  width: 40px;
-  height: 40px;
+  width: 9.64cqw;
+  height: 9.64cqw;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -986,55 +1047,57 @@ button, textarea {
 }
 
 .avatar-name {
-  font-size: 14px;
+  font-size: 3.37cqw;
   font-weight: 700;
   color: #171717;
-  line-height: 20px;
+  line-height: 4.82cqw;
   font-family: "Satoshi", "Inter", sans-serif;
 }
 
 .avatar-loc {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 14px;
+  gap: 1.45cqw;
+  font-size: 3.37cqw;
   color: #7b7b7b;
-  line-height: 20px;
+  line-height: 4.82cqw;
   font-family: "Satoshi", "Inter", sans-serif;
 }
 
 .avatar-loc-icon {
   flex-shrink: 0;
+  width: 3.86cqw;
+  height: 3.86cqw;
 }
 
 /* Card 2: Flexible pricing */
 .feature-card__illustration--pricing {
   position: absolute;
-  left: 24px;
-  top: 189px;
-  width: 366px;
-  height: 292px;
+  left: 5.78cqw;
+  top: 45.54cqw;
+  width: 88.19cqw;
+  height: 70.36cqw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  gap: 36px;
+  gap: 8.67cqw;
 }
 
 .pricing-bars {
   position: relative;
-  height: 215px;
+  height: 51.8cqw;
   width: 100%;
 }
 
 .pricing-bar {
   position: absolute;
   bottom: 0;
-  width: 114px;
+  width: 27.47cqw;
   background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
-  border: 1px solid #f7f7f7;
-  border-radius: 12px;
-  padding: 12px;
+  border: 0.24cqw solid #f7f7f7;
+  border-radius: 2.89cqw;
+  padding: 2.89cqw;
   display: flex;
   justify-content: flex-start;
   box-sizing: border-box;
@@ -1061,8 +1124,8 @@ button, textarea {
 }
 
 .pricing-bar__icon {
-  width: 32px;
-  height: 32px;
+  width: 7.71cqw;
+  height: 7.71cqw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1088,52 +1151,52 @@ button, textarea {
 .pricing-progress {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 5.78cqw;
   width: 100%;
 }
 
 .pricing-label {
-  font-size: 12px;
+  font-size: 2.89cqw;
   font-weight: 500;
   color: #a3a3a3;
-  line-height: 16px;
+  line-height: 3.86cqw;
   white-space: nowrap;
   font-family: "Satoshi", "Inter", sans-serif;
 }
 
 .pricing-track {
   flex: 1;
-  height: 8px;
+  height: 1.93cqw;
   background: #f7f7f7;
-  border-radius: 7px;
+  border-radius: 1.69cqw;
   position: relative;
   overflow: hidden;
 }
 
 .pricing-fill {
-  width: 186px;
+  width: 44.82cqw;
   height: 100%;
   background: #f20093;
-  border-radius: 7px;
+  border-radius: 1.69cqw;
 }
 
 /* Card 3: Launch Campaigns Faster */
 .feature-card__illustration--social {
   position: absolute;
-  left: 42.5px;
-  top: 169px;
-  width: 329px;
-  height: 296px;
+  left: 10.24cqw;
+  top: 40.72cqw;
+  width: 79.28cqw;
+  height: 71.33cqw;
 }
 
 .social-platform {
   position: absolute;
-  width: 329px;
-  height: 122px;
-  padding: 16px;
+  width: 79.28cqw;
+  height: 29.4cqw;
+  padding: 3.86cqw;
   background: #ffffff;
-  border: 0.787px solid rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
+  border: 0.19cqw solid rgba(0, 0, 0, 0.05);
+  border-radius: 2.89cqw;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -1149,9 +1212,9 @@ button, textarea {
   --sub-height: 0px;
   --sub-opacity: 0;
   --sub-margin: 0px;
-  --bar-height: 10px;
+  --bar-height: 2.4cqw;
   --bar-opacity: 1;
-  --bar-margin: 6px 0 12px 52px;
+  --bar-margin: 1.45cqw 0 2.89cqw 12.53cqw;
 }
 
 /* 4 张卡片通过 animation-delay 错开状态位置 */
@@ -1171,7 +1234,7 @@ button, textarea {
 .social-platform__header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 1.93cqw;
 }
 
 .social-platform__icon-wrap {
@@ -1179,9 +1242,9 @@ button, textarea {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 11px;
+  width: 10.6cqw;
+  height: 10.6cqw;
+  border-radius: 2.65cqw;
   overflow: hidden;
 }
 
@@ -1197,7 +1260,7 @@ button, textarea {
 }
 
 .social-platform__name {
-  font-size: 18px;
+  font-size: 4.34cqw;
   font-weight: 700;
   color: #1a1a1a;
   font-family: "Satoshi", "Inter", sans-serif;
@@ -1205,7 +1268,7 @@ button, textarea {
 }
 
 .social-platform__sub {
-  font-size: 12px;
+  font-size: 2.89cqw;
   color: #737373;
   font-weight: 400;
   font-family: "Satoshi", "Inter", sans-serif;
@@ -1219,7 +1282,7 @@ button, textarea {
 
 .social-platform__placeholder-bar {
   background: #f5f5f5;
-  border-radius: 4px;
+  border-radius: 0.96cqw;
   overflow: hidden;
   height: var(--bar-height);
   opacity: var(--bar-opacity);
@@ -1230,18 +1293,18 @@ button, textarea {
 .social-platform__stats {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding-left: 52px;
+  gap: 2.89cqw;
+  padding-left: 12.53cqw;
 }
 
 .stat-pill {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 6px 8px;
-  border-radius: 6px;
-  font-size: 12px;
+  gap: 0.96cqw;
+  padding: 1.45cqw 1.93cqw;
+  border-radius: 1.45cqw;
+  font-size: 2.89cqw;
   font-weight: 500;
   font-family: "Satoshi", "Inter", sans-serif;
   text-transform: capitalize;
@@ -1250,6 +1313,8 @@ button, textarea {
 
 .stat-pill svg {
   flex-shrink: 0;
+  width: 2.89cqw;
+  height: 2.89cqw;
 }
 
 .stat-pill--active {
@@ -1264,143 +1329,98 @@ button, textarea {
 
 @keyframes float {
   0%, 100% { transform: translateY(0) scale(0.9); }
-  50% { transform: translateY(-8px) scale(0.9); }
+  50% { transform: translateY(-1.93cqw) scale(0.9); }
 }
 
 @keyframes cardRotate {
-  /* 状态 4 (TikTok / 最前展示，主激活状态) */
   0%, 18.67% {
-    transform: translate3d(0px, 174px, 0) scale(1);
+    transform: translate3d(0px, 41.93cqw, 0) scale(1);
     z-index: 4;
-    --sub-height: 18px;
+    --sub-height: 4.34cqw;
     --sub-opacity: 1;
-    --sub-margin: 2px;
+    --sub-margin: 0.48cqw;
     --bar-height: 0px;
     --bar-opacity: 0;
     --bar-margin: 0px;
-    box-shadow: var(--Position-x-md, 0) var(--Position-y-md, 12px) var(--Blur-md, 24px) var(--Spread-md, -4px) var(--Opacity-opactiy-md, rgba(0, 0, 0, 0.05));
+    box-shadow: var(--Position-x-md, 0) var(--Position-y-md, 2.89cqw) var(--Blur-md, 5.78cqw) var(--Spread-md, -0.96cqw) var(--Opacity-opactiy-md, rgba(0, 0, 0, 0.05));
     animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
   }
-  
-  /* 洗牌向右抽出滑走 - 飞出极点，路径更开、弧度更柔和 */
   21.83% {
-    transform: translate3d(180px, 110px, 0) scale(0.85);
+    transform: translate3d(43.37cqw, 26.5cqw, 0) scale(0.85);
     z-index: 4;
     --sub-height: 0px;
     --sub-opacity: 0;
     --sub-margin: 0px;
-    --bar-height: 10px;
+    --bar-height: 2.4cqw;
     --bar-opacity: 1;
-    --bar-margin: 6px 0 12px 52px;
+    --bar-margin: 1.45cqw 0 2.89cqw 12.53cqw;
     box-shadow: none;
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
-  
-  /* 在开始折回顶部的一瞬间，迅速降级 z-index，让它从最底层滑回 */
   21.84% {
     z-index: 1;
   }
-  
-  /* 状态 1 (YouTube / 最顶最小状态) */
   25%, 43.67% {
-    transform: translate3d(35px, 0px, 0) scale(0.787);
+    transform: translate3d(8.43cqw, 0px, 0) scale(0.787);
     z-index: 1;
     --sub-height: 0px;
     --sub-opacity: 0;
     --sub-margin: 0px;
-    --bar-height: 10px;
+    --bar-height: 2.4cqw;
     --bar-opacity: 1;
-    --bar-margin: 6px 0 12px 52px;
+    --bar-margin: 1.45cqw 0 2.89cqw 12.53cqw;
     box-shadow: none;
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
-  
-  /* 过渡到状态 2 */
   50%, 68.67% {
-    transform: translate3d(22px, 56px, 0) scale(0.866);
+    transform: translate3d(5.3cqw, 13.49cqw, 0) scale(0.866);
     z-index: 2;
     --sub-height: 0px;
     --sub-opacity: 0;
     --sub-margin: 0px;
-    --bar-height: 10px;
+    --bar-height: 2.4cqw;
     --bar-opacity: 1;
-    --bar-margin: 6px 0 12px 52px;
+    --bar-margin: 1.45cqw 0 2.89cqw 12.53cqw;
     box-shadow: none;
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
-  
-  /* 过渡到状态 3 */
   75%, 93.67% {
-    transform: translate3d(9px, 116px, 0) scale(0.945);
+    transform: translate3d(2.17cqw, 27.95cqw, 0) scale(0.945);
     z-index: 3;
     --sub-height: 0px;
     --sub-opacity: 0;
     --sub-margin: 0px;
-    --bar-height: 10px;
+    --bar-height: 2.4cqw;
     --bar-opacity: 1;
-    --bar-margin: 6px 0 12px 52px;
+    --bar-margin: 1.45cqw 0 2.89cqw 12.53cqw;
     box-shadow: none;
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
-  
-  /* 回到状态 4 */
   100% {
-    transform: translate3d(0px, 174px, 0) scale(1);
+    transform: translate3d(0px, 41.93cqw, 0) scale(1);
     z-index: 4;
-    --sub-height: 18px;
+    --sub-height: 4.34cqw;
     --sub-opacity: 1;
-    --sub-margin: 2px;
+    --sub-margin: 0.48cqw;
     --bar-height: 0px;
     --bar-opacity: 0;
     --bar-margin: 0px;
-    box-shadow: var(--Position-x-md, 0) var(--Position-y-md, 12px) var(--Blur-md, 24px) var(--Spread-md, -4px) var(--Opacity-opactiy-md, rgba(0, 0, 0, 0.05));
+    box-shadow: var(--Position-x-md, 0) var(--Position-y-md, 2.89cqw) var(--Blur-md, 5.78cqw) var(--Spread-md, -0.96cqw) var(--Opacity-opactiy-md, rgba(0, 0, 0, 0.05));
     animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   }
 }
 
-@media (max-width: 920px) {
+@media (max-width: 768px) {
   .key-features-grid {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  .feature-card {
-    height: auto;
-    min-height: 480px;
-  }
-  .feature-card__illustration--pricing {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 250px;
-    margin-top: 24px;
-  }
-  .pricing-bars {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 366px;
-    height: 215px;
-  }
-  .feature-card__illustration--social {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 0;
-    width: 329px;
-    height: 300px;
-    margin-top: 24px;
-  }
-  .feature-card__illustration--map {
-    position: relative;
-    width: 100%;
-    height: 310px;
-    margin-top: 24px;
-  }
 }
-@media (max-width: 380px) {
-  .feature-card__illustration--social {
-    transform: translateX(-50%) scale(0.9);
+
+@media (min-width: 769px) {
+  .key-features-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25cqw;
   }
 }
 
@@ -1438,48 +1458,39 @@ button, textarea {
 }
 
 @keyframes rotatePricing {
-  /* 状态 1: 位置 C (最右, 215px, 粉色渐变，主激活状态) */
   0%, 22% {
-    left: 252px;
-    height: 215px;
+    left: 60.72cqw;
+    height: 51.8cqw;
     background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
     border-color: #fdf2f8;
     z-index: 3;
     --icon-color: #F20093;
     --icon-opacity: 1;
   }
-  
-  /* 在从最右退回到最左的一瞬间，迅速压低 z-index，让它从最底层滑回去 */
   22.01% {
     z-index: 1;
   }
-  
-  /* 状态 2: 位置 A (最左, 135px, 灰色渐变，次要状态) */
   33.33%, 56% {
     left: 0px;
-    height: 135px;
+    height: 32.53cqw;
     background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
     border-color: #f7f7f7;
     z-index: 1;
     --icon-color: #F9A6D8;
     --icon-opacity: 0.45;
   }
-  
-  /* 状态 3: 位置 B (中间, 175px, 灰色渐变，次要状态) */
   66.66%, 89% {
-    left: 126px;
-    height: 175px;
+    left: 30.36cqw;
+    height: 42.17cqw;
     background: linear-gradient(180deg, #ffffff 0%, #f7f7f7 100%);
     border-color: #f7f7f7;
     z-index: 2;
     --icon-color: #F9A6D8;
     --icon-opacity: 0.45;
   }
-  
-  /* 恢复到状态 1 */
   100% {
-    left: 252px;
-    height: 215px;
+    left: 60.72cqw;
+    height: 51.8cqw;
     background: linear-gradient(180deg, #ffffff 0%, #fdf2f8 100%);
     border-color: #fdf2f8;
     z-index: 3;
@@ -1488,21 +1499,15 @@ button, textarea {
   }
 }
 
-@media (max-width: 400px) {
-  .pricing-bars {
-    transform: translateX(-50%) scale(calc((100vw - 48px) / 366)) !important;
-    transform-origin: top left;
-  }
-}
-
 /* ==========================================================================
    How It Works Section
    ========================================================================== */
+
 .how-works-section {
   width: 100%;
-  max-width: 1440px;
+  max-width: 2560px;
   margin: 0 auto;
-  padding: 120px 82px;
+  padding: 120px var(--safe-padding);
   background: #ffffff;
 }
 
@@ -1510,13 +1515,13 @@ button, textarea {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 64px;
+  margin-bottom: var(--section-margin-bottom);
   gap: 40px;
 }
 
 .how-title {
   font-family: "Satoshi", sans-serif;
-  font-size: 36px;
+  font-size: var(--title-font-size);
   font-weight: 800;
   color: #171717;
   margin: 0;
@@ -1527,12 +1532,12 @@ button, textarea {
 
 .how-subtitle {
   font-family: "Satoshi", sans-serif;
-  font-size: 16px;
+  font-size: var(--subtitle-font-size);
   font-weight: 500;
-  line-height: 24px;
+  line-height: 1.5;
   color: rgba(23, 23, 23, 0.48);
   margin: 0;
-  max-width: 300px;
+  max-width: var(--subtitle-max-width);
   padding-bottom: 6px;
   text-align: right;
 }
@@ -1547,7 +1552,7 @@ button, textarea {
 .how-step-card {
   display: flex;
   height: 652px;
-  border-radius: 36px;
+  border-radius: 8px;
   overflow: hidden;
   position: relative;
   border: 1px solid rgba(23, 23, 23, 0.04);
@@ -1632,7 +1637,7 @@ button, textarea {
   position: absolute;
   bottom: 0;
   right: -1px; /* 对齐右侧边缘，避免有白边 */
-  width: 855px;
+  width: calc(100% - 420px);
   height: 556px;
   z-index: 2;
 }
@@ -1650,7 +1655,7 @@ button, textarea {
   border: 1px solid rgba(255, 255, 255, 1);
   border-bottom: none;
   border-right: none;
-  border-top-left-radius: 24px;
+  border-top-left-radius: 8px;
 }
 
 .how-step-img {
@@ -1660,7 +1665,7 @@ button, textarea {
   width: calc(100% - 12px);
   height: 545px;
   object-fit: cover;
-  border-top-left-radius: 14px;
+  border-top-left-radius: 8px;
   z-index: 3;
 }
 
@@ -1677,7 +1682,7 @@ button, textarea {
   top: 0;
   height: 100vh;
   width: 100%;
-  padding: 0 82px;
+  padding: 0 var(--safe-padding);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1717,10 +1722,11 @@ button, textarea {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 80px 0 0 0;
+  padding: var(--how-header-padding-top) 0 0 0;
   background-color: transparent;
   background-image: none;
-  width: 1276px;
+  width: 100%;
+  max-width: 2268px;
   align-self: auto;
   margin: 0 auto;
 }
@@ -1731,19 +1737,83 @@ button, textarea {
 
 .how-step-card-desktop {
   position: relative;
-  width: 1276px;
-  height: 652px;
+  width: 100%;
+  max-width: 2268px;
+  height: 51.1cqw;
+  max-height: 1160px;
   flex: 0 1 auto;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 60px;
+  padding-left: 4.7cqw;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 0.078cqw solid rgba(255, 255, 255, 0.1);
   box-sizing: border-box;
   transform-origin: top center;
   background-color: #111;
+}
+
+/* Proportional Scaling for How it works Desktop view (using Container Queries) */
+.how-step-card-desktop .how-text-content {
+  width: 28.54cqw;
+  height: 41.77cqw;
+  padding: 1.88cqw;
+  transform: translate(-1.888cqw, -0.945cqw);
+  box-sizing: border-box;
+}
+
+.how-step-card-desktop .how-step-badge {
+  padding: 0.47cqw 1.25cqw;
+  font-size: 1.1cqw;
+  margin-bottom: 2.5cqw;
+  border-radius: 78cqw;
+}
+
+.how-step-card-desktop .how-step-title {
+  font-size: 3.13cqw;
+  margin-bottom: 1.88cqw;
+}
+
+.how-step-card-desktop .how-step-desc {
+  font-size: 1.25cqw;
+  line-height: 2.04cqw;
+  margin-bottom: 3.13cqw;
+}
+
+.how-step-card-desktop .how-arrow-button {
+  width: 3.76cqw;
+  height: 3.76cqw;
+}
+
+.how-step-card-desktop .how-arrow-button svg {
+  width: 1.56cqw;
+  height: 1.56cqw;
+}
+
+.how-step-card-desktop .how-image-wrapper {
+  position: absolute;
+  bottom: 0;
+  right: -0.078cqw;
+  width: 67cqw;
+  height: 43.58cqw;
+  z-index: 2;
+  padding: 0;
+}
+
+.how-step-card-desktop .how-img-glass {
+  border-top-left-radius: 8px;
+  border: 0.078cqw solid rgba(255, 255, 255, 1);
+}
+
+.how-step-card-desktop .how-step-img {
+  position: absolute;
+  bottom: -0.078cqw;
+  left: 0.94cqw;
+  width: calc(100% - 0.94cqw);
+  height: 42.7cqw;
+  object-fit: cover;
+  border-top-left-radius: 8px;
 }
 
 .how-step-card-desktop--active {
@@ -1793,9 +1863,7 @@ button, textarea {
 .customize-ugc-section,
 .creator-showcase-section {
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 100px 0;
+  padding: var(--section-padding-y) 0;
   background: #ffffff;
   overflow: hidden;
 }
@@ -1805,15 +1873,19 @@ button, textarea {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 64px;
-  padding: 0 82px;
+  margin-bottom: var(--section-margin-bottom);
+  padding: 0 var(--safe-padding);
   gap: 40px;
+  width: 100%;
+  max-width: 2560px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ugc-title,
 .showcase-title {
   font-family: "Satoshi", sans-serif;
-  font-size: 36px;
+  font-size: var(--title-font-size);
   font-weight: 800;
   color: #171717;
   margin: 0;
@@ -1823,12 +1895,12 @@ button, textarea {
 .ugc-subtitle,
 .showcase-subtitle {
   font-family: "Satoshi", sans-serif;
-  font-size: 16px;
+  font-size: var(--subtitle-font-size);
   font-weight: 500;
-  line-height: 24px;
+  line-height: 1.5;
   color: rgba(23, 23, 23, 0.48);
   margin: 0;
-  max-width: 320px;
+  max-width: var(--subtitle-max-width);
   padding-bottom: 6px;
   text-align: right;
 }
@@ -2139,19 +2211,25 @@ button, textarea {
    ========================================================================== */
 .scale-ugc-section {
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 100px 82px;
+  padding: var(--section-padding-y) 0;
   background: #ffffff;
 }
 
+.scale-ugc-container {
+  width: 100%;
+  max-width: 2560px;
+  margin: 0 auto;
+  padding: 0 var(--safe-padding);
+  box-sizing: border-box;
+}
+
 .scale-header-container {
-  margin-bottom: 56px;
+  margin-bottom: var(--section-margin-bottom);
 }
 
 .scale-title {
   font-family: "Satoshi", sans-serif;
-  font-size: 24px;
+  font-size: clamp(24px, 1.67vw, 42px);
   font-weight: 600;
   color: #171717;
   margin: 0;
@@ -2162,14 +2240,14 @@ button, textarea {
 .scale-cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  gap: var(--scale-grid-gap);
   width: 100%;
 }
 
 .scale-market-card {
-  height: 196px;
+  height: var(--scale-card-height);
   border-radius: 8px;
-  padding: 32px;
+  padding: var(--scale-card-padding);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2195,27 +2273,27 @@ button, textarea {
 
 .scale-card-title {
   font-family: "Satoshi", sans-serif;
-  font-size: 18px;
+  font-size: clamp(18px, 1.25vw, 32px);
   font-weight: 700;
-  line-height: 24px;
+  line-height: clamp(24px, 1.67vw, 42px);
   color: #171717;
   margin: 0;
-  max-width: 240px;
+  max-width: clamp(240px, 16.6vw, 426px);
   letter-spacing: -0.01em;
 }
 
 .scale-card-icon {
   display: block;
   flex-shrink: 0;
-  width: 60px;
-  height: 60px;
+  width: clamp(60px, 4.16vw, 106px);
+  height: clamp(60px, 4.16vw, 106px);
 }
 
 .scale-card-desc {
   font-family: "Satoshi", sans-serif;
-  font-size: 14px;
+  font-size: clamp(14px, 0.97vw, 24px);
   font-weight: 500;
-  line-height: 22px;
+  line-height: clamp(22px, 1.53vw, 38px);
   color: rgba(23, 23, 23, 0.48);
   margin: 0;
 }
@@ -2226,10 +2304,16 @@ button, textarea {
    ========================================================================== */
 .ready-scale-section {
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 100px 82px;
+  padding: var(--section-padding-y) 0;
   background: #f7f7f7;
+}
+
+.ready-scale-container {
+  width: 100%;
+  max-width: 2560px;
+  margin: 0 auto;
+  padding: 0 var(--safe-padding);
+  box-sizing: border-box;
 }
 
 .ready-scale-content {
@@ -2241,7 +2325,7 @@ button, textarea {
 
 .ready-scale-title {
   font-family: "Satoshi", sans-serif;
-  font-size: 36px;
+  font-size: var(--title-font-size);
   font-weight: 800;
   color: #171717;
   margin: 0 0 24px 0;
@@ -2250,11 +2334,11 @@ button, textarea {
 
 .ready-scale-subtitle {
   font-family: "Satoshi", sans-serif;
-  font-size: 16px;
+  font-size: var(--subtitle-font-size);
   font-weight: 500;
-  line-height: 26px;
+  line-height: 1.5;
   color: rgba(23, 23, 23, 0.48);
-  max-width: 540px;
+  max-width: var(--subtitle-max-width);
   margin: 0 0 48px 0;
 }
 
@@ -2320,15 +2404,6 @@ button, textarea {
    Responsive Adaptations
    ========================================================================== */
 @media (max-width: 1100px) {
-  .how-works-section,
-  .scale-ugc-section,
-  .ready-scale-section {
-    padding-inline: 40px;
-  }
-  .ugc-header-container,
-  .showcase-header-container {
-    padding-inline: 40px;
-  }
   .scale-cards-grid {
     gap: 20px;
   }
@@ -2337,7 +2412,7 @@ button, textarea {
   }
 }
 
-@media (max-width: 920px) {
+@media (max-width: 1024px) {
   /* How it works 响应式降级 */
   .how-header-container,
   .ugc-header-container,
@@ -2356,27 +2431,58 @@ button, textarea {
   .how-step-card {
     flex-direction: column;
     height: auto;
-    border-radius: 28px;
+    border-radius: 8px;
+    padding: 40px 32px 0 32px;
   }
   .how-text-content {
     width: 100%;
-    padding: 40px 32px 24px 32px;
+    height: auto;
+    padding: 0;
+    margin-bottom: 32px;
+    transform: none;
   }
   .how-step-badge {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   .how-step-title {
     font-size: 30px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   .how-step-desc {
-    margin-bottom: 24px;
+    margin-bottom: 0;
   }
   .how-image-wrapper {
-    padding: 0 32px 40px 32px;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 67 / 43.58;
+    height: auto;
+    right: auto;
+    bottom: auto;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-bottom: none;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
   .how-img-glass {
-    height: 340px;
+    display: none;
+  }
+  .how-step-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 3;
+    display: block;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 
   /* UGC & Showcase 轮播降级为水平滚动或单卡片隐藏 */
@@ -2469,21 +2575,41 @@ button, textarea {
   .how-works-section,
   .scale-ugc-section,
   .ready-scale-section {
-    padding-inline: 20px;
     padding-block: 60px;
-  }
-  .ugc-header-container,
-  .showcase-header-container {
-    padding-inline: 20px;
   }
   .how-title,
   .ugc-title,
   .showcase-title,
-  .scale-title {
-    font-size: 32px;
+  .scale-title,
+  .key-features-header h2 {
+    font-size: 28px;
   }
-  .how-img-glass {
-    height: 240px;
+  .how-subtitle,
+  .ugc-subtitle,
+  .showcase-subtitle,
+  .key-features-subtitle {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .how-step-card {
+    border-radius: 8px;
+    padding: 32px 20px 0 20px;
+  }
+  .how-text-content {
+    margin-bottom: 24px;
+  }
+  .how-step-badge {
+    padding: 4px 12px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .how-step-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .how-step-desc {
+    font-size: 14px;
+    line-height: 22px;
   }
 }
 
@@ -2497,15 +2623,21 @@ button, textarea {
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  padding: 0 var(--safe-padding);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .how-cards-absolute-container {
   position: relative;
   width: 100%;
-  max-width: 1300px;
-  flex-grow: 1;
+  max-width: 2268px;
+  height: 51.1cqw;
+  max-height: 1160px;
+  margin: auto 0;
   display: flex;
   justify-content: center;
+  container-type: inline-size;
 }
 
 @media (max-width: 768px) {
@@ -2519,5 +2651,13 @@ button, textarea {
     text-align: left;
     max-width: 100%;
     font-size: 15px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .customize-ugc-section {
+    margin-top: calc(-50vh + 440px);
+    position: relative;
+    z-index: 5;
   }
 }
