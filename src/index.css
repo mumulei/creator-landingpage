@@ -540,7 +540,7 @@ button, textarea {
 
 .hero-mockup-shell {
   width: min(100%, 2268px);
-  margin: 3.15rem auto 0;
+  margin: clamp(40px, 3.5vw, 64px) auto 0;
 }
 
 .hero-mockup-shell__frame {
@@ -555,13 +555,11 @@ button, textarea {
   border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: none;
   height: 74.1vw;
-  transform: translate(0px, -9.04vw);
 }
 
 @media (min-width: 2560px) {
   .hero-mockup-shell__frame {
     height: 1897px;
-    transform: translate(0px, -231.4px);
   }
 }
 
@@ -712,7 +710,7 @@ button, textarea {
   }
   to {
     opacity: 1;
-    transform: perspective(1200px) translateY(6.9rem) rotateX(0deg) scale(1);
+    transform: perspective(1200px) translateY(0) rotateX(0deg) scale(1);
   }
 }
 
@@ -775,7 +773,7 @@ button, textarea {
   }
 
   .hero-mockup-shell {
-    margin-top: 2.1rem;
+    margin-top: 2.5rem;
   }
 
   @keyframes floatUpPerspective {
@@ -785,12 +783,11 @@ button, textarea {
     }
     to {
       opacity: 1;
-      transform: perspective(1200px) translateY(5rem) rotateX(0deg) scale(1);
+      transform: perspective(1200px) translateY(0) rotateX(0deg) scale(1);
     }
   }
 
   .hero-mockup-shell__frame {
-    transform: translateY(5rem);
     height: auto;
   }
 
@@ -889,12 +886,11 @@ button, textarea {
   }
 
   .hero-mockup-shell {
-    margin-top: 1.2rem;
+    margin-top: 2rem;
   }
 
   .hero-mockup-shell__frame {
-    border-radius: 24px;
-    transform: translateY(3rem);
+    border-radius: 8px;
     height: auto;
   }
 
@@ -909,12 +905,12 @@ button, textarea {
     }
     to {
       opacity: 1;
-      transform: perspective(1200px) translateY(3rem) rotateX(0deg) scale(1);
+      transform: perspective(1200px) translateY(0) rotateX(0deg) scale(1);
     }
   }
 
   .hero-mockup-image {
-    border-radius: 24px;
+    border-radius: 8px;
   }
 
   .trusted-cloud {
@@ -962,20 +958,17 @@ button, textarea {
   }
 
   .hero-mockup-shell__frame {
-    transform: translateY(6.9rem);
     height: auto;
   }
 
   @media (max-width: 920px) {
     .hero-mockup-shell__frame {
-      transform: translateY(5rem);
       height: auto;
     }
   }
 
   @media (max-width: 640px) {
     .hero-mockup-shell__frame {
-      transform: translateY(3rem);
       height: auto;
     }
   }
