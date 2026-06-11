@@ -6,6 +6,7 @@ import logoFunplus from "../assets/local-logos/logo-funplus.svg";
 import logoMetajoy from "../assets/local-logos/logo-metajoy.svg";
 import logoTencent from "../assets/local-logos/logo-tencent.svg";
 import logoQingci from "../assets/local-logos/logo-qingci.svg";
+import AnimatedContent from "./ui/AnimatedContent";
 
 const logos = [
   { src: logoCom2us, alt: "Com2uS" },
@@ -23,28 +24,30 @@ function LogoCloud() {
 
   return (
     <section className="trusted-cloud" aria-labelledby="trusted-cloud-title">
-      <h2 id="trusted-cloud-title" className="trusted-cloud__title">
-        <span className="is-strong">Trusted by Top Gaming Publishers</span>
-      </h2>
+      <AnimatedContent distance={50} duration={1.0}>
+        <h2 id="trusted-cloud-title" className="trusted-cloud__title">
+          <span className="is-strong">Trusted by Top Gaming Publishers</span>
+        </h2>
 
-      <div className="trusted-cloud__rule" aria-hidden="true" />
+        <div className="trusted-cloud__rule" aria-hidden="true" />
 
-      <div className="logo-marquee" aria-label="Trusted publisher logos">
-        <div className="logo-marquee__track">
-          {repeatedLogos.map((logo, index) => (
-            <img
-              key={`${logo.alt}-${index}`}
-              src={logo.src}
-              alt={logo.alt}
-              className="logo-marquee__image"
-              loading="lazy"
-              height="40"
-            />
-          ))}
+        <div className="logo-marquee" aria-label="Trusted publisher logos">
+          <div className="logo-marquee__track">
+            {repeatedLogos.map((logo, index) => (
+              <img
+                key={`${logo.alt}-${index}`}
+                src={logo.src}
+                alt={logo.alt}
+                className="logo-marquee__image"
+                loading="lazy"
+                height="40"
+              />
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="trusted-cloud__rule is-bottom" aria-hidden="true" />
+        <div className="trusted-cloud__rule is-bottom" aria-hidden="true" />
+      </AnimatedContent>
     </section>
   );
 }

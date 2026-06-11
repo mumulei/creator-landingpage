@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useScroll, useTransform, motion } from 'framer-motion';
+import AnimatedContent from './ui/AnimatedContent';
 import bg1Img from '../assets/features/how-bg-1.png';
 import bg2Img from '../assets/features/how-bg-2.png';
 import bg3Img from '../assets/features/how-bg-3.png';
@@ -134,26 +135,28 @@ export default function HowItWorks() {
     return (
       <section className="how-works-section" id="how-it-works">
         {/* Mobile content remains unchanged */}
-        <div className="how-header-container">
+        <AnimatedContent className="how-header-container">
           <h2 className="how-title">How it works？</h2>
           <p className="how-subtitle">From brief to content, without the chaos.</p>
-        </div>
+        </AnimatedContent>
         <div className="how-steps-list">
           {STEPS.map((item, index) => (
-            <div key={index} className="how-step-card how-card-visible">
-              <img src={item.bgImage} className="how-step-bg-img" alt="" />
-              <div className="how-text-content">
-                <div className="how-step-badge">
-                  <span>{item.step}</span>
+            <AnimatedContent key={index} delay={0.1 + index * 0.15}>
+              <div className="how-step-card how-card-visible">
+                <img src={item.bgImage} className="how-step-bg-img" alt="" />
+                <div className="how-text-content">
+                  <div className="how-step-badge">
+                    <span>{item.step}</span>
+                  </div>
+                  <h3 className="how-step-title">{item.title}</h3>
+                  <p className="how-step-desc">{item.description}</p>
                 </div>
-                <h3 className="how-step-title">{item.title}</h3>
-                <p className="how-step-desc">{item.description}</p>
+                <div className="how-image-wrapper">
+                  <div className="how-img-glass" />
+                  <img src={item.productImage} alt={item.title} className="how-step-img" loading="lazy" />
+                </div>
               </div>
-              <div className="how-image-wrapper">
-                <div className="how-img-glass" />
-                <img src={item.productImage} alt={item.title} className="how-step-img" loading="lazy" />
-              </div>
-            </div>
+            </AnimatedContent>
           ))}
         </div>
       </section>
@@ -163,12 +166,12 @@ export default function HowItWorks() {
   return (
     <section className="how-works-sticky-section" ref={sectionRef} id="how-it-works" style={{ height: '400vh' }}>
       <div className="how-unified-sticky-container">
-        <div className="how-sticky-header">
+        <AnimatedContent className="how-sticky-header">
           <h2 className="how-title">How it works？</h2>
           <p className="how-subtitle">From brief to content, without the chaos.</p>
-        </div>
+        </AnimatedContent>
 
-        <div className="how-cards-absolute-container">
+        <AnimatedContent distance={100} delay={0.2} className="how-cards-absolute-container">
           {STEPS.map((item, index) => (
             <DesktopCard 
               key={index}
@@ -178,7 +181,7 @@ export default function HowItWorks() {
               total={STEPS.length}
             />
           ))}
-        </div>
+        </AnimatedContent>
       </div>
     </section>
   );

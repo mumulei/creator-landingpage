@@ -9,7 +9,7 @@ import CustomizeUgc from "./components/customize-ugc.jsx";
 import ScaleUgc from "./components/scale-ugc.jsx";
 import CreatorShowcase from "./components/creator-showcase.jsx";
 import ReadyToScale from "./components/ready-to-scale.jsx";
-import ScrollReveal from "./components/ui/scroll-reveal.jsx";
+import AnimatedContent from "./components/ui/AnimatedContent.jsx";
 
 // Avatar and Creator imports for Hero stats badge
 import avatar1 from "./assets/features/avatar-1.png";
@@ -188,10 +188,10 @@ function App() {
         Scroll boundary buffer / Features section placeholder
         用于彻底远离首屏的 WebGL GPU 边界冲突区，采用无描边、无分割线的极简设计，与白色背景融为一体
       */}
-      <ScrollReveal className="reveal-container scroll-buffer-section" as="section">
+      <AnimatedContent className="reveal-container scroll-buffer-section">
         <h2 className="scroll-buffer-title anim-fade-up" style={{ animationDelay: "0.1s" }}>More Features Coming Soon</h2>
         <p className="scroll-buffer-text anim-fade-up" style={{ animationDelay: "0.25s" }}>We are continuously expanding the creator library and campaign tools.</p>
-      </ScrollReveal>
+      </AnimatedContent>
     </main>
   );
 }

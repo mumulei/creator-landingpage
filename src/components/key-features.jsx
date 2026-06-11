@@ -2,7 +2,7 @@ import React from 'react';
 
 /* 引入动态三维地球组件 */
 import { GlobeInteractive } from './ui/cobe-globe';
-import ScrollReveal from './ui/scroll-reveal';
+import AnimatedContent from './ui/AnimatedContent';
 
 /* 从 Figma 导出的真实资源 */
 import avatar1 from '../assets/features/avatar-1.png';
@@ -25,17 +25,19 @@ const LocIcon = () => (
 export default function KeyFeatures() {
   return (
     <section className="key-features-section">
-      <ScrollReveal className="reveal-container key-features-container">
-        <header className="key-features-header">
-          <h2 className="anim-fade-up" style={{ animationDelay: '0.1s' }}>Key Features</h2>
-          <p className="key-features-subtitle anim-fade-up" style={{ animationDelay: '0.2s' }}>
-            Everything brands need to launch creator campaigns across markets.
-          </p>
-        </header>
+      <div className="key-features-container">
+        <AnimatedContent distance={60} duration={1.0}>
+          <header className="key-features-header">
+            <h2>Key Features</h2>
+            <p className="key-features-subtitle">
+              Everything brands need to launch creator campaigns across markets.
+            </p>
+          </header>
+        </AnimatedContent>
 
         <div className="key-features-grid">
           {/* Card 1: Built for cross-border growth */}
-          <div className="feature-card-wrapper anim-fade-up" style={{ animationDelay: '0.2s' }}>
+          <AnimatedContent className="feature-card-wrapper" delay={0.1} distance={80} duration={1.0}>
             <div className="feature-card feature-card--cross-border">
               <div className="feature-card__content">
                 <h3>Built for <strong>cross-border</strong> growth</h3>
@@ -73,10 +75,10 @@ export default function KeyFeatures() {
                 </div>
               </div>
             </div>
-          </div>
+          </AnimatedContent>
 
           {/* Card 2: Flexible pricing */}
-          <div className="feature-card-wrapper anim-fade-up" style={{ animationDelay: '0.35s' }}>
+          <AnimatedContent className="feature-card-wrapper" delay={0.25} distance={80} duration={1.0}>
             <div className="feature-card feature-card--pricing">
               <div className="feature-card__content">
                 <h3><strong>Flexible</strong> pricing</h3>
@@ -109,10 +111,10 @@ export default function KeyFeatures() {
                 </div>
               </div>
             </div>
-          </div>
+          </AnimatedContent>
 
           {/* Card 3: Launch Campaigns Faster */}
-          <div className="feature-card-wrapper anim-fade-up" style={{ animationDelay: '0.5s' }}>
+          <AnimatedContent className="feature-card-wrapper" delay={0.4} distance={80} duration={1.0}>
             <div className="feature-card feature-card--speed">
               <div className="feature-card__content">
                 <h3>Launch Campaigns <strong>Faster</strong></h3>
@@ -216,10 +218,10 @@ export default function KeyFeatures() {
                 </div>
               </div>
             </div>
-          </div>
+          </AnimatedContent>
 
         </div>
-      </ScrollReveal>
+      </div>
     </section>
   );
 }

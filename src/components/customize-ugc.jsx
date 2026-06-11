@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AnimatedContent from './ui/AnimatedContent';
 import creator1 from '../assets/features/ugc-creator-1.png';
 import creator2 from '../assets/features/ugc-creator-2.png';
 import creator3 from '../assets/features/ugc-creator-3.png';
@@ -80,15 +81,18 @@ export default function CustomizeUgc() {
   return (
     <section className="customize-ugc-section" id="customize-ugc">
       {/* 头部标题区 */}
-      <div className="ugc-header-container">
+      {/* 头部标题区 */}
+      <AnimatedContent className="ugc-header-container">
         <h2 className="ugc-title">Customize a Diverse Range of UGC</h2>
         <p className="ugc-subtitle">
           Customize UGC to meet the needs of various briefs and brands.
         </p>
-      </div>
+      </AnimatedContent>
 
       {/* 轮播容器区 */}
-      <div 
+      <AnimatedContent 
+        delay={0.2} 
+        distance={50}
         className="ugc-carousel-container"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -171,7 +175,7 @@ export default function CustomizeUgc() {
             </button>
           ))}
         </div>
-      </div>
+      </AnimatedContent>
     </section>
   );
 }

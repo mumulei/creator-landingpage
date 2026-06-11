@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AnimatedContent from './ui/AnimatedContent';
 import creator1 from '../assets/features/ugc-creator-1.png';
 import creator2 from '../assets/features/ugc-creator-2.png';
 import creator3 from '../assets/features/ugc-creator-3.png';
@@ -85,15 +86,18 @@ export default function CreatorShowcase() {
   return (
     <section className="creator-showcase-section" id="creator-showcase">
       {/* 头部标题区 */}
-      <div className="showcase-header-container">
+      {/* 头部标题区 */}
+      <AnimatedContent className="showcase-header-container">
         <h2 className="showcase-title">Creator Video Showcase</h2>
         <p className="showcase-subtitle">
           Discover creator styles to combine for video variety.
         </p>
-      </div>
+      </AnimatedContent>
 
       {/* 轮播容器区 */}
-      <div 
+      <AnimatedContent 
+        delay={0.2} 
+        distance={50}
         className="showcase-carousel-container"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -180,7 +184,7 @@ export default function CreatorShowcase() {
             </button>
           ))}
         </div>
-      </div>
+      </AnimatedContent>
     </section>
   );
 }
