@@ -37,6 +37,10 @@ Welcome to the Creator Landing Page project! This repository contains the source
   - **飞入优化 (Throw & Catch)**：在 `17%`（滑出）使用 ease-in 并在 `19.5%`（顶部飞入）使用 ease-out 双重时序，消除了卡片回弹到顶部时的 `500ms` 生硬顿挫。
   - **主副描述动态展收**：当卡片轮换到最底部主位置时，通过 CSS 过渡变量平滑折叠灰色占位条并展开真实的文本描述小字。
 
+### 4. Apple 级平滑圆角 (Apple-like Smooth Corners)
+- **极致的视觉追求**：为了摆脱标准 CSS `border-radius` 带来的工业切割感，项目中引入了 `react-smooth-corners` 插件。
+- **使用场景**：在关键的卡片外壳（如首屏 Mockup 视窗）使用 `<SmoothCorners corners={{ radius: 16, smoothing: 0.6 }}>`，通过底层实现超椭圆（Squircle）算法，带来了媲美 iOS 系统级别丝滑无断点的圆角过渡体验。
+
 ---
 
 ## ⚠️ 避坑指南：WebGL 渲染与 GPU 复合边界冲突 (The WebGL Compositor Pitfall)

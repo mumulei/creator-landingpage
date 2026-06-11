@@ -101,6 +101,7 @@ button, textarea {
   inset: 0 0 auto;
   z-index: 0;
   height: 100vh;
+  max-height: 1000px;
   overflow: hidden;
   pointer-events: none;
 }
@@ -370,6 +371,7 @@ button, textarea {
 .hero {
   position: relative;
   height: 100vh;
+  max-height: 1000px;
   padding: 8.2rem var(--safe-padding) 0;
   overflow: hidden;
   clip-path: inset(0);
@@ -562,6 +564,7 @@ button, textarea {
     height: 1897px;
   }
 }
+
 
 /* macOS traffic light controls */
 .hero-mockup-window-controls {
@@ -757,7 +760,18 @@ button, textarea {
 
   .hero {
     height: 100vh;
+    max-height: 800px;
     padding: 6rem var(--safe-padding) 0;
+  }
+
+  .paico-hero-bg {
+    max-height: 800px;
+  }
+
+  .paico-hero-bg__base,
+  .paico-hero-bg__scene {
+    transform: scale(1.6);
+    transform-origin: center bottom;
   }
 
   .hero-body {
@@ -857,32 +871,61 @@ button, textarea {
 
   .hero {
     height: 100vh;
-    padding: 4.8rem 1rem 0;
+    max-height: 700px;
+    padding: 6rem 1rem 0;
+  }
+
+  .paico-hero-bg {
+    max-height: 700px;
+  }
+
+  .paico-hero-bg__base,
+  .paico-hero-bg__scene {
+    transform: scale(2.2);
+    transform-origin: center bottom;
   }
 
   .hero h1 span:first-child {
-    font-size: 30px;
-    line-height: 42px;
+    font-size: 26px;
+    line-height: 36px;
+    font-weight: 500;
   }
 
   .hero h1 span:last-child {
-    font-size: 36px;
-    line-height: 42px;
+    font-size: 30px;
+    line-height: 36px;
+    font-weight: 600;
+  }
+
+  .hero-stats-row {
+    margin-top: 1.75rem;
+  }
+
+  .hero-stats-text {
+    font-size: 12px;
+    color: rgba(23, 23, 23, 0.6);
   }
 
   .hero-body {
-    font-size: 15px;
-    line-height: 22px;
-    margin-top: 1rem;
+    display: block;
+    font-size: 13px;
+    line-height: 20px;
+    margin-top: 1.5rem;
+    color: rgba(23, 23, 23, 0.6);
   }
 
   .hero-cta-row {
     flex-direction: column;
     align-items: center;
+    gap: 16px;
+    margin-top: 2rem;
+    padding: 0;
   }
 
   .hero-cta {
     width: min(100%, 280px);
+    height: 48px;
+    font-size: 14px;
   }
 
   .hero-mockup-shell {
@@ -1035,25 +1078,73 @@ button, textarea {
   container-type: inline-size;
 }
 
-/* Feature Card Base */
-.feature-card {
+.feature-card-shell {
+  width: 100%;
+  height: 121.7cqw;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  container-type: inline-size;
+  cursor: default;
+}
+
+.feature-card-shell:hover {
+  transform: translateY(-0.96cqw);
+}
+
+.feature-card-bg-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.feature-card-bg-wrapper > div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.feature-card-bg-wrapper.hover-layer {
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.feature-card-shell:hover .feature-card-bg-wrapper.hover-layer {
+  opacity: 1;
+}
+
+.feature-card-bg-base {
+  width: 100%;
+  height: 100%;
   background: #ffffff;
-  border-radius: 2.89cqw;
+  border-radius: 2.89cqw; /* fallback */
+  border: 0.24cqw solid rgba(0, 0, 0, 0.05);
+}
+
+.feature-card-bg-hover {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 2.89cqw; /* fallback */
+  border: 0.24cqw solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2.89cqw 7.71cqw rgba(0, 0, 0, 0.04), 0 0.96cqw 2.89cqw rgba(0, 0, 0, 0.02);
+}
+
+.feature-card-content-layer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
   padding: 5.78cqw;
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  border: 0.24cqw solid rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  height: 121.7cqw;
-}
-
-.feature-card:hover {
-  transform: translateY(-0.96cqw);
-  box-shadow: 0 2.89cqw 7.71cqw rgba(0, 0, 0, 0.04), 0 0.96cqw 2.89cqw rgba(0, 0, 0, 0.02);
-  border-color: rgba(0, 0, 0, 0.08);
+  pointer-events: auto;
+  overflow: hidden; /* For inner absolute elements like globes */
 }
 
 .feature-card__content {
@@ -1125,7 +1216,7 @@ button, textarea {
   pointer-events: auto;
 }
 
-.feature-card--cross-border:hover .avatar-tag {
+.feature-card-shell.cross-border:hover .avatar-tag {
   transform: scale(1) translateY(-0.96cqw);
 }
 
@@ -1662,18 +1753,29 @@ button, textarea {
   width: 100%;
 }
 
-.how-step-card {
-  display: flex;
-  height: 652px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  border: 1px solid rgba(23, 23, 23, 0.04);
+.how-step-card-shell {
+  height: auto;
+  width: 100%;
   /* 初始不可见，为 IntersectionObserver 动画做准备 */
   opacity: 0;
   transform: translateY(60px);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
               transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.how-step-card-shell > div {
+  width: 100%;
+  height: 100%;
+}
+
+.how-step-card {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(23, 23, 23, 0.04);
 }
 
 .how-card-visible {
@@ -1756,19 +1858,40 @@ button, textarea {
 }
 
 /* 毛玻璃托底 */
-.how-img-glass {
+.how-img-glass-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.how-img-glass-container > div {
+  width: 100%;
+  height: 100%;
+}
+
+.how-img-glass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-24, 1.5rem) 0 0 0;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 1);
-  border-bottom: none;
-  border-right: none;
-  border-top-left-radius: 8px;
+  backdrop-filter: blur(60px);
+  -webkit-backdrop-filter: blur(60px);
+}
+
+.how-img-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
 }
 
 .how-step-img {
@@ -1778,7 +1901,7 @@ button, textarea {
   width: calc(100% - 12px);
   height: 545px;
   object-fit: cover;
-  border-top-left-radius: 8px;
+  border-top-left-radius: 14px;
   z-index: 3;
 }
 
@@ -1848,12 +1971,22 @@ button, textarea {
 
 
 
-.how-step-card-desktop {
-  position: relative;
+.how-step-card-desktop-shell {
   width: 100%;
   max-width: 2268px;
   height: 51.1cqw;
   max-height: 1160px;
+}
+
+.how-step-card-desktop-shell > div {
+  width: 100%;
+  height: 100%;
+}
+
+.how-step-card-desktop {
+  position: relative;
+  width: 100%;
+  height: 100%;
   flex: 0 1 auto;
   border-radius: 8px;
   display: flex;
@@ -1864,7 +1997,7 @@ button, textarea {
   border: 0.078cqw solid rgba(255, 255, 255, 0.1);
   box-sizing: border-box;
   transform-origin: top center;
-  background-color: #111;
+  background-color: transparent;
 }
 
 /* Proportional Scaling for How it works Desktop view (using Container Queries) */
@@ -1914,10 +2047,6 @@ button, textarea {
   padding: 0;
 }
 
-.how-step-card-desktop .how-img-glass {
-  border-top-left-radius: 8px;
-  border: 0.078cqw solid rgba(255, 255, 255, 1);
-}
 
 .how-step-card-desktop .how-step-img {
   position: absolute;
@@ -1926,7 +2055,7 @@ button, textarea {
   width: calc(100% - 0.94cqw);
   height: 42.7cqw;
   object-fit: cover;
-  border-top-left-radius: 8px;
+  border-top-left-radius: 14px;
 }
 
 .how-step-card-desktop--active {
@@ -2088,6 +2217,19 @@ button, textarea {
 }
 
 /* 卡片内部渲染 */
+.ugc-card-img-holder-shell,
+.showcase-card-img-holder-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.ugc-card-img-holder-shell > div,
+.showcase-card-img-holder-shell > div {
+  width: 100%;
+  height: 100%;
+}
+
 .ugc-card-img-holder,
 .showcase-card-img-holder {
   position: relative;
@@ -2097,6 +2239,7 @@ button, textarea {
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   transition: border 0.76s ease, box-shadow 0.76s ease;
+  box-sizing: border-box;
 }
 
 /* 激活的卡片带有高对比白框与大阴影 */
@@ -2357,23 +2500,71 @@ button, textarea {
   width: 100%;
 }
 
-.scale-market-card {
+.scale-market-card-shell {
   height: var(--scale-card-height);
+  width: 100%;
+  position: relative;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.scale-market-card-shell:hover {
+  transform: translateY(-4px);
+}
+
+.scale-card-bg-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.scale-card-bg-wrapper > div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.scale-card-bg-wrapper.hover-layer {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.scale-market-card-shell:hover .scale-card-bg-wrapper.hover-layer {
+  opacity: 1;
+}
+
+.scale-card-bg-base {
+  width: 100%;
+  height: 100%;
+  background: #f7f7f7;
   border-radius: 8px;
+}
+
+.scale-card-bg-hover {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(23, 23, 23, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+}
+
+.scale-market-card-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
   padding: var(--scale-card-padding);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
-  background: #f7f7f7;
-  border: 1px solid transparent;
-}
-
-.scale-market-card:hover {
-  transform: translateY(-4px);
-  background: #ffffff;
-  border-color: rgba(23, 23, 23, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+  pointer-events: auto;
 }
 
 .scale-card-top {
@@ -2520,7 +2711,7 @@ button, textarea {
   .scale-cards-grid {
     gap: 20px;
   }
-  .scale-market-card {
+  .scale-market-card-content {
     padding: 24px;
   }
 }
@@ -2656,9 +2847,11 @@ button, textarea {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  .scale-market-card {
+  .scale-market-card-shell {
     height: auto;
     min-height: 160px;
+  }
+  .scale-market-card-content {
     gap: 24px;
   }
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AnimatedContent from './ui/AnimatedContent';
+import { SmoothCorners } from '@lisse/react';
 import creator1 from '../assets/features/ugc-creator-1.png';
 import creator2 from '../assets/features/ugc-creator-2.png';
 import creator3 from '../assets/features/ugc-creator-3.png';
@@ -110,7 +111,8 @@ export default function CustomizeUgc() {
                 onClick={() => setActiveIndex(index)}
               >
                 {/* 创作者图片背景 */}
-                <div className="ugc-card-img-holder">
+                <div className="ugc-card-img-holder-shell">
+                  <SmoothCorners className="ugc-card-img-holder" corners={{ radius: 28, smoothing: 0.6 }} shadowStrategy="box-shadow">
                   <img src={card.image} alt={card.label} className="ugc-card-image" />
                   
                   {/* 半透明暗底遮罩 */}
@@ -157,6 +159,7 @@ export default function CustomizeUgc() {
                       </div>
                     </>
                   )}
+                  </SmoothCorners>
                 </div>
               </div>
             );

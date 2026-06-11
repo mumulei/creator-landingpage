@@ -10,6 +10,7 @@ import ScaleUgc from "./components/scale-ugc.jsx";
 import CreatorShowcase from "./components/creator-showcase.jsx";
 import ReadyToScale from "./components/ready-to-scale.jsx";
 import AnimatedContent from "./components/ui/AnimatedContent.jsx";
+import { SmoothCorners } from '@lisse/react';
 
 // Avatar and Creator imports for Hero stats badge
 import avatar1 from "./assets/features/avatar-1.png";
@@ -144,16 +145,34 @@ function App() {
           <div className="hero-cta-row anim-fade-up" style={{ animationDelay: "0.55s" }}>
             <a className="hero-cta hero-cta--dark" href="#get-started" id="hero-cta-start">
               Get Started
-              <span aria-hidden="true">›</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clipPath="url(#clip0_39517_10179)">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M13.0883 9.41086C13.2445 9.56713 13.3323 9.77906 13.3323 10C13.3323 10.221 13.2445 10.4329 13.0883 10.5892L8.37415 15.3034C8.29727 15.383 8.20532 15.4464 8.10365 15.4901C8.00198 15.5338 7.89263 15.5568 7.78198 15.5577C7.67133 15.5587 7.5616 15.5376 7.45919 15.4957C7.35677 15.4538 7.26373 15.3919 7.18548 15.3137C7.10724 15.2354 7.04536 15.1424 7.00346 15.04C6.96156 14.9376 6.94048 14.8278 6.94144 14.7172C6.9424 14.6065 6.96539 14.4972 7.00906 14.3955C7.05274 14.2939 7.11622 14.2019 7.19581 14.125L11.3208 10L7.19581 5.87503C7.04401 5.71786 6.96002 5.50736 6.96192 5.28886C6.96382 5.07036 7.05146 4.86135 7.20596 4.70685C7.36047 4.55234 7.56948 4.4647 7.78798 4.4628C8.00648 4.4609 8.21698 4.5449 8.37415 4.6967L13.0883 9.41086Z" fill="currentColor"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_39517_10179">
+                    <rect width="20" height="20" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>
             </a>
             <a className="hero-cta hero-cta--light" href="#book-demo" id="hero-cta-demo">
               Book A Demo
-              <span aria-hidden="true">›</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clipPath="url(#clip0_39517_10180)">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M13.0883 9.41086C13.2445 9.56713 13.3323 9.77906 13.3323 10C13.3323 10.221 13.2445 10.4329 13.0883 10.5892L8.37415 15.3034C8.29727 15.383 8.20532 15.4464 8.10365 15.4901C8.00198 15.5338 7.89263 15.5568 7.78198 15.5577C7.67133 15.5587 7.5616 15.5376 7.45919 15.4957C7.35677 15.4538 7.26373 15.3919 7.18548 15.3137C7.10724 15.2354 7.04536 15.1424 7.00346 15.04C6.96156 14.9376 6.94048 14.8278 6.94144 14.7172C6.9424 14.6065 6.96539 14.4972 7.00906 14.3955C7.05274 14.2939 7.11622 14.2019 7.19581 14.125L11.3208 10L7.19581 5.87503C7.04401 5.71786 6.96002 5.50736 6.96192 5.28886C6.96382 5.07036 7.05146 4.86135 7.20596 4.70685C7.36047 4.55234 7.56948 4.4647 7.78798 4.4628C8.00648 4.4609 8.21698 4.5449 8.37415 4.6967L13.0883 9.41086Z" fill="currentColor"/>
+                </g>
+                <defs>
+                  <clipPath id="clip0_39517_10180">
+                    <rect width="20" height="20" fill="white"/>
+                  </clipPath>
+                </defs>
+              </svg>
             </a>
           </div>
 
           <div className="hero-mockup-shell anim-fade-up" style={{ animationDelay: "0.7s" }}>
-            <div className="hero-mockup-shell__frame">
+            <SmoothCorners className="hero-mockup-shell__frame" corners={{ radius: 16, smoothing: 0.6 }}>
               {/* macOS Window Controls */}
               <div className="hero-mockup-window-controls">
                 <span className="hero-mockup-control-dot hero-mockup-control-dot--red" />
@@ -161,17 +180,18 @@ function App() {
                 <span className="hero-mockup-control-dot hero-mockup-control-dot--green" />
               </div>
               <div className="hero-mockup-window-capsule" aria-hidden="true" />
-              <div className="hero-mockup-image-wrapper">
+              <SmoothCorners className="hero-mockup-image-wrapper" corners={{ radius: 16, smoothing: 0.6 }}>
                 <img
                   src={polishedDashboard}
                   alt="Creatorial brands dashboard mockup"
                   className="hero-mockup-image"
                   fetchPriority="high"
+                  loading="eager"
                   width="1320"
                   height="820"
                 />
-              </div>
-            </div>
+              </SmoothCorners>
+            </SmoothCorners>
           </div>
         </div>
       </section>

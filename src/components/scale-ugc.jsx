@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AnimatedContent from './ui/AnimatedContent';
+import { SmoothCorners } from '@lisse/react';
 
 import icon1 from '../assets/features/scale-icon-1.svg';
 import icon2 from '../assets/features/scale-icon-2.svg';
@@ -24,6 +25,37 @@ const MARKET_CARDS = [
   },
 ];
 
+const ScaleMarketCard = ({ card }) => {
+  return (
+    <div className="scale-market-card-shell">
+      {/* 基础状态背景 */}
+      <div className="scale-card-bg-wrapper base-layer">
+        <SmoothCorners 
+          className="scale-card-bg-base" 
+          corners={{ radius: 16, smoothing: 0.6 }} 
+        />
+      </div>
+      
+      {/* Hover 状态背景与阴影边框 */}
+      <div className="scale-card-bg-wrapper hover-layer">
+        <SmoothCorners 
+          className="scale-card-bg-hover" 
+          corners={{ radius: 16, smoothing: 0.6 }} 
+          aria-hidden="true"
+        />
+      </div>
+      {/* 实际内容层 */}
+      <div className="scale-market-card-content">
+        <div className="scale-card-top">
+          <h3 className="scale-card-title">{card.title}</h3>
+          {card.icon}
+        </div>
+        <p className="scale-card-desc">{card.description}</p>
+      </div>
+    </div>
+  );
+};
+
 export default function ScaleUgc() {
   return (
     <section className="scale-ugc-section" id="scale-ugc">
@@ -37,16 +69,7 @@ export default function ScaleUgc() {
         <div className="scale-cards-grid">
           {MARKET_CARDS.map((card, index) => (
             <AnimatedContent key={index} delay={0.1 + index * 0.15}>
-              <div className="scale-market-card">
-                {/* 卡片顶部：文案标题 + 右上角线性矢量Icon */}
-                <div className="scale-card-top">
-                  <h3 className="scale-card-title">{card.title}</h3>
-                  {card.icon}
-                </div>
-                
-                {/* 卡片下半部：详细说明文案 */}
-                <p className="scale-card-desc">{card.description}</p>
-              </div>
+              <ScaleMarketCard card={card} />
             </AnimatedContent>
           ))}
         </div>

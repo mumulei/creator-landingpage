@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useScroll, useTransform, motion } from 'framer-motion';
+import { useScroll, useTransform, useSpring, motion } from 'framer-motion';
+import { SmoothCorners } from '@lisse/react';
 import AnimatedContent from './ui/AnimatedContent';
 import bg1Img from '../assets/features/how-bg-1.png';
 import bg2Img from '../assets/features/how-bg-2.png';
@@ -42,36 +43,44 @@ const STEPS = [
 ];
 
 const DesktopCard = ({ item, index, progress, total }) => {
-  // Each card slides up one by one.
-  // Card 0 is always there (y = 0).
-  // Card 1 slides up between 0 and 0.33.
-  // Card 2 slides up between 0.33 and 0.66.
-  // Card 3 slides up between 0.66 and 1.
+  // We divide the total scroll into (total - 1) * 2 + 1 segments.
+  // Each card slides in for one segment, then rests for one segment.
+  const D = (total - 1) * 2 + 1;
   
-  const startSlide = (index - 1) / (total - 1);
-  const endSlide = index / (total - 1);
+  const yRange = index === 0 
+    ? [0, 1] 
+    : [0, (2 * index - 1) / D, (2 * index) / D, 1];
   
-  // y position: starts at 100vh (below screen), goes to 0 (centered in container)
-  const y = useTransform(
-    progress,
-    [startSlide < 0 ? 0 : startSlide, endSlide],
-    index === 0 ? ['0vh', '0vh'] : ['100vh', '0vh']
-  );
+  const yOutput = index === 0 
+    ? [0, 0] 
+    : [100, 100, 0, 0];
+
+  const yRaw = useTransform(progress, yRange, yOutput);
   
-  // Scale down the card when the NEXT card slides up over it.
-  // Next card starts sliding at endSlide, finishes at nextSlideEnd.
-  const nextSlideEnd = (index + 1) / (total - 1);
-  const targetScale = 1 - (total - 1 - index) * 0.04;
+  // Apply physics spring for a bounce/snap effect
+  const ySpring = useSpring(yRaw, {
+    stiffness: 160,
+    damping: 18,
+    mass: 1,
+    restDelta: 0.001
+  });
+
+  const y = useTransform(ySpring, val => `${val}vh`);
   
-  const scale = useTransform(
-    progress,
-    [endSlide, nextSlideEnd > 1 ? 1 : nextSlideEnd],
-    [1, index === total - 1 ? 1 : 1 - 0.04] 
-  );
+  // Scale down the card when the NEXT card starts sliding up over it.
+  const scaleRange = index === total - 1 
+    ? [0, 1] 
+    : [0, (2 * index + 1) / D, (2 * index + 2) / D, 1];
+
+  const scaleOutput = index === total - 1 
+    ? [1, 1] 
+    : [1, 1, 1 - 0.04, 1 - 0.04];
+  
+  const scale = useTransform(progress, scaleRange, scaleOutput);
 
   return (
     <motion.div 
-      className="how-step-card-desktop"
+      className="how-step-card-desktop-shell"
       style={{
         position: 'absolute',
         top: 0,
@@ -83,32 +92,36 @@ const DesktopCard = ({ item, index, progress, total }) => {
         zIndex: index
       }}
     >
-      <img src={item.bgImage} className="how-step-bg-img" alt="" />
-      
-      <div className="how-text-content">
-        <div className="how-step-badge">
-          <span>{item.step}</span>
-        </div>
-        <h3 className="how-step-title">{item.title}</h3>
-        <p className="how-step-desc">{item.description}</p>
+      <SmoothCorners className="how-step-card-desktop" corners={{ radius: 16, smoothing: 0.6 }} shadowStrategy="box-shadow">
+        <img src={item.bgImage} className="how-step-bg-img" alt="" />
         
-        <div className="how-arrow-button">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
+        <div className="how-text-content">
+          <div className="how-step-badge">
+            <span>{item.step}</span>
+          </div>
+          <h3 className="how-step-title">{item.title}</h3>
+          <p className="how-step-desc">{item.description}</p>
+          
+          <div className="how-arrow-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </div>
         </div>
-      </div>
-      
-      <div className="how-image-wrapper">
-        <div className="how-img-glass" />
-        <img 
-          src={item.productImage} 
-          alt={item.title} 
-          className="how-step-img" 
-          loading="lazy"
-        />
-      </div>
+        
+        <div className="how-image-wrapper">
+          <div className="how-img-glass-container">
+            <div className="how-img-glass" />
+          </div>
+          <img 
+            src={item.productImage} 
+            alt={item.title} 
+            className="how-step-img" 
+            loading="lazy"
+          />
+        </div>
+      </SmoothCorners>
     </motion.div>
   );
 };
@@ -142,19 +155,23 @@ export default function HowItWorks() {
         <div className="how-steps-list">
           {STEPS.map((item, index) => (
             <AnimatedContent key={index} delay={0.1 + index * 0.15}>
-              <div className="how-step-card how-card-visible">
-                <img src={item.bgImage} className="how-step-bg-img" alt="" />
-                <div className="how-text-content">
-                  <div className="how-step-badge">
-                    <span>{item.step}</span>
+              <div className="how-step-card-shell how-card-visible">
+                <SmoothCorners className="how-step-card" corners={{ radius: 16, smoothing: 0.6 }} shadowStrategy="box-shadow">
+                  <img src={item.bgImage} className="how-step-bg-img" alt="" />
+                  <div className="how-text-content">
+                    <div className="how-step-badge">
+                      <span>{item.step}</span>
+                    </div>
+                    <h3 className="how-step-title">{item.title}</h3>
+                    <p className="how-step-desc">{item.description}</p>
                   </div>
-                  <h3 className="how-step-title">{item.title}</h3>
-                  <p className="how-step-desc">{item.description}</p>
-                </div>
-                <div className="how-image-wrapper">
-                  <div className="how-img-glass" />
-                  <img src={item.productImage} alt={item.title} className="how-step-img" loading="lazy" />
-                </div>
+                  <div className="how-image-wrapper">
+                    <div className="how-img-glass-container">
+            <div className="how-img-glass" />
+          </div>
+                    <img src={item.productImage} alt={item.title} className="how-step-img" loading="lazy" />
+                  </div>
+                </SmoothCorners>
               </div>
             </AnimatedContent>
           ))}
@@ -164,7 +181,7 @@ export default function HowItWorks() {
   }
 
   return (
-    <section className="how-works-sticky-section" ref={sectionRef} id="how-it-works" style={{ height: '400vh' }}>
+    <section className="how-works-sticky-section" ref={sectionRef} id="how-it-works" style={{ height: '600vh' }}>
       <div className="how-unified-sticky-container">
         <AnimatedContent className="how-sticky-header">
           <h2 className="how-title">How it works？</h2>

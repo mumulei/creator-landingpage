@@ -3,6 +3,7 @@ import React from 'react';
 /* 引入动态三维地球组件 */
 import { GlobeInteractive } from './ui/cobe-globe';
 import AnimatedContent from './ui/AnimatedContent';
+import { SmoothCorners } from '@lisse/react';
 
 /* 从 Figma 导出的真实资源 */
 import avatar1 from '../assets/features/avatar-1.png';
@@ -38,39 +39,50 @@ export default function KeyFeatures() {
         <div className="key-features-grid">
           {/* Card 1: Built for cross-border growth */}
           <AnimatedContent className="feature-card-wrapper" delay={0.1} distance={80} duration={1.0}>
-            <div className="feature-card feature-card--cross-border">
-              <div className="feature-card__content">
-                <h3>Built for <strong>cross-border</strong> growth</h3>
-                <p>Brief, review, and manage campaigns in your own language while working seamlessly with overseas creators.</p>
+            <div className="feature-card-shell cross-border">
+              {/* 基础背景层 */}
+              <div className="feature-card-bg-wrapper base-layer">
+                <SmoothCorners className="feature-card-bg-base" corners={{ radius: 16, smoothing: 0.6 }} />
               </div>
-              <div className="feature-card__illustration feature-card__illustration--globe">
-                {/* 三维动态旋转地球背景 */}
-                <div className="globe-container">
-                  <GlobeInteractive className="cobe-globe-canvas" />
+              {/* Hover 悬浮背景层 */}
+              <div className="feature-card-bg-wrapper hover-layer">
+                <SmoothCorners className="feature-card-bg-hover" corners={{ radius: 16, smoothing: 0.6 }} aria-hidden="true" />
+              </div>
+              {/* 内容层 */}
+              <div className="feature-card-content-layer">
+                <div className="feature-card__content">
+                  <h3>Built for <strong>cross-border</strong> growth</h3>
+                  <p>Brief, review, and manage campaigns in your own language while working seamlessly with overseas creators.</p>
                 </div>
-
-                {/* 3 个 Avatar 标签 — 与设计稿完全一致 */}
-                <div className="avatar-tag avatar-tag--1">
-                  <img src={avatar1} alt="" className="avatar-img" width="44" height="44" />
-                  <div className="avatar-info">
-                    <span className="avatar-name">Arya</span>
-                    <span className="avatar-loc"><LocIcon /> Texas, USA</span>
+                <div className="feature-card__illustration feature-card__illustration--globe">
+                  {/* 三维动态旋转地球背景 */}
+                  <div className="globe-container">
+                    <GlobeInteractive className="cobe-globe-canvas" />
                   </div>
-                </div>
 
-                <div className="avatar-tag avatar-tag--2">
-                  <img src={avatar2} alt="" className="avatar-img" width="44" height="44" />
-                  <div className="avatar-info">
-                    <span className="avatar-name">Alex</span>
-                    <span className="avatar-loc"><LocIcon /> Peoria, AZ</span>
+                  {/* 3 个 Avatar 标签 — 与设计稿完全一致 */}
+                  <div className="avatar-tag avatar-tag--1">
+                    <img src={avatar1} alt="" className="avatar-img" width="44" height="44" />
+                    <div className="avatar-info">
+                      <span className="avatar-name">Arya</span>
+                      <span className="avatar-loc"><LocIcon /> Texas, USA</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="avatar-tag avatar-tag--3">
-                  <img src={avatar3} alt="" className="avatar-img" width="44" height="44" />
-                  <div className="avatar-info">
-                    <span className="avatar-name">Drake</span>
-                    <span className="avatar-loc"><LocIcon /> Paris, France</span>
+                  <div className="avatar-tag avatar-tag--2">
+                    <img src={avatar2} alt="" className="avatar-img" width="44" height="44" />
+                    <div className="avatar-info">
+                      <span className="avatar-name">Alex</span>
+                      <span className="avatar-loc"><LocIcon /> Peoria, AZ</span>
+                    </div>
+                  </div>
+
+                  <div className="avatar-tag avatar-tag--3">
+                    <img src={avatar3} alt="" className="avatar-img" width="44" height="44" />
+                    <div className="avatar-info">
+                      <span className="avatar-name">Drake</span>
+                      <span className="avatar-loc"><LocIcon /> Paris, France</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -79,35 +91,46 @@ export default function KeyFeatures() {
 
           {/* Card 2: Flexible pricing */}
           <AnimatedContent className="feature-card-wrapper" delay={0.25} distance={80} duration={1.0}>
-            <div className="feature-card feature-card--pricing">
-              <div className="feature-card__content">
-                <h3><strong>Flexible</strong> pricing</h3>
-                <p>Start with a single video or scale with a subscription. No minimum spend, long-term contracts, or bundled packages.</p>
+            <div className="feature-card-shell pricing">
+              {/* 基础背景层 */}
+              <div className="feature-card-bg-wrapper base-layer">
+                <SmoothCorners className="feature-card-bg-base" corners={{ radius: 16, smoothing: 0.6 }} />
               </div>
-              <div className="feature-card__illustration feature-card__illustration--pricing">
-                <div className="pricing-bars">
-                  <div className="pricing-bar pricing-bar--1">
-                    <div className="pricing-bar__icon">
-                      <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon1}")` }}></span>
-                    </div>
-                  </div>
-                  <div className="pricing-bar pricing-bar--2">
-                    <div className="pricing-bar__icon">
-                      <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon2}")` }}></span>
-                    </div>
-                  </div>
-                  <div className="pricing-bar pricing-bar--3">
-                    <div className="pricing-bar__icon">
-                      <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon3}")` }}></span>
-                    </div>
-                  </div>
+              {/* Hover 悬浮背景层 */}
+              <div className="feature-card-bg-wrapper hover-layer">
+                <SmoothCorners className="feature-card-bg-hover" corners={{ radius: 16, smoothing: 0.6 }} aria-hidden="true" />
+              </div>
+              {/* 内容层 */}
+              <div className="feature-card-content-layer">
+                <div className="feature-card__content">
+                  <h3><strong>Flexible</strong> pricing</h3>
+                  <p>Start with a single video or scale with a subscription. No minimum spend, long-term contracts, or bundled packages.</p>
                 </div>
-                <div className="pricing-progress">
-                  <span className="pricing-label">Start small</span>
-                  <div className="pricing-track">
-                    <div className="pricing-fill"></div>
+                <div className="feature-card__illustration feature-card__illustration--pricing">
+                  <div className="pricing-bars">
+                    <div className="pricing-bar pricing-bar--1">
+                      <div className="pricing-bar__icon">
+                        <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon1}")` }}></span>
+                      </div>
+                    </div>
+                    <div className="pricing-bar pricing-bar--2">
+                      <div className="pricing-bar__icon">
+                        <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon2}")` }}></span>
+                      </div>
+                    </div>
+                    <div className="pricing-bar pricing-bar--3">
+                      <div className="pricing-bar__icon">
+                        <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon3}")` }}></span>
+                      </div>
+                    </div>
                   </div>
-                  <span className="pricing-label">Scale anytime</span>
+                  <div className="pricing-progress">
+                    <span className="pricing-label">Start small</span>
+                    <div className="pricing-track">
+                      <div className="pricing-fill"></div>
+                    </div>
+                    <span className="pricing-label">Scale anytime</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -115,106 +138,118 @@ export default function KeyFeatures() {
 
           {/* Card 3: Launch Campaigns Faster */}
           <AnimatedContent className="feature-card-wrapper" delay={0.4} distance={80} duration={1.0}>
-            <div className="feature-card feature-card--speed">
-              <div className="feature-card__content">
-                <h3>Launch Campaigns <strong>Faster</strong></h3>
-                <p>Reduce production bottlenecks and get launch-ready UGC delivered in as little as 10 days.</p>
+            <div className="feature-card-shell speed">
+              {/* 基础背景层 */}
+              <div className="feature-card-bg-wrapper base-layer">
+                <SmoothCorners className="feature-card-bg-base" corners={{ radius: 16, smoothing: 0.6 }} />
               </div>
-              <div className="feature-card__illustration feature-card__illustration--social">
-                {/* YouTube 卡片 — 最小，最顶部 */}
-                <div className="social-platform social-platform--yt">
-                  <div className="social-platform__header">
-                    <div className="social-platform__icon-wrap">
-                      <img src={iconYoutube} alt="" className="social-platform__logo" />
-                    </div>
-                    <div className="social-platform__name-group">
-                      <span className="social-platform__name">YouTube</span>
-                      <span className="social-platform__sub">Global Video Sharing & Creator Hub</span>
-                    </div>
-                  </div>
-                  <div className="social-platform__placeholder-bar" style={{ width: 170 }}></div>
-                  <div className="social-platform__stats">
-                    <div className="stat-pill stat-pill--active">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                      <span>36 active</span>
-                    </div>
-                    <div className="stat-pill stat-pill--total">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-                      <span>100 total</span>
-                    </div>
-                  </div>
+              {/* Hover 悬浮背景层 */}
+              <div className="feature-card-bg-wrapper hover-layer">
+                <SmoothCorners className="feature-card-bg-hover" corners={{ radius: 16, smoothing: 0.6 }} aria-hidden="true" />
+              </div>
+              {/* 内容层 */}
+              <div className="feature-card-content-layer">
+                <div className="feature-card__content">
+                  <h3>Launch Campaigns <strong>Faster</strong></h3>
+                  <p>Reduce production bottlenecks and get launch-ready UGC delivered in as little as 10 days.</p>
                 </div>
+                <div className="feature-card__illustration feature-card__illustration--social">
+                  {/* YouTube 卡片 — 最小，最顶部 */}
+                  <div className="social-platform social-platform--yt">
+                    <div className="social-platform__header">
+                      <div className="social-platform__icon-wrap">
+                        <img src={iconYoutube} alt="" className="social-platform__logo" />
+                      </div>
+                      <div className="social-platform__name-group">
+                        <span className="social-platform__name">YouTube</span>
+                        <span className="social-platform__sub">Global Video Sharing & Creator Hub</span>
+                      </div>
+                    </div>
+                    <div className="social-platform__placeholder-bar" style={{ width: 170 }}></div>
+                    <div className="social-platform__stats">
+                      <div className="stat-pill stat-pill--active">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
+                        <span>36 active</span>
+                      </div>
+                      <div className="stat-pill">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
+                        <span>12 pending</span>
+                      </div>
+                    </div>
+                  </div>
 
-                {/* Facebook 卡片 */}
-                <div className="social-platform social-platform--fb">
-                  <div className="social-platform__header">
-                    <div className="social-platform__icon-wrap">
-                      <img src={iconFacebook} alt="" className="social-platform__logo" />
+                  {/* Facebook 卡片 */}
+                  <div className="social-platform social-platform--fb">
+                    <div className="social-platform__header">
+                      <div className="social-platform__icon-wrap">
+                        <img src={iconFacebook} alt="" className="social-platform__logo" />
+                      </div>
+                      <div className="social-platform__name-group">
+                        <span className="social-platform__name">Facebook</span>
+                        <span className="social-platform__sub">Community & Social Networking</span>
+                      </div>
                     </div>
-                    <div className="social-platform__name-group">
-                      <span className="social-platform__name">Facebook</span>
-                      <span className="social-platform__sub">Social Network & Community Marketing</span>
+                    <div className="social-platform__placeholder-bar" style={{ width: 220 }}></div>
+                    <div className="social-platform__stats">
+                      <div className="stat-pill stat-pill--active">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
+                        <span>54 active</span>
+                      </div>
+                      <div className="stat-pill">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
+                        <span>8 pending</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="social-platform__placeholder-bar" style={{ width: 188 }}></div>
-                  <div className="social-platform__stats">
-                    <div className="stat-pill stat-pill--active">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                      <span>36 active</span>
-                    </div>
-                    <div className="stat-pill stat-pill--total">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-                      <span>100 total</span>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Instagram 卡片 */}
-                <div className="social-platform social-platform--ig">
-                  <div className="social-platform__header">
-                    <div className="social-platform__icon-wrap">
-                      <img src={iconInstagram} alt="" className="social-platform__logo" />
+                  {/* Instagram 卡片 */}
+                  <div className="social-platform social-platform--ig">
+                    <div className="social-platform__header">
+                      <div className="social-platform__icon-wrap">
+                        <img src={iconInstagram} alt="" className="social-platform__logo" />
+                      </div>
+                      <div className="social-platform__name-group">
+                        <span className="social-platform__name">Instagram</span>
+                        <span className="social-platform__sub">Visual Storytelling & Reels</span>
+                      </div>
                     </div>
-                    <div className="social-platform__name-group">
-                      <span className="social-platform__name">Instagram</span>
-                      <span className="social-platform__sub">Visual Content & Influencer Hub</span>
+                    <div className="social-platform__placeholder-bar" style={{ width: 190 }}></div>
+                    <div className="social-platform__stats">
+                      <div className="stat-pill stat-pill--active">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
+                        <span>89 active</span>
+                      </div>
+                      <div className="stat-pill">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
+                        <span>24 pending</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="social-platform__placeholder-bar" style={{ width: 204 }}></div>
-                  <div className="social-platform__stats">
-                    <div className="stat-pill stat-pill--active">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                      <span>36 active</span>
-                    </div>
-                    <div className="stat-pill stat-pill--total">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-                      <span>100 total</span>
-                    </div>
-                  </div>
-                </div>
 
-                {/* TikTok 卡片 — 最大，最底部 */}
-                <div className="social-platform social-platform--tt">
-                  <div className="social-platform__header">
-                    <div className="social-platform__icon-wrap">
-                      <img src={iconTiktok} alt="" className="social-platform__logo" />
+                  {/* TikTok 卡片 — 最大，最底部 */}
+                  <div className="social-platform social-platform--tk">
+                    <div className="social-platform__header">
+                      <div className="social-platform__icon-wrap">
+                        <img src={iconTiktok} alt="" className="social-platform__logo" />
+                      </div>
+                      <div className="social-platform__name-group">
+                        <span className="social-platform__name">TikTok</span>
+                        <span className="social-platform__sub">Short-Form Mobile Video Leader</span>
+                      </div>
                     </div>
-                    <div className="social-platform__name-group">
-                      <span className="social-platform__name">Tiktok</span>
-                      <span className="social-platform__sub">Digital Entertainment Marketing Business</span>
+                    <div className="social-platform__placeholder-bar" style={{ width: 260 }}></div>
+                    <div className="social-platform__stats">
+                      <div className="stat-pill stat-pill--active">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
+                        <span>142 active</span>
+                      </div>
+                      <div className="stat-pill">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
+                        <span>45 pending</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="social-platform__placeholder-bar" style={{ width: 220 }}></div>
-                  <div className="social-platform__stats">
-                    <div className="stat-pill stat-pill--active">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                      <span>36 Active</span>
-                    </div>
-                    <div className="stat-pill stat-pill--total">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-                      <span>100 Total</span>
-                    </div>
-                  </div>
+
                 </div>
               </div>
             </div>
