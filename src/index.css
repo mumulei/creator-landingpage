@@ -418,10 +418,49 @@ button, textarea {
   line-height: 1.2;
 }
 
+.hero-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: clamp(1.5rem, 2.22vw, 3.5rem);
+}
+
+.hero-stats-avatars {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+}
+
+.hero-stats-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid #ffffff;
+  margin-right: -8px;
+  object-fit: cover;
+  background-color: #f0f0f0;
+}
+
+.hero-stats-text {
+  font-family: "Satoshi", "Inter", sans-serif;
+  font-size: clamp(13px, 0.97vw, 20px);
+  font-weight: 500;
+  color: #171717;
+  line-height: 20px;
+}
+
+.hero-stats-divider {
+  width: 1px;
+  height: 10px;
+  background-color: rgba(23, 23, 23, 0.15);
+  margin: 0 4px;
+}
+
 .hero-body {
   width: 100%;
   max-width: clamp(720px, 50vw, 1280px);
-  margin: 2rem auto 0;
+  margin: clamp(1.5rem, 2.22vw, 3.5rem) auto 0;
   font-family: "Satoshi", sans-serif;
   font-size: clamp(16px, 1.11vw, 28px);
   font-weight: 500;
@@ -482,27 +521,78 @@ button, textarea {
 }
 
 .hero-mockup-shell {
-  width: min(100%, 2346px);
-  margin: 2.15rem auto 0;
+  width: min(100%, 2268px);
+  margin: 3.15rem auto 0;
 }
 
 .hero-mockup-shell__frame {
   position: relative;
-  border-radius: 34px;
-  padding: 0;
+  border-radius: 8px;
+  padding: 42px 12px 12px 12px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.92),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
     0 24px 70px rgba(23, 23, 23, 0.08),
     0 40px 90px rgba(255, 118, 178, 0.08);
+}
+
+/* macOS traffic light controls */
+.hero-mockup-window-controls {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  z-index: 10;
+}
+
+.hero-mockup-control-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.hero-mockup-control-dot--red {
+  background-color: #ff5f56;
+}
+
+.hero-mockup-control-dot--yellow {
+  background-color: #ffbd2e;
+}
+
+.hero-mockup-control-dot--green {
+  background-color: #27c93f;
+}
+
+/* macOS window top right pill */
+.hero-mockup-window-capsule {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 8px;
+  border-radius: 5.5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+}
+
+.hero-mockup-image-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  width: 100%;
 }
 
 .hero-mockup-image {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 34px;
+  border-radius: 12px;
 }
 
 /* ======== TRUSTED CLOUD ======== */

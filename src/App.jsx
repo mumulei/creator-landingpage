@@ -11,6 +11,13 @@ import CreatorShowcase from "./components/creator-showcase.jsx";
 import ReadyToScale from "./components/ready-to-scale.jsx";
 import ScrollReveal from "./components/ui/scroll-reveal.jsx";
 
+// Avatar and Creator imports for Hero stats badge
+import avatar1 from "./assets/features/avatar-1.png";
+import avatar2 from "./assets/features/avatar-2.png";
+import avatar3 from "./assets/features/avatar-3.png";
+import creator1 from "./assets/features/ugc-creator-1.png";
+import creator2 from "./assets/features/ugc-creator-2.png";
+
 
 const navItems = ["Home", "About Us", "Creator Library", "Pricing"];
 
@@ -108,10 +115,25 @@ function App() {
             <span className="anim-fade-up" style={{ animationDelay: "0.1s" }}>
               Turn UGC Into Your
             </span>
-            <span className="anim-fade-up" style={{ animationDelay: "0.25s" }}>
+            <span className="anim-fade-up" style={{ animationDelay: "0.2s" }}>
               Best-Performing Ads
             </span>
           </h1>
+
+          {/* Statistics Badge Row */}
+          <div className="hero-stats-row anim-fade-up" style={{ animationDelay: "0.3s" }}>
+            <div className="hero-stats-avatars">
+              <img src={avatar1} alt="" className="hero-stats-avatar" />
+              <img src={avatar2} alt="" className="hero-stats-avatar" />
+              <img src={avatar3} alt="" className="hero-stats-avatar" />
+              <img src={creator1} alt="" className="hero-stats-avatar" />
+              <img src={creator2} alt="" className="hero-stats-avatar" />
+            </div>
+            <span className="hero-stats-text">10K+ Creators Onboard</span>
+            <div className="hero-stats-divider" aria-hidden="true" />
+            <span className="hero-stats-text">1K+ Videos Delivered</span>
+          </div>
+
           <p className="hero-body anim-fade-up" style={{ animationDelay: "0.4s" }}>
             High-performing UGC that drives real growth.
             <br />
@@ -132,14 +154,23 @@ function App() {
 
           <div className="hero-mockup-shell anim-fade-up" style={{ animationDelay: "0.7s" }}>
             <div className="hero-mockup-shell__frame">
-              <img
-                src={polishedDashboard}
-                alt="Creatorial brands dashboard mockup"
-                className="hero-mockup-image"
-                fetchPriority="high"
-                width="1320"
-                height="820"
-              />
+              {/* macOS Window Controls */}
+              <div className="hero-mockup-window-controls">
+                <span className="hero-mockup-control-dot hero-mockup-control-dot--red" />
+                <span className="hero-mockup-control-dot hero-mockup-control-dot--yellow" />
+                <span className="hero-mockup-control-dot hero-mockup-control-dot--green" />
+              </div>
+              <div className="hero-mockup-window-capsule" aria-hidden="true" />
+              <div className="hero-mockup-image-wrapper">
+                <img
+                  src={polishedDashboard}
+                  alt="Creatorial brands dashboard mockup"
+                  className="hero-mockup-image"
+                  fetchPriority="high"
+                  width="1320"
+                  height="820"
+                />
+              </div>
             </div>
           </div>
         </div>
