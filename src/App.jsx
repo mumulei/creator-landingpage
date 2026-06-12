@@ -10,6 +10,7 @@ import ScaleUgc from "./components/scale-ugc.jsx";
 import CreatorShowcase from "./components/creator-showcase.jsx";
 import ReadyToScale from "./components/ready-to-scale.jsx";
 import AnimatedContent from "./components/ui/AnimatedContent.jsx";
+import GradualBlur from "./components/GradualBlur.jsx";
 import { SmoothCorners } from '@lisse/react';
 
 // Avatar and Creator imports for Hero stats badge
@@ -25,10 +26,32 @@ const navItems = ["Home", "About Us", "Creator Library", "Pricing"];
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  /* 导航栏滚动检测：滚动超过 32px 后添加 scrolled 状态 */
+  /* 导航栏滚动检测：滚动超过 32px 后添加 scrolled 状态，同时检测深色区块 */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 32);
+
+      // Check all elements that explicitly define a theme
+      const themedElements = document.querySelectorAll('[data-theme]');
+      let currentDark = false;
+      const headerCenterY = 44; // middle of the 88px topbar
+      
+      themedElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        // Check if the center of the header falls within this element's vertical bounds
+        if (rect.top <= headerCenterY && rect.bottom >= headerCenterY) {
+          if (el.getAttribute('data-theme') === 'dark') {
+            currentDark = true;
+          } else if (el.getAttribute('data-theme') === 'light') {
+            currentDark = false;
+          }
+        }
+      });
+      setIsDarkTheme(currentDark);
+    };
+    
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
@@ -47,9 +70,18 @@ function App() {
       <BlindsAuroraBackground />
 
       <header
-        className={`topbar${scrolled ? " topbar--scrolled" : ""}`}
+        className={`topbar${scrolled ? " topbar--scrolled" : ""}${isDarkTheme ? " topbar--dark" : ""}`}
         id="topbar"
       >
+        <GradualBlur
+          target="parent"
+          position="top"
+          height="5.5rem"
+          strength={2}
+          divCount={7}
+          curve="bezier"
+          zIndex={-1}
+        />
         <a className="brand" href="/" aria-label="Paico AI home">
           <img
             src={brandLogo}

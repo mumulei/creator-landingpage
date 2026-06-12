@@ -138,14 +138,6 @@ button, textarea {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
-.paico-hero-bg__blur {
-  inset: 0 0 auto;
-  height: 132px;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0) 100%);
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0) 100%);
-}
 
 .paico-hero-bg__glow {
   inset: -180px auto auto 50%;
@@ -180,23 +172,7 @@ button, textarea {
   transition: padding 0.3s ease;
 }
 
-/* Gradient blur mask at the bottom of the topbar */
-.topbar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5.5rem;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  /* Use mask to make the blur fade out at the bottom */
-  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-  pointer-events: none;
-  z-index: -1;
-}
+
 
 .topbar--scrolled {
   padding: 0.6rem var(--safe-padding);
@@ -265,7 +241,7 @@ button, textarea {
   width: 16px;
   height: 1px;
   border-radius: 999px;
-  background: #171717;
+  background: currentColor;
   transform: translateX(-50%);
 }
 
@@ -2969,4 +2945,30 @@ button, textarea {
     position: relative;
     z-index: 5;
   }
+}
+
+/* Dark theme adjustments for topbar */
+.topbar--dark {
+  transition: all 0.3s ease;
+}
+
+.topbar--dark .brand-mark {
+  filter: invert(1);
+}
+
+.topbar--dark nav a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.topbar--dark nav a:hover,
+.topbar--dark nav a.is-active {
+  color: #fff;
+}
+
+.topbar--dark .ghost-link {
+  color: #fff;
+}
+
+.topbar--dark .mobile-menu-btn {
+  color: #fff;
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import GradualBlur from "./GradualBlur";
 
 const UNICORN_SDK_URL =
   "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.12/dist/unicornStudio.umd.js";
@@ -114,8 +115,15 @@ function BlindsAuroraBackground() {
         ref={containerRef}
         className={`paico-hero-bg__scene ${isReady ? "is-ready" : ""}`}
       />
-      <div className="paico-hero-bg__gradient" />
-      <div className="paico-hero-bg__blur" />
+      <GradualBlur
+        target="parent"
+        position="top"
+        height="132px"
+        strength={1}
+        divCount={6}
+        curve="bezier"
+        zIndex={10}
+      />
       <div className="paico-hero-bg__glow" />
     </div>
   );

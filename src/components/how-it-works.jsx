@@ -92,7 +92,7 @@ const DesktopCard = ({ item, index, progress, total }) => {
         zIndex: index
       }}
     >
-      <SmoothCorners className="how-step-card-desktop" corners={{ radius: 16, smoothing: 0.6 }} shadowStrategy="box-shadow">
+      <SmoothCorners className="how-step-card-desktop" corners={{ radius: 16, smoothing: 0.6 }} shadowStrategy="box-shadow" data-theme="dark">
         <img src={item.bgImage} className="how-step-bg-img" alt="" />
         
         <div className="how-text-content">
@@ -110,7 +110,7 @@ const DesktopCard = ({ item, index, progress, total }) => {
           </div>
         </div>
         
-        <div className="how-image-wrapper">
+        <div className="how-image-wrapper" data-theme="light">
           <div className="how-img-glass-container">
             <div className="how-img-glass" />
           </div>
@@ -156,7 +156,7 @@ export default function HowItWorks() {
           {STEPS.map((item, index) => (
             <AnimatedContent key={index} delay={0.1 + index * 0.15}>
               <div className="how-step-card-shell how-card-visible">
-                <SmoothCorners className="how-step-card" corners={{ radius: 16, smoothing: 0.6 }} shadowStrategy="box-shadow">
+                <SmoothCorners className="how-step-card" corners={{ radius: 16, smoothing: 0.6 }} shadowStrategy="box-shadow" data-theme="dark">
                   <img src={item.bgImage} className="how-step-bg-img" alt="" />
                   <div className="how-text-content">
                     <div className="how-step-badge">
@@ -165,7 +165,7 @@ export default function HowItWorks() {
                     <h3 className="how-step-title">{item.title}</h3>
                     <p className="how-step-desc">{item.description}</p>
                   </div>
-                  <div className="how-image-wrapper">
+                  <div className="how-image-wrapper" data-theme="light">
                     <div className="how-img-glass-container">
             <div className="how-img-glass" />
           </div>
