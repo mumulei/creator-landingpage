@@ -88,7 +88,7 @@ button, textarea {
   font: inherit;
 }
 
-.paico-page {
+.creatorial-page {
   position: relative;
   min-height: 100vh;
   overflow: clip;
@@ -96,7 +96,7 @@ button, textarea {
   background: #ffffff;
 }
 
-.paico-hero-bg {
+.creatorial-hero-bg {
   position: absolute;
   inset: 0 0 auto;
   z-index: 0;
@@ -106,16 +106,16 @@ button, textarea {
   pointer-events: none;
 }
 
-.paico-hero-bg__base,
-.paico-hero-bg__scene,
-.paico-hero-bg__gradient,
-.paico-hero-bg__blur,
-.paico-hero-bg__glow {
+.creatorial-hero-bg__base,
+.creatorial-hero-bg__scene,
+.creatorial-hero-bg__gradient,
+.creatorial-hero-bg__blur,
+.creatorial-hero-bg__glow {
   position: absolute;
   inset: 0;
 }
 
-.paico-hero-bg__base {
+.creatorial-hero-bg__base {
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -123,23 +123,23 @@ button, textarea {
   transform: scale(1.02);
 }
 
-.paico-hero-bg__scene {
+.creatorial-hero-bg__scene {
   opacity: 0;
   transition: opacity 320ms ease;
 }
 
-.paico-hero-bg__scene.is-ready {
+.creatorial-hero-bg__scene.is-ready {
   opacity: 1;
 }
 
-.paico-hero-bg__gradient {
+.creatorial-hero-bg__gradient {
   inset: 0 0 auto;
   height: 168px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 
-.paico-hero-bg__glow {
+.creatorial-hero-bg__glow {
   inset: -180px auto auto 50%;
   width: min(1180px, 90vw);
   height: 420px;
@@ -740,12 +740,12 @@ button, textarea {
     padding: 6rem var(--safe-padding) 0;
   }
 
-  .paico-hero-bg {
+  .creatorial-hero-bg {
     max-height: 800px;
   }
 
-  .paico-hero-bg__base,
-  .paico-hero-bg__scene {
+  .creatorial-hero-bg__base,
+  .creatorial-hero-bg__scene {
     transform: scale(1.6);
     transform-origin: center bottom;
   }
@@ -851,12 +851,12 @@ button, textarea {
     padding: 6rem 1rem 0;
   }
 
-  .paico-hero-bg {
+  .creatorial-hero-bg {
     max-height: 700px;
   }
 
-  .paico-hero-bg__base,
-  .paico-hero-bg__scene {
+  .creatorial-hero-bg__base,
+  .creatorial-hero-bg__scene {
     transform: scale(2.2);
     transform-origin: center bottom;
   }

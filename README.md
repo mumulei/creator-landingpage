@@ -1,6 +1,6 @@
-# Creator Landing Page (Paico Unicorn)
+# Creatorial-landingpage
 
-Welcome to the Creator Landing Page project! This repository contains the source code for the high-conversion, visually stunning landing page built with React, Vite, and Unicorn Studio (WebGL).
+Welcome to the Creatorial-landingpage project! This repository contains the source code for the high-conversion, visually stunning landing page built with React, Vite, and SmoothCorners.
 
 ## 📐 基础规范 (Guidelines)
 
@@ -43,22 +43,11 @@ Welcome to the Creator Landing Page project! This repository contains the source
 
 ---
 
-## ⚠️ 避坑指南：WebGL 渲染与 GPU 复合边界冲突 (The WebGL Compositor Pitfall)
+## 🎥 首屏背景与渲染优化 (Background & Rendering Optimization)
 
-如果你需要在页面底部添加新内容或修改结构，请务必注意这个曾在本项目中引发过严重“闪烁（Flickering / Jumping）”的底层系统级 Bug！
-
-### 🐛 症状
-当页面滚动到底部极限时，移动鼠标，整个页面的滚动高度会疯狂跳动 30%，产生剧烈闪烁。
-
-### 🔎 原因
-1. **GPU 复合边界突破**：Mockup 区域比首屏大，虽然主线程中它被 `.hero` 的 `overflow: hidden` 裁剪，但由于 Mockup 的动画使用了 3D `transform`，它被提升为一个 GPU 复合层（Composited Layer）。Safari/Chrome 的 GPU 合成引擎在计算页面的“可滚动物理高度”时，把被隐藏的下半部分体积也算进去了（多出约 300px 高度）。
-2. **WebGL 重绘触发重算**：背景层启用了 Unicorn Studio 的 WebGL 鼠标交互，只要鼠标移动，WebGL Canvas 就会高频 requestAnimationFrame 重绘。
-3. **触底弹性冲突**：当用户滚到绝对最底边时，WebGL 的重绘导致 GPU 与主线程在“最大滚动高度”上打架，从而引发滚动锚定（Scroll Anchoring）错误，疯狂把页面往上抬高。
-
-### 🛡️ 防御措施
-为了解决这个问题，我们采取了以下组合拳，**请绝对不要移除它们**：
-1. **GPU 级强裁切**：在 `.hero` 容器上除了 `overflow: hidden`，还必须带有 `clip-path: inset(0);`。这会强制要求 GPU 合成器在计算 bounding box 时无情切断所有逃逸的 3D 层体积。
-2. **防弹跳缓冲占位区 (Scroll Boundary Buffer)**：在 `KeyFeatures` 之后，我们**永远**需要一个足够的缓冲空间（比如 `100vh` 的无描边占位屏、或者未来真实的完整 Footer 组件）。这让页面底部边界远离 WebGL 的首屏活动范围，彻底消除底部物理边界带来的弹性碰撞问题。
+在重构过程中，首屏动画与大背景进行了升级和优化，去除了传统的复杂 3D 渲染，采用轻量化的视频与 CSS 混合渲染：
+- **自适应视频背景**：Hero 区域改用本地公共资源视频 `hero-bg.mp4` 进行全屏自动循环静音播放，相比传统 WebGL 渲染极大减轻了 GPU 混合合成器的计算压力，解决了在 Safari/Chrome 上的高频帧重绘冲突。
+- **GPU 级强裁切与缓冲**：为了防止 Mockup 的 3D 入场 `transform` 动画层溢出，从而被浏览器误判并累加页面可滚动高度，我们保留了 `.hero` 容器上的 `overflow: hidden` 与 `clip-path: inset(0)` 强裁切逻辑，彻底消除了底部触底弹性抖动问题。
 
 ---
 

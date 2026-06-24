@@ -84,7 +84,7 @@ function App() {
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
-    <main className="paico-page">
+    <main className="creatorial-page">
       <GradientBlurTop />
       <BlindsAuroraBackground />
 
@@ -92,7 +92,7 @@ function App() {
         className={`topbar${scrolled ? " topbar--scrolled" : ""}${isDarkTheme ? " topbar--dark" : ""}`}
         id="topbar"
       >
-        <a className="brand" href="/" aria-label="Paico AI home">
+        <a className="brand" href="/" aria-label="Creatorial home">
           <img
             src={brandLogo}
             alt=""

@@ -2,7 +2,7 @@ import React from "react";
 
 function BlindsAuroraBackground() {
   return (
-    <div className="paico-hero-bg" aria-hidden="true">
+    <div className="creatorial-hero-bg" aria-hidden="true">
       <video
         src="/hero-bg.mp4"
         autoPlay
