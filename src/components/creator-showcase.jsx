@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { SmoothCorners } from '@lisse/react';
 import AnimatedContent from './ui/AnimatedContent';
 import creator1 from '../assets/features/ugc-creator-1.png';
 import creator2 from '../assets/features/ugc-creator-2.png';
@@ -50,19 +51,74 @@ const SHOWCASE_CARDS = [
   },
 ];
 
+// 将数据源复制 3 份以形成无缝平铺滑轨，防止轮播时的节点大反弹横穿
+const VIRTUAL_CARDS = [
+  ...SHOWCASE_CARDS.map(c => ({ ...c, virtualId: c.id + '_L' })),
+  ...SHOWCASE_CARDS.map(c => ({ ...c, virtualId: c.id + '_M' })),
+  ...SHOWCASE_CARDS.map(c => ({ ...c, virtualId: c.id + '_R' })),
+];
+
 export default function CreatorShowcase() {
-  const [activeIndex, setActiveIndex] = useState(2); // 默认聚焦中间的 Review (索引为 2)
+  const [activeIndex, setActiveIndex] = useState(7); // 默认聚焦中间组的 Review (索引为 7)
+  const [isResetting, setIsResetting] = useState(false);
   const [mutedStates, setMutedStates] = useState({ 10: true, 11: true, 12: true, 13: true, 14: true });
+  const [isHovered, setIsHovered] = useState(false);
+
+  // 触控划动识别
+  const touchStartX = React.useRef(0);
+  const touchEndX = React.useRef(0);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const deltaX = touchEndX.current - touchStartX.current;
+    if (deltaX > 50) {
+      setActiveIndex((prev) => prev - 1);
+    } else if (deltaX < -50) {
+      setActiveIndex((prev) => prev + 1);
+    }
+  };
+
+  // 监听 activeIndex 越界，在动画结束后静默重置（无动画重置）
+  useEffect(() => {
+    if (activeIndex >= 10) {
+      const timer = setTimeout(() => {
+        setIsResetting(true);
+        setActiveIndex(activeIndex - 5);
+        
+        setTimeout(() => {
+          setIsResetting(false);
+        }, 50);
+      }, 760); // 760ms 匹配 transition 动画时长
+      return () => clearTimeout(timer);
+    } else if (activeIndex < 5) {
+      const timer = setTimeout(() => {
+        setIsResetting(true);
+        setActiveIndex(activeIndex + 5);
+        
+        setTimeout(() => {
+          setIsResetting(false);
+        }, 50);
+      }, 760);
+      return () => clearTimeout(timer);
+    }
+  }, [activeIndex]);
 
   // 自动轮播 (5.5 秒切换一次)
-  const [isHovered, setIsHovered] = useState(false);
   useEffect(() => {
-    if (isHovered) return;
+    if (isHovered || isResetting) return;
     const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % SHOWCASE_CARDS.length);
+      setActiveIndex((prev) => prev + 1);
     }, 5500);
     return () => clearInterval(timer);
-  }, [isHovered]);
+  }, [isHovered, isResetting]);
 
   const handleMuteToggle = (e, id) => {
     e.stopPropagation();
@@ -72,20 +128,8 @@ export default function CreatorShowcase() {
     }));
   };
 
-  // 计算相对位置 Class
-  const getCardClass = (index) => {
-    const diff = (index - activeIndex + SHOWCASE_CARDS.length) % SHOWCASE_CARDS.length;
-    if (diff === 0) return 'showcase-card-active';
-    if (diff === 1) return 'showcase-card-right-1';
-    if (diff === 2) return 'showcase-card-right-2';
-    if (diff === 3) return 'showcase-card-left-2';
-    if (diff === 4) return 'showcase-card-left-1';
-    return '';
-  };
-
   return (
     <section className="creator-showcase-section" id="creator-showcase">
-      {/* 头部标题区 */}
       {/* 头部标题区 */}
       <AnimatedContent className="showcase-header-container">
         <h2 className="showcase-title">Creator Video Showcase</h2>
@@ -101,45 +145,78 @@ export default function CreatorShowcase() {
         className="showcase-carousel-container"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         <div className="showcase-cards-wrapper">
-          {SHOWCASE_CARDS.map((card, index) => {
-            const cardClass = getCardClass(index);
-            const isActive = index === activeIndex;
+          {VIRTUAL_CARDS.map((card, index) => {
+            const diff = index - activeIndex;
+            
+            // 精确计算滑轨卡片的水平位移（支持通过 CSS 变量等比缩小）
+            let translateXVar = '0px';
+            if (diff === 1) {
+              translateXVar = 'var(--showcase-offset-1)';
+            } else if (diff === -1) {
+              translateXVar = 'calc(-1 * var(--showcase-offset-1))';
+            } else if (diff === 2) {
+              translateXVar = 'var(--showcase-offset-2)';
+            } else if (diff === -2) {
+              translateXVar = 'calc(-1 * var(--showcase-offset-2))';
+            } else if (diff > 2) {
+              translateXVar = `calc(var(--showcase-offset-2) + ${diff - 2} * var(--showcase-offset-outer))`;
+            } else if (diff < -2) {
+              translateXVar = `calc(-1 * var(--showcase-offset-2) - ${Math.abs(diff + 2)} * var(--showcase-offset-outer))`;
+            }
+
+            let scale = 0.72;
+            let opacity = 0;
+            let zIndex = 0;
+
+            if (diff === 0) {
+              scale = 1;
+              opacity = 1;
+              zIndex = 10;
+            } else if (diff === 1 || diff === -1) {
+              scale = 0.85;
+              opacity = 0.85;
+              zIndex = 5;
+            } else if (diff === 2 || diff === -2) {
+              scale = 0.72;
+              opacity = 0.72;
+              zIndex = 2;
+            }
+
+            const style = {
+              transform: `translate3d(calc(-50% + ${translateXVar}), -50%, 0) scale(${scale})`,
+              opacity: opacity,
+              zIndex: zIndex,
+              pointerEvents: (diff >= -2 && diff <= 2) ? 'auto' : 'none',
+            };
+
+            const isActive = diff === 0;
             const isMuted = mutedStates[card.id];
 
             return (
               <div
-                key={card.id}
-                className={`showcase-carousel-card ${cardClass}`}
-                onClick={() => setActiveIndex(index)}
+                key={card.virtualId}
+                className={`showcase-carousel-card ${isActive ? 'showcase-card-active' : ''} ${isResetting ? 'no-transition' : ''}`}
+                style={style}
+                onClick={() => {
+                  if (diff >= -2 && diff <= 2 && diff !== 0) {
+                    setActiveIndex(index);
+                  }
+                }}
               >
                 <div className="showcase-card-img-holder">
                   <img src={card.image} alt={card.label} className="showcase-card-image" />
                   
-                  {/* 半透明遮罩 */}
-                  <div className="showcase-card-overlay"></div>
+                  {/* 只有非活动卡片有半透明/磨砂灰度遮罩 */}
+                  {!isActive && <div className="showcase-card-overlay"></div>}
 
-                  {/* 悬浮装饰：创作者和转化率数据 */}
-                  <div className="showcase-card-meta">
-                    <span className="showcase-meta-creator">{card.creator}</span>
-                    <span className="showcase-meta-ctr">{card.ctr}</span>
-                  </div>
-
-                  {/* 平台渠道标签 */}
-                  <div className="showcase-platform-tag">
-                    <span>{card.platform}</span>
-                  </div>
-
-                  {/* 聚焦卡片特有播放组件 */}
+                  {/* 聚焦卡片特有播放组件：静音开关与底部进度条 */}
                   {isActive && (
                     <>
-                      <div className="showcase-play-button-center">
-                        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
-                          <polygon points="6 3 20 12 6 21 6 3" />
-                        </svg>
-                      </div>
-
                       {/* 静音开关 */}
                       <button 
                         className="showcase-mute-toggle"
@@ -147,13 +224,13 @@ export default function CreatorShowcase() {
                         aria-label="Toggle mute"
                       >
                         {isMuted ? (
-                          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
                             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                             <line x1="23" y1="9" x2="17" y2="15" />
                             <line x1="17" y1="9" x2="23" y2="15" />
                           </svg>
                         ) : (
-                          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+                          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
                             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
                             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
                           </svg>
@@ -172,17 +249,48 @@ export default function CreatorShowcase() {
           })}
         </div>
 
-        {/* 底部关联文本标签导航 */}
-        <div className="showcase-tabs-navigation">
-          {SHOWCASE_CARDS.map((card, index) => (
-            <button
-              key={card.id}
-              className={`showcase-tab-btn ${index === activeIndex ? 'showcase-tab-active' : ''}`}
-              onClick={() => setActiveIndex(index)}
-            >
-              {card.label}
-            </button>
-          ))}
+        {/* 底部小圆点进度条指示器 */}
+        <div className="showcase-dots-container">
+          {SHOWCASE_CARDS.map((card, idx) => {
+            const activeCard = SHOWCASE_CARDS[activeIndex % 5];
+            const isActive = activeCard.id === card.id;
+            
+            return (
+              <div 
+                key={card.id} 
+                className={`showcase-dot-item ${isActive ? 'showcase-dot-active' : ''}`}
+                onClick={() => {
+                  setActiveIndex(5 + idx);
+                }}
+              >
+                {isActive && (
+                  <div 
+                    key={`${card.id}-${isHovered}`} 
+                    className="showcase-dot-progress"
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* 底部 Explore creators 按钮 */}
+        <div className="showcase-cta-container" style={{ display: 'flex', justifyContent: 'center', marginTop: '24px' }}>
+          <SmoothCorners asChild corners={{ radius: 24, smoothing: 0.6 }}>
+            <a href="#explore-creators" className="ready-btn ready-btn-primary group">
+              <span className="btn-arrow-left">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+              <span className="btn-text">Explore creators</span>
+              <span className="btn-arrow-right">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+            </a>
+          </SmoothCorners>
         </div>
       </AnimatedContent>
     </section>

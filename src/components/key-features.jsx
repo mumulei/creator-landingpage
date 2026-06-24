@@ -30,9 +30,6 @@ export default function KeyFeatures() {
         <AnimatedContent distance={60} duration={1.0}>
           <header className="key-features-header">
             <h2>Key Features</h2>
-            <p className="key-features-subtitle">
-              Everything brands need to launch creator campaigns across markets.
-            </p>
           </header>
         </AnimatedContent>
 

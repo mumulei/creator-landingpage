@@ -5,56 +5,74 @@ import brandLogo from "./assets/local-logos/brand-logo.svg";
 import LogoCloud from "./components/logo-cloud.jsx";
 import KeyFeatures from "./components/key-features.jsx";
 import HowItWorks from "./components/how-it-works.jsx";
-import CustomizeUgc from "./components/customize-ugc.jsx";
 import ScaleUgc from "./components/scale-ugc.jsx";
 import CreatorShowcase from "./components/creator-showcase.jsx";
 import ReadyToScale from "./components/ready-to-scale.jsx";
+import Footer from './components/footer.jsx';
 import AnimatedContent from "./components/ui/AnimatedContent.jsx";
-import GradualBlur from "./components/GradualBlur.jsx";
+import GradientBlurTop from "./components/GradientBlurTop.jsx";
 import { SmoothCorners } from '@lisse/react';
 
-// Avatar and Creator imports for Hero stats badge
-import avatar1 from "./assets/features/avatar-1.png";
-import avatar2 from "./assets/features/avatar-2.png";
-import avatar3 from "./assets/features/avatar-3.png";
-import creator1 from "./assets/features/ugc-creator-1.png";
-import creator2 from "./assets/features/ugc-creator-2.png";
 
 
-const navItems = ["Home", "About Us", "Creator Library", "Pricing"];
+
+const navItems = ["Home", "Creator Library", "Pricing", "About Us", "App For Creator"];
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  /* 导航栏滚动检测：滚动超过 32px 后添加 scrolled 状态，同时检测深色区块 */
+  /* 导航栏滚动检测：滚动超过 32px 后添加 scrolled 状态，同时检测是否悬浮在深色元素上 */
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 32);
 
-      // Check all elements that explicitly define a theme
-      const themedElements = document.querySelectorAll('[data-theme]');
+      const topbar = document.getElementById("topbar");
+      if (!topbar) return;
+
+      const topbarRect = topbar.getBoundingClientRect();
+      const topbarTop = topbarRect.top;
+      const topbarBottom = topbarRect.bottom;
+      const topbarLeft = topbarRect.left;
+      const topbarRight = topbarRect.right;
+      const headerCenterY = (topbarTop + topbarBottom) / 2;
+
+      // 寻找真正被明确标记为 dark 主题的深色元素（如页脚和 ReadyToScale 包裹区）
+      const darkElements = document.querySelectorAll('[data-theme="dark"]');
+
       let currentDark = false;
-      const headerCenterY = 44; // middle of the 88px topbar
-      
-      themedElements.forEach(el => {
+
+      darkElements.forEach((el) => {
         const rect = el.getBoundingClientRect();
-        // Check if the center of the header falls within this element's vertical bounds
-        if (rect.top <= headerCenterY && rect.bottom >= headerCenterY) {
-          if (el.getAttribute('data-theme') === 'dark') {
-            currentDark = true;
-          } else if (el.getAttribute('data-theme') === 'light') {
+
+        // 垂直相交检测：元素的 vertical 范围覆盖了 topbar 的垂直中线
+        const verticalOverlap = rect.top <= headerCenterY && rect.bottom >= headerCenterY;
+        
+        // 水平相交检测：元素的 horizontal 范围与 topbar 发生重叠
+        const horizontalOverlap = rect.left < topbarRight && rect.right > topbarLeft;
+
+        if (verticalOverlap && horizontalOverlap) {
+          // 如果该元素显式声明了 light 主题，则排他，否则只要重合就判定为 dark
+          if (el.getAttribute('data-theme') === 'light') {
             currentDark = false;
+          } else {
+            currentDark = true;
           }
         }
       });
+
       setIsDarkTheme(currentDark);
     };
     
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   /* 移动菜单展开时禁止背景滚动 */
@@ -67,21 +85,13 @@ function App() {
 
   return (
     <main className="paico-page">
+      <GradientBlurTop />
       <BlindsAuroraBackground />
 
       <header
         className={`topbar${scrolled ? " topbar--scrolled" : ""}${isDarkTheme ? " topbar--dark" : ""}`}
         id="topbar"
       >
-        <GradualBlur
-          target="parent"
-          position="top"
-          height="5.5rem"
-          strength={2}
-          divCount={7}
-          curve="bezier"
-          zIndex={-1}
-        />
         <a className="brand" href="/" aria-label="Paico AI home">
           <img
             src={brandLogo}
@@ -127,9 +137,21 @@ function App() {
               ▾
             </span>
           </a>
-          <a className="solid-link solid-link--magenta" href="#get-started" id="nav-cta">
-            Get Started
-          </a>
+          <SmoothCorners asChild corners={{ radius: 18, smoothing: 0.6 }}>
+            <a className="solid-link solid-link--magenta group" href="#get-started" id="nav-cta">
+              <span className="btn-arrow-left">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+              <span className="btn-text">Get Started</span>
+              <span className="btn-arrow-right">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+            </a>
+          </SmoothCorners>
         </div>
 
         {/* 移动菜单遮罩层 */}
@@ -145,27 +167,15 @@ function App() {
       <section className="hero">
         <div className="hero-copy">
           <h1>
-            <span className="anim-fade-up" style={{ animationDelay: "0.1s" }}>
+            <span className="anim-fade-up" style={{ animationDelay: "0.1s", fontWeight: 700 }}>
               Turn UGC Into Your
             </span>
-            <span className="anim-fade-up" style={{ animationDelay: "0.2s" }}>
+            <span className="anim-fade-up" style={{ animationDelay: "0.2s", fontWeight: 700 }}>
               Best-Performing Ads
             </span>
           </h1>
 
-          {/* Statistics Badge Row */}
-          <div className="hero-stats-row anim-fade-up" style={{ animationDelay: "0.3s" }}>
-            <div className="hero-stats-avatars">
-              <img src={avatar1} alt="" className="hero-stats-avatar" />
-              <img src={avatar2} alt="" className="hero-stats-avatar" />
-              <img src={avatar3} alt="" className="hero-stats-avatar" />
-              <img src={creator1} alt="" className="hero-stats-avatar" />
-              <img src={creator2} alt="" className="hero-stats-avatar" />
-            </div>
-            <span className="hero-stats-text">10K+ Creators Onboard</span>
-            <div className="hero-stats-divider" aria-hidden="true" />
-            <span className="hero-stats-text">1K+ Videos Delivered</span>
-          </div>
+
 
           <p className="hero-body anim-fade-up" style={{ animationDelay: "0.4s" }}>
             High-performing UGC that drives real growth.
@@ -175,32 +185,36 @@ function App() {
           </p>
 
           <div className="hero-cta-row anim-fade-up" style={{ animationDelay: "0.55s" }}>
-            <a className="hero-cta hero-cta--dark" href="#get-started" id="hero-cta-start">
-              Get Started
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clipPath="url(#clip0_39517_10179)">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M13.0883 9.41086C13.2445 9.56713 13.3323 9.77906 13.3323 10C13.3323 10.221 13.2445 10.4329 13.0883 10.5892L8.37415 15.3034C8.29727 15.383 8.20532 15.4464 8.10365 15.4901C8.00198 15.5338 7.89263 15.5568 7.78198 15.5577C7.67133 15.5587 7.5616 15.5376 7.45919 15.4957C7.35677 15.4538 7.26373 15.3919 7.18548 15.3137C7.10724 15.2354 7.04536 15.1424 7.00346 15.04C6.96156 14.9376 6.94048 14.8278 6.94144 14.7172C6.9424 14.6065 6.96539 14.4972 7.00906 14.3955C7.05274 14.2939 7.11622 14.2019 7.19581 14.125L11.3208 10L7.19581 5.87503C7.04401 5.71786 6.96002 5.50736 6.96192 5.28886C6.96382 5.07036 7.05146 4.86135 7.20596 4.70685C7.36047 4.55234 7.56948 4.4647 7.78798 4.4628C8.00648 4.4609 8.21698 4.5449 8.37415 4.6967L13.0883 9.41086Z" fill="currentColor"/>
-                </g>
-                <defs>
-                  <clipPath id="clip0_39517_10179">
-                    <rect width="20" height="20" fill="white"/>
-                  </clipPath>
-                </defs>
-              </svg>
-            </a>
-            <a className="hero-cta hero-cta--light" href="#book-demo" id="hero-cta-demo">
-              Book A Demo
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clipPath="url(#clip0_39517_10180)">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M13.0883 9.41086C13.2445 9.56713 13.3323 9.77906 13.3323 10C13.3323 10.221 13.2445 10.4329 13.0883 10.5892L8.37415 15.3034C8.29727 15.383 8.20532 15.4464 8.10365 15.4901C8.00198 15.5338 7.89263 15.5568 7.78198 15.5577C7.67133 15.5587 7.5616 15.5376 7.45919 15.4957C7.35677 15.4538 7.26373 15.3919 7.18548 15.3137C7.10724 15.2354 7.04536 15.1424 7.00346 15.04C6.96156 14.9376 6.94048 14.8278 6.94144 14.7172C6.9424 14.6065 6.96539 14.4972 7.00906 14.3955C7.05274 14.2939 7.11622 14.2019 7.19581 14.125L11.3208 10L7.19581 5.87503C7.04401 5.71786 6.96002 5.50736 6.96192 5.28886C6.96382 5.07036 7.05146 4.86135 7.20596 4.70685C7.36047 4.55234 7.56948 4.4647 7.78798 4.4628C8.00648 4.4609 8.21698 4.5449 8.37415 4.6967L13.0883 9.41086Z" fill="currentColor"/>
-                </g>
-                <defs>
-                  <clipPath id="clip0_39517_10180">
-                    <rect width="20" height="20" fill="white"/>
-                  </clipPath>
-                </defs>
-              </svg>
-            </a>
+            <SmoothCorners asChild corners={{ radius: 24, smoothing: 0.6 }}>
+              <a className="hero-cta hero-cta--dark group" href="#get-started" id="hero-cta-start">
+                <span className="btn-arrow-left">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+                <span className="btn-text">Get Started</span>
+                <span className="btn-arrow-right">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+              </a>
+            </SmoothCorners>
+            <SmoothCorners asChild corners={{ radius: 24, smoothing: 0.6 }}>
+              <a className="hero-cta hero-cta--light group" href="#book-demo" id="hero-cta-demo">
+                <span className="btn-arrow-left">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+                <span className="btn-text">Book A Demo</span>
+                <span className="btn-arrow-right">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+              </a>
+            </SmoothCorners>
           </div>
 
           <div className="hero-mockup-shell anim-fade-up" style={{ animationDelay: "0.7s" }}>
@@ -230,20 +244,13 @@ function App() {
 
       <LogoCloud />
       <KeyFeatures />
-      <HowItWorks />
-      <CustomizeUgc />
       <ScaleUgc />
+      <HowItWorks />
       <CreatorShowcase />
-      <ReadyToScale />
-      
-      {/* 
-        Scroll boundary buffer / Features section placeholder
-        用于彻底远离首屏的 WebGL GPU 边界冲突区，采用无描边、无分割线的极简设计，与白色背景融为一体
-      */}
-      <AnimatedContent className="reveal-container scroll-buffer-section">
-        <h2 className="scroll-buffer-title anim-fade-up" style={{ animationDelay: "0.1s" }}>More Features Coming Soon</h2>
-        <p className="scroll-buffer-text anim-fade-up" style={{ animationDelay: "0.25s" }}>We are continuously expanding the creator library and campaign tools.</p>
-      </AnimatedContent>
+      <div className="ready-footer-wrap" data-theme="dark">
+        <ReadyToScale />
+        <Footer />
+      </div>
     </main>
   );
 }

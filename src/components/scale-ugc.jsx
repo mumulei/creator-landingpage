@@ -2,26 +2,39 @@ import React, { useState } from 'react';
 import AnimatedContent from './ui/AnimatedContent';
 import { SmoothCorners } from '@lisse/react';
 
-import icon1 from '../assets/features/scale-icon-1.svg';
-import icon2 from '../assets/features/scale-icon-2.svg';
-import icon3 from '../assets/features/scale-icon-3.svg';
+import headerIcon1 from '../assets/features/scale-header-icon-1.svg';
+import decorSmall1 from '../assets/features/scale-decor-small-1.svg';
+import decorLarge1 from '../assets/features/scale-decor-large-1.svg';
 
-// 三栏卡片数据配置
+import headerIcon2 from '../assets/features/scale-header-icon-2.svg';
+import decorSmall2 from '../assets/features/scale-decor-small-2.svg';
+import decorLarge2 from '../assets/features/scale-decor-large-2.svg';
+
+import headerIcon3 from '../assets/features/scale-header-icon-3.svg';
+import decorSmall3 from '../assets/features/scale-decor-small-3.svg';
+import decorLarge3 from '../assets/features/scale-decor-large-3.svg';
+
 const MARKET_CARDS = [
   {
     title: 'Operate in your language, launch in theirs',
     description: "Brief, review, and manage everything in your own language. We'll handle the rest.",
-    icon: <img src={icon1} alt="" width="60" height="60" className="scale-card-icon" />,
+    headerIcon: headerIcon1,
+    decorSmall: decorSmall1,
+    decorLarge: decorLarge1,
   },
   {
     title: 'Creators who understand your market',
     description: 'Authentic content from creators who understand the local culture and consumers.',
-    icon: <img src={icon3} alt="" width="60" height="60" className="scale-card-icon" />,
+    headerIcon: headerIcon2,
+    decorSmall: decorSmall2,
+    decorLarge: decorLarge2,
   },
   {
     title: 'Cross-Border Expansion Made Simple',
     description: 'Payments, compliance, content rights, and creator coordination, handled in one platform.',
-    icon: <img src={icon2} alt="" width="60" height="60" className="scale-card-icon" />,
+    headerIcon: headerIcon3,
+    decorSmall: decorSmall3,
+    decorLarge: decorLarge3,
   },
 ];
 
@@ -32,7 +45,7 @@ const ScaleMarketCard = ({ card }) => {
       <div className="scale-card-bg-wrapper base-layer">
         <SmoothCorners 
           className="scale-card-bg-base" 
-          corners={{ radius: 16, smoothing: 0.6 }} 
+          corners={{ radius: 24, smoothing: 0.6 }} 
         />
       </div>
       
@@ -40,18 +53,22 @@ const ScaleMarketCard = ({ card }) => {
       <div className="scale-card-bg-wrapper hover-layer">
         <SmoothCorners 
           className="scale-card-bg-hover" 
-          corners={{ radius: 16, smoothing: 0.6 }} 
+          corners={{ radius: 24, smoothing: 0.6 }} 
           aria-hidden="true"
         />
       </div>
       {/* 实际内容层 */}
       <div className="scale-market-card-content">
-        <div className="scale-card-top">
+        <div className="scale-card-header">
+          <img src={card.headerIcon} className="scale-card-header-icon" alt="" />
           <h3 className="scale-card-title">{card.title}</h3>
-          {card.icon}
         </div>
         <p className="scale-card-desc">{card.description}</p>
       </div>
+
+      {/* 装饰图形 */}
+      <img src={card.decorSmall} className="scale-decor-small" alt="" />
+      <img src={card.decorLarge} className="scale-decor-large" alt="" />
     </div>
   );
 };

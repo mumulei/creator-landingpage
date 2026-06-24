@@ -40,7 +40,7 @@ function LogoCloud() {
                 alt={logo.alt}
                 className="logo-marquee__image"
                 loading="lazy"
-                height="40"
+                height="56"
               />
             ))}
           </div>

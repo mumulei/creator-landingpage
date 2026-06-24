@@ -1,4 +1,5 @@
 import React from 'react';
+import { SmoothCorners } from '@lisse/react';
 import AnimatedContent from './ui/AnimatedContent';
 
 export default function ReadyToScale() {
@@ -12,30 +13,43 @@ export default function ReadyToScale() {
             
             {/* 副标题 */}
             <p className="ready-scale-subtitle">
-              Connect with creators that get your brand. Take your business to the next level.
+              Connect with creators that get your brand.<br />
+              Take your business to the next level.
             </p>
 
             {/* 两个48px高圆角药丸形按钮并排 */}
             <div className="ready-scale-buttons">
-              <a href="#get-started" className="ready-btn ready-btn-primary">
-                <span>Get Started</span>
-                <span className="ready-btn-arrow">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </span>
-              </a>
+              <SmoothCorners asChild corners={{ radius: 24, smoothing: 0.6 }}>
+                <a href="#get-started" className="ready-btn ready-btn-primary group">
+                  <span className="btn-arrow-left">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </span>
+                  <span className="btn-text">Get Started</span>
+                  <span className="btn-arrow-right">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </span>
+                </a>
+              </SmoothCorners>
 
-              <a href="#book-demo" className="ready-btn ready-btn-secondary">
-                <span>Book a Demo</span>
-                <span className="ready-btn-arrow">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </span>
-              </a>
+              <SmoothCorners asChild corners={{ radius: 24, smoothing: 0.6 }}>
+                <a href="#book-demo" className="ready-btn ready-btn-secondary group">
+                  <span className="btn-arrow-left">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </span>
+                  <span className="btn-text">Book A Demo</span>
+                  <span className="btn-arrow-right">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                  </span>
+                </a>
+              </SmoothCorners>
             </div>
           </div>
         </AnimatedContent>
@@ -43,3 +57,4 @@ export default function ReadyToScale() {
     </section>
   );
 }
+
