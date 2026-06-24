@@ -49,6 +49,34 @@ Welcome to the Creatorial-landingpage project! This repository contains the sour
 ### 6. 页脚与底纹发光背景融合 (ReadyToScale & Footer Integration)
 - **连续极光背景与 ASCII 字符底纹**：将 `ReadyToScale` 和 `Footer` 放置于统一的包裹容器 `.ready-footer-wrap` 中，在包裹容器的伪类上叠加 `ascii-art.png` 作为多重背景底图，配合 `linear-gradient` 的遮罩防止遮挡文字；同时将 `ReadyToScale` 背景重设为 `transparent` 移除遮挡，实现在页面最底部完美呈现连续的紫色斜向发光背景。
 
+### 7. 📱 三端响应式设计规则 (Multi-device Responsive Rules)
+
+为了确保设计图（Figma）与本地流式布局的像素级保真度，下表展示了 **Desktop (1440px)**、**Tablet (834px)** 和 **Mobile (402px/375px)** 在主要 Section 和核心布局参数上的响应式对比规则：
+
+| 布局参数 / 组件区域 | Desktop 桌面端 (设计基准: 1440px) | Tablet 平板端 (设计基准: 834px) | Mobile 移动端 (设计基准: 402px) |
+| :--- | :--- | :--- | :--- |
+| **视口断点与触发** | 默认 (宽 > 1150px 流式缩放) | `max-width: 1150px` (自适应) | `max-width: 640px` (单列/紧凑) |
+| **左右安全边距 (`--safe-padding`)** | `5.7vw` (在 1440px 下等于 82px) | 锁定为 `40px` (Figma 规范: 40px) | 锁定为 `20px` (Figma 规范: 16px，本地微调防溢出) |
+| **纵向段落间距 (`--section-padding-y`)**| `8.33vw` (在 1440px 下等于 120px) | 锁定为 `100px` | 锁定为 `60px` |
+| **标题字号字重 (H2 / `--title-font-size`)**| `34px` / 字重 `700` | `32px` / 字重 `700` | `28px` / 字重 `700` |
+| **Hero 首屏** | 高度 `100vh` 限制为 `1000px`，大图 Mockup 占位，双按钮横向 | 高度上限变更为 `800px`，Mockup 自动高度，按钮定宽 `184px` | 高度上限 `700px`，Mockup 变为普通卡片圆角 `8px`，按钮垂直堆叠并宽度 `100%` |
+| **Logo 墙 (`LogoCloud`)** | Marquee 轨道，Logo 高度 `56px`，Gap `92px`，周期 `36s` | Logo 高度自适应， marquee 轨道继承桌端 | Logo 高度收缩至 `40px`，Gap 缩减至 `52px`，周期加速至 `28s` |
+| **Key Features 核心特性** | 3 列网格，卡片 Gap `24px` | 单列平铺，垂直 Gap `24px`，文字左对齐 | 单列平铺，继承平板端，使用容器宽度单位等比缩放 |
+| **Scale UGC 跨市场** | 3 列网格，卡片 Gap `24px`，卡片高度固定为 `280px` | 单列平铺，卡片高度自适应，最小高度 `160px`，右侧 padding-right `100px` 防止文字与小图标重叠，图文环绕左对齐 | 单列平铺，继承平板端防重叠布局 |
+| **How It Works 步骤列表** | 双列左右排版，卡片比例 `1148 / 600`，外间距 `80px`，图标容器 `68px`（下边距 `80px`） | 垂直堆叠排版，大图处于下方，卡片比例自适应。文字与大图 Gap `56px`，卡片间距 `56px`，图标下边距 `48px` | 垂直堆叠，卡片内边距缩减至 `32px 20px 0`。文字与大图 Gap `24px`，卡片间距 `24px`，图标下边距 `24px` |
+| **Creator Showcase 3D轮播** | 3D 滑轨。卡片宽 `340px`/高 `582px`，卡片圆角 Active `32px`/Inactive `24px`，偏移量 `350px`/`650px` | 3D 滑轨。卡片宽 `260px`/高 `445px`，卡片圆角统一 `24px`，偏移量 `280px`/`540px`（防重叠） | 3D 滑轨。卡片宽 `190px`/高 `325px`，卡片圆角统一 `24px`，偏移量 `205px`/`395px`（露边展示） |
+| **Ready To Scale** | 纵向内边距 `100px`。双按钮横排，Gap `24px`，按钮宽 `200px` | 纵向内边距 `80px`。双按钮垂直堆叠，按钮宽度撑满 `100%` (max-width `320px`) | 纵向内边距 `60px`。按钮继承平板端堆叠逻辑 |
+| **Footer 页脚** | 左右安全边距 `82px` 通栏，左侧品牌靠左，右侧 3 列外链靠右且右对齐 | 顶层转为垂直排列（品牌上，链接下），3 列链接横向拉伸 `justify-content: space-between` | 3 列外链转为单列垂直，品牌与链接全部居中对齐。底部版权与社交链接垂直反转（版权在最下） |
+
+#### 响应式设计落地规范与细节：
+1. **Figma 静态数值与流式 VW 的对齐**：
+   - Desktop 1440px 下的静态物理间距（如 Safe Padding 82px，Section Padding 120px）通过 CSS 变量 `5.7vw` 和 `8.33vw` 进行流式动态计算，确保了在 1920px 等大屏下页面等比舒展，并在超 2K (`min-width: 2560px`) 时切断流式，锁定安全尺寸以防过宽拉伸。
+2. **SmoothCorners 平滑圆角降级与兼容**：
+   - 按钮与主要卡片容器在所有屏幕下均通过 `@lisse/react` (`SmoothCorners` 配合 `smoothing: 0.6`) 生成极致平滑的 Squircle 圆角。
+   - **防塌陷降级**: 对于 Showcase 视频滑轨（3D 位移变换容易使 lisse canvas 重绘失败并高度塌陷为正方形）以及 How It Works 特色图容器（内部包含 flex-grow 100% 图片），在 CSS 中统一降级为原生 `border-radius`（Showcase 视窗 Active `32px` / Inactive `24px`，How It Works 大图内边框 `16px`）以做完美兼容。
+3. **防文字重叠与自适应换行 (Text Wrapping)**：
+   - `Scale UGC` 的小卡片在进入 Tablet/Mobile 的单列排版后，通过右侧 `padding-right: 100px` 隔离右下角绝对定位的装饰小图标，并设置 `.scale-card-header` 为 `display: flow-root;`，小图标 `float: left`，使得卡片标题首行紧贴图标，其余文本自然在下方换行包裹，消除了静态定位在各设备上的文本重叠隐患。
+
 ---
 
 ## 🎥 首屏背景与渲染优化 (Background & Rendering Optimization)
