@@ -137,21 +137,19 @@ function App() {
               ▾
             </span>
           </a>
-          <SmoothCorners asChild corners={{ radius: 18, smoothing: 0.6 }}>
-            <a className="solid-link solid-link--magenta group" href="#get-started" id="nav-cta">
-              <span className="btn-arrow-left">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </span>
-              <span className="btn-text">Get Started</span>
-              <span className="btn-arrow-right">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </span>
-            </a>
-          </SmoothCorners>
+          <a className="solid-link solid-link--magenta group" href="#get-started" id="nav-cta">
+            <span className="btn-arrow-left">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </span>
+            <span className="btn-text">Get Started</span>
+            <span className="btn-arrow-right">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </span>
+          </a>
         </div>
 
         {/* 移动菜单遮罩层 */}
@@ -185,36 +183,32 @@ function App() {
           </p>
 
           <div className="hero-cta-row anim-fade-up" style={{ animationDelay: "0.55s" }}>
-            <SmoothCorners asChild corners={{ radius: 24, smoothing: 0.6 }}>
-              <a className="hero-cta hero-cta--dark group" href="#get-started" id="hero-cta-start">
-                <span className="btn-arrow-left">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </span>
-                <span className="btn-text">Get Started</span>
-                <span className="btn-arrow-right">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </span>
-              </a>
-            </SmoothCorners>
-            <SmoothCorners asChild corners={{ radius: 24, smoothing: 0.6 }}>
-              <a className="hero-cta hero-cta--light group" href="#book-demo" id="hero-cta-demo">
-                <span className="btn-arrow-left">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </span>
-                <span className="btn-text">Book A Demo</span>
-                <span className="btn-arrow-right">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </span>
-              </a>
-            </SmoothCorners>
+            <a className="hero-cta hero-cta--dark group" href="#get-started" id="hero-cta-start">
+              <span className="btn-arrow-left">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+              <span className="btn-text">Get Started</span>
+              <span className="btn-arrow-right">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+            </a>
+            <a className="hero-cta hero-cta--light group" href="#book-demo" id="hero-cta-demo">
+              <span className="btn-arrow-left">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+              <span className="btn-text">Book A Demo</span>
+              <span className="btn-arrow-right">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </span>
+            </a>
           </div>
 
           <div className="hero-mockup-shell anim-fade-up" style={{ animationDelay: "0.7s" }}>
