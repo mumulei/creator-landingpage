@@ -899,8 +899,8 @@ button, textarea {
   }
 
   .hero-cta {
-    width: min(100%, 280px);
-    height: 48px;
+    width: min(100%, 280px) !important;
+    height: 48px !important;
     font-size: 14px;
   }
 
@@ -909,8 +909,22 @@ button, textarea {
   }
 
   .hero-mockup-shell__frame {
-    border-radius: 8px;
+    clip-path: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    border-radius: 8px !important;
     height: auto;
+  }
+
+  .hero-mockup-image-wrapper {
+    clip-path: none !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+    border-radius: 8px !important;
+  }
+
+  .hero-mockup-image {
+    border-radius: 8px !important;
   }
 
   .hero::after {
@@ -926,10 +940,6 @@ button, textarea {
       opacity: 1;
       transform: perspective(1200px) translateY(0) rotateX(0deg) scale(1);
     }
-  }
-
-  .hero-mockup-image {
-    border-radius: 8px;
   }
 
   .trusted-cloud {
