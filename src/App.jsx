@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import BlindsAuroraBackground from "./components/blinds-aurora-background.jsx";
-import polishedDashboard from "./assets/Brands.png";
+import polishedDashboard from "./assets/Brands.jpg";
 import brandLogo from "./assets/local-logos/brand-logo.svg";
 import LogoCloud from "./components/logo-cloud.jsx";
 import KeyFeatures from "./components/key-features.jsx";
