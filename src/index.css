@@ -2939,13 +2939,17 @@ button, textarea {
     padding: 0;
     box-sizing: border-box;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+  }
+  .how-img-border-box {
     border: 1px solid rgba(255, 255, 255, 1);
     border-bottom: none;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
   }
   .how-img-glass {
     display: none;
@@ -2962,6 +2966,8 @@ button, textarea {
     display: block;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   /* UGC 轮播降级为水平滚动 */
