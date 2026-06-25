@@ -2,11 +2,6 @@ import React from 'react';
 import { SmoothCorners } from '@lisse/react';
 import AnimatedContent from './ui/AnimatedContent';
 
-import product1Img from '../assets/features/how-product-1.png';
-import product2Img from '../assets/features/how-product-2.png';
-import product3Img from '../assets/features/how-product-3.png';
-import product4Img from '../assets/features/how-product-4.png';
-
 import icon1 from '../assets/features/how-icon-1.svg';
 import icon2 from '../assets/features/how-icon-2.svg';
 import icon3 from '../assets/features/how-icon-3.svg';
@@ -17,28 +12,28 @@ const STEPS = [
   {
     title: 'Set Up Your Brand',
     description: 'Create your brand profile and manage all your requests. Everything in one place.',
-    productImage: product1Img,
+    videoSrc: '/step_1_compressed.mp4',
     cardBg: '#fdf2f8',
     iconBg: '#f20093',
   },
   {
     title: 'Launch a Request',
     description: 'Post what you need — country, language, content. Creators apply, or invite ones you like directly. Review, then approve your lineup.',
-    productImage: product2Img,
+    videoSrc: '/step_2_compressed.mp4',
     cardBg: '#ecf4fe',
     iconBg: '#4797f6',
   },
   {
     title: 'Stay in the Loop',
     description: 'Message creators, share references, and track progress. All on the platform.',
-    productImage: product3Img,
+    videoSrc: '/step_3_compressed.mp4',
     cardBg: '#faf3fe',
     iconBg: '#a13ef1',
   },
   {
     title: 'Approve & Download',
     description: "Happy with submitted content? Approve, download your assets, and publish whenever you're ready.",
-    productImage: product4Img,
+    videoSrc: '/step_4_compressed.mp4',
     cardBg: '#fefce6',
     iconBg: '#f0af30',
   },
@@ -88,14 +83,16 @@ export default function HowItWorks() {
                   <p className="how-step-desc">{item.description}</p>
                 </div>
                 
-                {/* 右侧大图带白边框 */}
+                {/* 右侧大图带白边框（换成视频） */}
                 <div className="how-image-wrapper">
                   <div className="how-img-border-box">
-                    <img 
-                      src={item.productImage} 
-                      alt={item.title} 
-                      className="how-step-img" 
-                      loading="lazy"
+                    <video 
+                      src={item.videoSrc} 
+                      className="how-step-video" 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline
                     />
                   </div>
                 </div>

@@ -1848,7 +1848,8 @@ button, textarea {
   height: 100%;
 }
 
-.how-step-img {
+.how-step-img,
+.how-step-video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1999,7 +2000,8 @@ button, textarea {
 }
 
 
-.how-step-card-desktop .how-step-img {
+.how-step-card-desktop .how-step-img,
+.how-step-card-desktop .how-step-video {
   position: absolute;
   bottom: -0.078cqw;
   left: 0.94cqw;
@@ -2948,7 +2950,8 @@ button, textarea {
   .how-img-glass {
     display: none;
   }
-  .how-step-img {
+  .how-step-img,
+  .how-step-video {
     position: absolute;
     top: 0;
     left: 0;
