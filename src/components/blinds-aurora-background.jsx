@@ -8,12 +8,13 @@ function BlindsAuroraBackground({ isActive = true }) {
         <MeshGradient
           width={1280}
           height={720}
-          colors={["#ffe5fe", "#ff8ade", "#ffadef"]}
-          distortion={0.68}
-          swirl={0.2}
+          colors={["#ffe5fd", "#ff8ade", "#ffadef", "#ff9ee7"]}
+          distortion={0.7}
+          swirl={0.6}
           grainMixer={0}
           grainOverlay={0}
-          speed={isActive ? 1.36 : 0}
+          speed={isActive ? 1.2 : 0}
+          scale={0.88}
           rotation={360}
           offsetX={-0.16}
           style={{

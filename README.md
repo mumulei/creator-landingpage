@@ -16,6 +16,14 @@ Welcome to the Creatorial-landingpage project! This repository contains the sour
 - 需要直接交付前端时看 `concise`
 - 需要快速同步原则时看 `summary`
 
+## 🎯 Hero 交付文档
+
+Hero 区域的当前实现细则、Shader 参数、遮罩规则、性能暂停逻辑，已单独整理在：
+
+- `docs/hero/client-web-hero-handoff.md`
+
+推荐在修改首屏前先读这份文档。
+
 ## 📐 基础规范 (Guidelines)
 
 为了保证后续维护和迭代的顺利进行，接手的开发者（或 Agent）请严格遵守以下开发规范：
@@ -99,9 +107,13 @@ Welcome to the Creatorial-landingpage project! This repository contains the sour
 
 ## 🎥 首屏背景与渲染优化 (Background & Rendering Optimization)
 
-在重构过程中，首屏动画与大背景进行了升级和优化，去除了传统的复杂 3D 渲染，采用轻量化的视频与 CSS 混合渲染：
-- **自适应视频背景**：Hero 区域改用本地公共资源视频 `hero-bg.mp4` 进行全屏自动循环静音播放，相比传统 WebGL 渲染极大减轻了 GPU 混合合成器的计算压力，解决了在 Safari/Chrome 上的高频帧重绘冲突。
+当前首屏背景已从旧的视频方案切换为 `@paper-design/shaders-react` 的 `MeshGradient` 实现，并叠加白色渐变遮罩来控制顶部可读性与整体氛围。
+
+- **Shader 背景**：Hero 使用 `MeshGradient` 作为动态背景，不再使用 `hero-bg.mp4`。
+- **视口内运行 / 视口外暂停**：Hero Shader 在首屏可见时保持动态，滚出 Hero 视口后自动暂停，以减少无效持续渲染。
 - **GPU 级强裁切与缓冲**：为了防止 Mockup 的 3D 入场 `transform` 动画层溢出，从而被浏览器误判并累加页面可滚动高度，我们保留了 `.hero` 容器上的 `overflow: hidden` 与 `clip-path: inset(0)` 强裁切逻辑，彻底消除了底部触底弹性抖动问题。
+
+更具体的实现参数请直接查看 `docs/hero/client-web-hero-handoff.md`。
 
 ---
 
