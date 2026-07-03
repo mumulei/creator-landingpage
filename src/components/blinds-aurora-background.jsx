@@ -6,17 +6,21 @@ function BlindsAuroraBackground({ isActive = true }) {
     <div className="creatorial-hero-bg" aria-hidden="true">
       <div className="creatorial-hero-bg__mesh">
         <MeshGradient
-          width={1280}
-          height={720}
-          colors={["#ffe5fd", "#ff8ade", "#ffadef", "#ff9ee7"]}
-          distortion={0.7}
-          swirl={0.6}
+          fit="contain"
+          scale={0.98}
+          rotation={180}
+          offsetX={-0.16}
+          offsetY={0}
+          speed={isActive ? 1.2 : 0}
+          originX={0.5}
+          originY={0.5}
+          worldWidth={0}
+          worldHeight={0}
+          colors={["#FBD5E4", "#FD9BBF", "#FCE8EE", "#FBACD2", "#FFF0F8", "#FFD1E9", "#FFF5F8", "#FDC4D9", "#FEF5F8", "#FFD1E6"]}
+          distortion={0.68}
+          swirl={0.61}
           grainMixer={0}
           grainOverlay={0}
-          speed={isActive ? 1.2 : 0}
-          scale={0.88}
-          rotation={360}
-          offsetX={-0.16}
           style={{
             width: "100%",
             height: "100%",
