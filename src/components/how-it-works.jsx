@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SmoothCorners } from '@lisse/react';
 import AnimatedContent from './ui/AnimatedContent';
 
@@ -54,9 +54,26 @@ const renderIcon = (index) => {
   return null;
 };
 
-export default function HowItWorks() {
+export default function HowItWorks({ sectionRef, isActive = true }) {
+  const videoRefs = useRef([]);
+
+  useEffect(() => {
+    videoRefs.current.forEach((video) => {
+      if (!video) return;
+
+      if (isActive) {
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(() => {});
+        }
+      } else {
+        video.pause();
+      }
+    });
+  }, [isActive]);
+
   return (
-    <section className="how-works-section" id="how-it-works">
+    <section ref={sectionRef} className="how-works-section" id="how-it-works">
       <AnimatedContent className="how-header-container">
         <h2 className="how-title">How it works ?</h2>
         <p className="how-subtitle">From brief to content, without the chaos.</p>
@@ -87,6 +104,9 @@ export default function HowItWorks() {
                 <div className="how-image-wrapper">
                   <div className="how-img-border-box">
                     <video 
+                      ref={(node) => {
+                        videoRefs.current[index] = node;
+                      }}
                       src={item.videoSrc} 
                       className="how-step-video" 
                       autoPlay 

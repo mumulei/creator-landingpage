@@ -1,7 +1,7 @@
 import React from "react";
 import { MeshGradient } from "@paper-design/shaders-react";
 
-function BlindsAuroraBackground() {
+function BlindsAuroraBackground({ isActive = true }) {
   return (
     <div className="creatorial-hero-bg" aria-hidden="true">
       <div className="creatorial-hero-bg__mesh">
@@ -13,7 +13,7 @@ function BlindsAuroraBackground() {
           swirl={0.2}
           grainMixer={0}
           grainOverlay={0}
-          speed={1.36}
+          speed={isActive ? 1.36 : 0}
           rotation={360}
           offsetX={-0.16}
           style={{

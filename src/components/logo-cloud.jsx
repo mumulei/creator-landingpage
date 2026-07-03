@@ -19,11 +19,15 @@ const logos = [
   { src: logoQingci, alt: "Qingci Games" },
 ];
 
-function LogoCloud() {
+function LogoCloud({ sectionRef, isActive = true }) {
   const repeatedLogos = [...logos, ...logos];
 
   return (
-    <section className="trusted-cloud" aria-labelledby="trusted-cloud-title">
+    <section
+      ref={sectionRef}
+      className={`trusted-cloud${isActive ? "" : " is-paused"}`}
+      aria-labelledby="trusted-cloud-title"
+    >
       <AnimatedContent distance={50} duration={1.0}>
         <h2 id="trusted-cloud-title" className="trusted-cloud__title">
           <span className="is-strong">Trusted by Top Gaming Publishers</span>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import BlindsAuroraBackground from "./components/blinds-aurora-background.jsx";
 import polishedDashboard from "./assets/Brands.jpg";
 import brandLogo from "./assets/local-logos/brand-logo.svg";
@@ -13,8 +13,28 @@ import AnimatedContent from "./components/ui/AnimatedContent.jsx";
 import GradientBlurTop from "./components/GradientBlurTop.jsx";
 import { SmoothCorners } from '@lisse/react';
 
+function useSectionInView(threshold = 0.08) {
+  const ref = useRef(null);
+  const [isInView, setIsInView] = useState(true);
 
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold }
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return [ref, isInView];
+}
 
 const navItems = ["Home", "Creator Library", "Pricing", "About Us", "App For Creator"];
 
@@ -22,6 +42,10 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [heroRef, isHeroInView] = useSectionInView(0.08);
+  const [trustedRef, isTrustedInView] = useSectionInView(0.08);
+  const [keyFeaturesRef, isKeyFeaturesInView] = useSectionInView(0.08);
+  const [howItWorksRef, isHowItWorksInView] = useSectionInView(0.08);
 
   /* 导航栏滚动检测：滚动超过 32px 后添加 scrolled 状态，同时检测是否悬浮在深色元素上 */
   useEffect(() => {
@@ -86,7 +110,7 @@ function App() {
   return (
     <main className="creatorial-page">
       <GradientBlurTop />
-      <BlindsAuroraBackground />
+      <BlindsAuroraBackground isActive={isHeroInView} />
 
       <header
         className={`topbar${scrolled ? " topbar--scrolled" : ""}${isDarkTheme ? " topbar--dark" : ""}`}
@@ -162,7 +186,7 @@ function App() {
         )}
       </header>
 
-      <section className="hero">
+      <section className="hero" ref={heroRef}>
         <div className="hero-copy">
           <h1>
             <span className="anim-fade-up" style={{ animationDelay: "0.1s", fontWeight: 700 }}>
@@ -236,10 +260,10 @@ function App() {
         </div>
       </section>
 
-      <LogoCloud />
-      <KeyFeatures />
+      <LogoCloud sectionRef={trustedRef} isActive={isTrustedInView} />
+      <KeyFeatures sectionRef={keyFeaturesRef} isActive={isKeyFeaturesInView} />
       <ScaleUgc />
-      <HowItWorks />
+      <HowItWorks sectionRef={howItWorksRef} isActive={isHowItWorksInView} />
       <CreatorShowcase />
       <div className="ready-footer-wrap" data-theme="dark">
         <ReadyToScale />

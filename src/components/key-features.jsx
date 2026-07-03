@@ -23,9 +23,12 @@ const LocIcon = () => (
   </svg>
 );
 
-export default function KeyFeatures() {
+export default function KeyFeatures({ sectionRef, isActive = true }) {
   return (
-    <section className="key-features-section">
+    <section
+      ref={sectionRef}
+      className={`key-features-section${isActive ? "" : " is-paused"}`}
+    >
       <div className="key-features-container">
         <AnimatedContent distance={60} duration={1.0}>
           <header className="key-features-header">
@@ -54,7 +57,7 @@ export default function KeyFeatures() {
                 <div className="feature-card__illustration feature-card__illustration--globe">
                   {/* 三维动态旋转地球背景 */}
                   <div className="globe-container">
-                    <GlobeInteractive className="cobe-globe-canvas" />
+                    <GlobeInteractive className="cobe-globe-canvas" isActive={isActive} />
                   </div>
 
                   {/* 3 个 Avatar 标签 — 与设计稿完全一致 */}

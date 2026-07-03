@@ -669,6 +669,10 @@ button, textarea {
   animation-play-state: paused;
 }
 
+.trusted-cloud.is-paused .logo-marquee__track {
+  animation-play-state: paused;
+}
+
 .logo-marquee__image {
   display: block;
   height: 56px;
@@ -1248,6 +1252,12 @@ button, textarea {
   top: 96.87cqw;
   left: calc(50% - 9.76cqw);
   animation: float 6s ease-in-out infinite 2s;
+}
+
+.key-features-section.is-paused .avatar-tag,
+.key-features-section.is-paused .pricing-bar,
+.key-features-section.is-paused .social-platform {
+  animation-play-state: paused;
 }
 
 .avatar-img {

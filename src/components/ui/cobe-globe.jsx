@@ -4,6 +4,7 @@ import createGlobe from "cobe"
 export function GlobeInteractive({
   className = "",
   speed = 0.006, // 稍微调快一点旋转速度以展现动态效果
+  isActive = true,
 }) {
   const canvasRef = useRef(null)
   const pointerInteracting = useRef(null)
@@ -11,6 +12,11 @@ export function GlobeInteractive({
   const phiOffsetRef = useRef(0)
   const thetaOffsetRef = useRef(0)
   const isPausedRef = useRef(false)
+  const isActiveRef = useRef(isActive)
+
+  useEffect(() => {
+    isActiveRef.current = isActive
+  }, [isActive])
 
   const handlePointerDown = useCallback((e) => {
     pointerInteracting.current = { x: e.clientX, y: e.clientY }
@@ -79,11 +85,13 @@ export function GlobeInteractive({
       })
 
       function animate() {
-        if (!isPausedRef.current) phi += speed
-        globe.update({
-          phi: phi + phiOffsetRef.current + dragOffset.current.phi,
-          theta: 0.15 + thetaOffsetRef.current + dragOffset.current.theta,
-        })
+        if (isActiveRef.current || pointerInteracting.current !== null) {
+          if (!isPausedRef.current) phi += speed
+          globe.update({
+            phi: phi + phiOffsetRef.current + dragOffset.current.phi,
+            theta: 0.15 + thetaOffsetRef.current + dragOffset.current.theta,
+          })
+        }
         animationId = requestAnimationFrame(animate)
       }
       animate()
