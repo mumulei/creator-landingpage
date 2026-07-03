@@ -106,6 +106,7 @@ button, textarea {
   pointer-events: none;
 }
 
+.creatorial-hero-bg__mesh,
 .creatorial-hero-bg__base,
 .creatorial-hero-bg__scene,
 .creatorial-hero-bg__gradient,
@@ -113,6 +114,22 @@ button, textarea {
 .creatorial-hero-bg__glow {
   position: absolute;
   inset: 0;
+}
+
+.creatorial-hero-bg__mesh {
+  inset: -6% -8% -8%;
+  z-index: 0;
+  opacity: 1;
+  filter: saturate(1.08);
+}
+
+.creatorial-hero-bg__mesh :where([data-paper-shader]) {
+  width: 100%;
+  height: 100%;
+}
+
+.creatorial-hero-bg__mesh :where([data-paper-shader]) canvas {
+  z-index: 0;
 }
 
 .creatorial-hero-bg__base {
@@ -133,9 +150,15 @@ button, textarea {
 }
 
 .creatorial-hero-bg__gradient {
-  inset: 0 0 auto;
-  height: 168px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 100%);
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
 }
 
 
@@ -481,12 +504,11 @@ button, textarea {
 .hero-cta--light {
   background: rgba(255, 255, 255, 0.92);
   color: #171717;
-  border: 1px solid rgba(23, 23, 23, 0.08);
+  border: none;
 }
 
 .hero-cta--light:hover {
   background: #ffffff;
-  border-color: rgba(23, 23, 23, 0.15);
 }
 
 #nav-cta,
