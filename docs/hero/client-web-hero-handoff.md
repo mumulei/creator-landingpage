@@ -1,106 +1,86 @@
-# Hero 背景实现说明
+# Hero 背景动画实现说明
 
-这份文档只说明当前 Hero 区域背景相关的 3 个实现点：
+这份文档只说明 `Hero` 背景动画的实现方式，供前端开发直接接入和维护。
 
-1. 背景从视频切换为 `MeshGradient`
-2. 在 `MeshGradient` 上方叠加整屏白色渐变遮罩
-3. Hero 滚出视口后自动暂停 shader 动画
+## 涉及文件
 
-## 代码基准文件
+- `/Users/mumulei/Downloads/antigravity/creator-landingpage/src/App.jsx`
+- `/Users/mumulei/Downloads/antigravity/creator-landingpage/src/components/blinds-aurora-background.jsx`
+- `/Users/mumulei/Downloads/antigravity/creator-landingpage/src/index.css`
 
-- `src/components/blinds-aurora-background.jsx`
-- `src/App.jsx`
-- `src/index.css`
+## 使用方式
 
-## 1. 背景从视频切换为 MeshGradient
+`Hero` 背景动画通过 `BlindsAuroraBackground` 组件挂载。
 
-当前 Hero 背景已经不再使用视频方案，而是改为 `@paper-design/shaders-react` 提供的 `MeshGradient`。
-
-依赖：
-
-```bash
-npm install @paper-design/shaders-react
-```
-
-当前实现：
+在页面中使用：
 
 ```jsx
-import { MeshGradient } from "@paper-design/shaders-react";
+<BlindsAuroraBackground />
+```
 
-<MeshGradient
-  width={1280}
-  height={720}
-  colors={["#ffe5fd", "#ff8ade", "#ffadef", "#ff9ee7"]}
-  distortion={0.7}
-  swirl={0.6}
-  grainMixer={0}
-  grainOverlay={0}
-  speed={isActive ? 1.2 : 0}
-  scale={0.88}
-  rotation={360}
-  offsetX={-0.16}
+挂载位置在：
+
+- `src/App.jsx`
+
+## 动画实现
+
+背景动画由 `src/components/blinds-aurora-background.jsx` 负责。
+
+当前实现流程：
+
+1. 组件挂载后执行 `loadUnicornStudio()`
+2. 动态注入动画脚本
+3. 调用 `studio.init()`
+4. 在目标容器内生成 `canvas`
+5. 检测到 `canvas` 后，为容器追加 `is-ready`，再显示动画
+
+关键代码：
+
+```jsx
+const UNICORN_SCRIPT_SRC =
+  "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.12/dist/unicornStudio.umd.js";
+const PAICO_PROJECT_ID = "D3Vd49nwPvID5Nz0VKLr";
+```
+
+```jsx
+<div
+  ref={embedRef}
+  className={`creatorial-hero-bg__unicorn${isReady ? " is-ready" : ""}`}
+  data-us-project={PAICO_PROJECT_ID}
+  data-us-scale="1"
 />
 ```
 
-当前 `MeshGradient` 挂载在 `BlindsAuroraBackground` 组件中。
+## 样式结构
 
-## 2. 叠加整屏白色渐变遮罩
+动画层和覆盖层样式定义在：
 
-为了让 Hero 顶部更干净、文字可读性更稳定，当前在 `MeshGradient` 上方叠加了一层整屏白色渐变遮罩。
+- `src/index.css`
 
-对应样式：
+主要类名：
 
-```css
-.creatorial-hero-bg__gradient {
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.72) 0%,
-    rgba(255, 255, 255, 0.25) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  pointer-events: none;
-}
-```
+- `.creatorial-hero-bg`
+- `.creatorial-hero-bg__unicorn`
+- `.creatorial-hero-bg__unicorn.is-ready`
+- `.creatorial-hero-bg__gradient`
+- `.creatorial-hero-bg__blur`
+- `.creatorial-hero-bg__glow`
+- `.creatorial-hero-bg__bottom-border`
 
-效果说明：
+其中：
 
-- 顶部白色遮罩最明显
-- 中部仍保留轻度白雾过渡
-- 底部完全退掉，让背景颜色自然露出
+- `.creatorial-hero-bg__unicorn`
+  - 动画容器，默认透明
+- `.creatorial-hero-bg__unicorn.is-ready`
+  - 动画准备完成后显示
+- 其余覆盖层
+  - 用于顶部渐变、模糊、柔光和底部分割线
 
-这层遮罩只负责 Hero 背景氛围控制，不负责 Hero 底部与下一段内容的过渡。
+## 开发维护
 
-## 3. Hero 滚出视口后暂停 shader
+后续如果需要继续维护这套背景动画，只需要关注两部分：
 
-为了减少无效持续渲染，当前 Hero 使用 `IntersectionObserver` 控制 shader 的播放状态。
-
-`App.jsx` 中的逻辑：
-
-```jsx
-const [heroRef, isHeroInView] = useSectionInView(0.08);
-
-<BlindsAuroraBackground isActive={isHeroInView} />
-<section className="hero" ref={heroRef}>
-```
-
-`BlindsAuroraBackground` 中通过 `isActive` 控制 `speed`：
-
-```jsx
-speed={isActive ? 1.2 : 0}
-```
-
-行为规则：
-
-- Hero 在视口内时，shader 正常播放
-- Hero 滚出视口后，shader 速度切到 `0`
-- Hero 回到视口后，shader 恢复播放
-
-## 给开发的执行结论
-
-如果后续只需要维护 Hero 背景，请只关注这 3 个点：
-
-1. `MeshGradient` 参数本身
-2. `.creatorial-hero-bg__gradient` 的整屏白色遮罩
-3. `IntersectionObserver + isActive` 的视口暂停逻辑
+1. `src/components/blinds-aurora-background.jsx`
+   - 管理脚本加载、动画挂载、容器状态切换
+2. `src/index.css`
+   - 管理背景层级、透明度和覆盖层样式

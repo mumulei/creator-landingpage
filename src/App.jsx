@@ -42,7 +42,6 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-  const [heroRef, isHeroInView] = useSectionInView(0.08);
   const [trustedRef, isTrustedInView] = useSectionInView(0.08);
   const [keyFeaturesRef, isKeyFeaturesInView] = useSectionInView(0.08);
   const [howItWorksRef, isHowItWorksInView] = useSectionInView(0.08);
@@ -110,7 +109,7 @@ function App() {
   return (
     <main className="creatorial-page">
       <GradientBlurTop />
-      <BlindsAuroraBackground isActive={isHeroInView} />
+      <BlindsAuroraBackground />
 
       <header
         className={`topbar${scrolled ? " topbar--scrolled" : ""}${isDarkTheme ? " topbar--dark" : ""}`}
@@ -186,7 +185,7 @@ function App() {
         )}
       </header>
 
-      <section className="hero" ref={heroRef}>
+      <section className="hero">
         <div className="hero-copy">
           <h1>
             <span className="anim-fade-up" style={{ animationDelay: "0.1s", fontWeight: 700 }}>
