@@ -4,9 +4,9 @@
 
 ## 涉及文件
 
-- `/Users/mumulei/Downloads/antigravity/creator-landingpage/src/App.jsx`
-- `/Users/mumulei/Downloads/antigravity/creator-landingpage/src/components/blinds-aurora-background.jsx`
-- `/Users/mumulei/Downloads/antigravity/creator-landingpage/src/index.css`
+- `src/App.jsx`
+- `src/components/blinds-aurora-background.jsx`
+- `src/index.css`
 
 ## 使用方式
 

@@ -107,10 +107,10 @@ Hero 区域的当前实现细则、Shader 参数、遮罩规则、性能暂停�
 
 ## 🎥 首屏背景与渲染优化 (Background & Rendering Optimization)
 
-当前首屏背景已从旧的视频方案切换为 `@paper-design/shaders-react` 的 `MeshGradient` 实现，并叠加白色渐变遮罩来控制顶部可读性与整体氛围。
+当前首屏背景采用混合方案：
 
-- **Shader 背景**：Hero 使用 `MeshGradient` 作为动态背景，不再使用 `hero-bg.mp4`。
-- **视口内运行 / 视口外暂停**：Hero Shader 在首屏可见时保持动态，滚出 Hero 视口后自动暂停，以减少无效持续渲染。
+- **Paper 背景主体**：Hero 的底层背景主体使用 `@paper-design/shaders-react` 的 `MeshGradient`。
+- **Paico 覆盖层结构**：在 `MeshGradient` 上方保留 `paico.ai` 那套 `gradient + blur + glow + bottom-border` 覆盖层。
 - **GPU 级强裁切与缓冲**：为了防止 Mockup 的 3D 入场 `transform` 动画层溢出，从而被浏览器误判并累加页面可滚动高度，我们保留了 `.hero` 容器上的 `overflow: hidden` 与 `clip-path: inset(0)` 强裁切逻辑，彻底消除了底部触底弹性抖动问题。
 
 更具体的实现参数请直接查看 `docs/hero/client-web-hero-handoff.md`。
