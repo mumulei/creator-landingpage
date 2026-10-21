@@ -40,7 +40,7 @@ function useSectionInView(threshold = 0.08) {
   return [ref, isInView];
 }
 
-const navItems = ["Home", "Token Factory", "Creator Library", "Pricing", "About Us", "App For Creator"];
+const navItems = ["Home", "Creator Library", "Plans & Billing", "About Us", "App For Creator", "Creatorial AI"];
 
 function App() {
   const { t } = useLocale();
@@ -150,8 +150,8 @@ function App() {
           {navItems.map((item, index) => (
             <a
               key={item}
-              href={item === 'Token Factory' ? '/token-factory' : item === 'Home' ? '/' : `/#${item.toLowerCase().replace(/\s+/g, "-")}`}
-              className={(isTokenFactory ? item === 'Token Factory' : index === 0) ? "is-active" : ""}
+              href={item === 'Creatorial AI' ? '/token-factory' : item === 'Home' ? '/' : item === 'Plans & Billing' ? '/#pricing' : `/#${item.toLowerCase().replace(/\s+/g, "-")}`}
+              className={(isTokenFactory ? item === 'Creatorial AI' : index === 0) ? "is-active" : ""}
               onClick={closeMenu}
             >
               <T>{item}</T>

@@ -1,4 +1,5 @@
 export const zh = {
+  'Plans & Billing': '套餐与账单',
   'From Creativity to Intelligence': '从创意，到智能',
   'AI Compute & Creative Infrastructure for the Next Generation of AI.': '为下一代 AI 打造的算力与创意基础设施。',
   'From Creativity, to Intelligence': '从创意，到智能',
