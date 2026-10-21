@@ -1,5 +1,6 @@
+import { T } from '../i18n/locale';
+import { useLocale } from '../i18n/use-locale';
 import React, { useState, useEffect } from 'react';
-import { SmoothCorners } from '@lisse/react';
 import AnimatedContent from './ui/AnimatedContent';
 import creator1 from '../assets/features/ugc-creator-1.png';
 import creator2 from '../assets/features/ugc-creator-2.png';
@@ -59,6 +60,7 @@ const VIRTUAL_CARDS = [
 ];
 
 export default function CreatorShowcase() {
+  const { t } = useLocale();
   const [activeIndex, setActiveIndex] = useState(7); // 默认聚焦中间组的 Review (索引为 7)
   const [isResetting, setIsResetting] = useState(false);
   const [mutedStates, setMutedStates] = useState({ 10: true, 11: true, 12: true, 13: true, 14: true });
@@ -132,10 +134,8 @@ export default function CreatorShowcase() {
     <section className="creator-showcase-section" id="creator-showcase">
       {/* 头部标题区 */}
       <AnimatedContent className="showcase-header-container">
-        <h2 className="showcase-title">Creator Video Showcase</h2>
-        <p className="showcase-subtitle">
-          Discover creator styles to combine for video variety.
-        </p>
+        <h2 className="showcase-title"><T>{"Creator Video Showcase"}</T></h2>
+        <p className="showcase-subtitle"><T>{"Discover creator styles to combine for video variety."}</T></p>
       </AnimatedContent>
 
       {/* 轮播容器区 */}
@@ -209,7 +209,7 @@ export default function CreatorShowcase() {
                 }}
               >
                 <div className="showcase-card-img-holder">
-                  <img src={card.image} alt={card.label} className="showcase-card-image" />
+                  <img src={card.image} alt={t(card.label)} className="showcase-card-image" />
                   
                   {/* 只有非活动卡片有半透明/磨砂灰度遮罩 */}
                   {!isActive && <div className="showcase-card-overlay"></div>}
@@ -221,7 +221,7 @@ export default function CreatorShowcase() {
                       <button 
                         className="showcase-mute-toggle"
                         onClick={(e) => handleMuteToggle(e, card.id)}
-                        aria-label="Toggle mute"
+                        aria-label={t('Toggle mute')}
                       >
                         {isMuted ? (
                           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
@@ -282,7 +282,7 @@ export default function CreatorShowcase() {
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </span>
-            <span className="btn-text">Explore creators</span>
+            <span className="btn-text"><T>{"Explore creators"}</T></span>
             <span className="btn-arrow-right">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />

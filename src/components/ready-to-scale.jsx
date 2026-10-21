@@ -1,56 +1,33 @@
-import React from 'react';
-import { SmoothCorners } from '@lisse/react';
+import { T } from '../i18n/locale';
+import { useReducedMotion } from 'framer-motion';
 import AnimatedContent from './ui/AnimatedContent';
+import arrowLight from '../assets/footer/arrow-light.svg';
+import arrowDark from '../assets/footer/arrow-dark.svg';
 
-export default function ReadyToScale() {
-  return (
-    <section className="ready-scale-section" id="ready-to-scale">
-      <div className="ready-scale-container">
-        <AnimatedContent scale={0.95} distance={50} delay={0.1}>
-          <div className="ready-scale-content">
-            {/* 大标题 */}
-            <h2 className="ready-scale-title">Ready to scale your UGC?</h2>
-            
-            {/* 副标题 */}
-            <p className="ready-scale-subtitle">
-              Connect with creators that get your brand.<br />
-              Take your business to the next level.
-            </p>
-
-            {/* 两个48px高圆角药丸形按钮并排 */}
-            <div className="ready-scale-buttons">
-              <a href="#get-started" className="ready-btn ready-btn-primary group">
-                <span className="btn-arrow-left">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </span>
-                <span className="btn-text">Get Started</span>
-                <span className="btn-arrow-right">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </span>
-              </a>
-
-              <a href="#book-demo" className="ready-btn ready-btn-secondary group">
-                <span className="btn-arrow-left">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </span>
-                <span className="btn-text">Book A Demo</span>
-                <span className="btn-arrow-right">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </span>
-              </a>
-            </div>
-          </div>
-        </AnimatedContent>
-      </div>
-    </section>
-  );
+function ReadyButton({ href, secondary = false, children }) {
+  const arrow = <img src={secondary ? arrowDark : arrowLight} alt="" />;
+  return <a href={href} className={`ready-btn ready-btn-${secondary ? 'secondary' : 'primary'} group`}>
+    <span className="btn-arrow-left" aria-hidden="true">{arrow}</span>
+    <span className="btn-text">{children}</span>
+    <span className="btn-arrow-right" aria-hidden="true">{arrow}</span>
+  </a>;
 }
 
+export default function ReadyToScale({ tokenFactory = false }) {
+  const reduced = useReducedMotion();
+  const content = <div className="ready-scale-content">
+    <h2 className="ready-scale-title"><T>{tokenFactory ? 'Ready to build the future?' : 'Ready to scale your UGC?'}</T></h2>
+    <p className="ready-scale-subtitle">{tokenFactory
+      ? <><T>{"Join the next generation of creators and developers"}</T><br /><T>{"building on Creatorial's AI infrastructure."}</T></>
+      : <><T>{"Connect with creators that get your brand."}</T><br /><T>{"Take your business to the next level."}</T></>}</p>
+    <div className="ready-scale-buttons">
+      {tokenFactory ? <ReadyButton href="mailto:support@creatorial.com?subject=Token%20Factory%20enquiry"><T>{"Talk to Us"}</T></ReadyButton> : <>
+        <ReadyButton href="#get-started"><T>{"Get Started"}</T></ReadyButton>
+        <ReadyButton href="#book-demo" secondary><T>{"Book A Demo"}</T></ReadyButton>
+      </>}
+    </div>
+  </div>;
+  return <section className="ready-scale-section" id={tokenFactory ? 'tf-contact' : 'ready-to-scale'}>
+    <div className="ready-scale-container">{reduced ? content : <AnimatedContent scale={0.95} distance={50} delay={0.1}>{content}</AnimatedContent>}</div>
+  </section>;
+}

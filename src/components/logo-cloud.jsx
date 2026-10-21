@@ -1,3 +1,5 @@
+import { T } from '../i18n/locale';
+import { useLocale } from '../i18n/use-locale';
 import logoCom2us from "../assets/local-logos/logo-com2us.svg";
 import logoJoycity from "../assets/local-logos/logo-joycity.svg";
 import logoRealme from "../assets/local-logos/logo-realme.svg";
@@ -20,6 +22,7 @@ const logos = [
 ];
 
 function LogoCloud({ sectionRef, isActive = true }) {
+  const { t } = useLocale();
   const repeatedLogos = [...logos, ...logos];
 
   return (
@@ -30,12 +33,12 @@ function LogoCloud({ sectionRef, isActive = true }) {
     >
       <AnimatedContent distance={50} duration={1.0}>
         <h2 id="trusted-cloud-title" className="trusted-cloud__title">
-          <span className="is-strong">Trusted by Top Gaming Publishers</span>
+          <span className="is-strong"><T>{"Trusted by Top Gaming Publishers"}</T></span>
         </h2>
 
         <div className="trusted-cloud__rule" aria-hidden="true" />
 
-        <div className="logo-marquee" aria-label="Trusted publisher logos">
+        <div className="logo-marquee" aria-label={t('Trusted publisher logos')}>
           <div className="logo-marquee__track">
             {repeatedLogos.map((logo, index) => (
               <img

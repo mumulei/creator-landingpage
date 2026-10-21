@@ -1,6 +1,10 @@
+import { T } from './i18n/locale';
+import { useLocale } from './i18n/use-locale';
+import LanguageSwitcher from './components/language-switcher';
 import { useState, useEffect, useCallback, useRef } from "react";
 import BlindsAuroraBackground from "./components/blinds-aurora-background.jsx";
 import polishedDashboard from "./assets/Brands.jpg";
+import polishedDashboardMobile from "./assets/Brands-mobile.jpg";
 import brandLogo from "./assets/local-logos/brand-logo.svg";
 import LogoCloud from "./components/logo-cloud.jsx";
 import KeyFeatures from "./components/key-features.jsx";
@@ -9,9 +13,9 @@ import ScaleUgc from "./components/scale-ugc.jsx";
 import CreatorShowcase from "./components/creator-showcase.jsx";
 import ReadyToScale from "./components/ready-to-scale.jsx";
 import Footer from './components/footer.jsx';
-import AnimatedContent from "./components/ui/AnimatedContent.jsx";
 import GradientBlurTop from "./components/GradientBlurTop.jsx";
 import { SmoothCorners } from '@lisse/react';
+import TokenFactory from './components/token-factory.jsx';
 
 function useSectionInView(threshold = 0.08) {
   const ref = useRef(null);
@@ -36,9 +40,11 @@ function useSectionInView(threshold = 0.08) {
   return [ref, isInView];
 }
 
-const navItems = ["Home", "Creator Library", "Pricing", "About Us", "App For Creator"];
+const navItems = ["Home", "Token Factory", "Creator Library", "Pricing", "About Us", "App For Creator"];
 
 function App() {
+  const { t } = useLocale();
+  const isTokenFactory = window.location.pathname.replace(/\/$/, '') === '/token-factory';
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -109,13 +115,13 @@ function App() {
   return (
     <main className="creatorial-page">
       <GradientBlurTop />
-      <BlindsAuroraBackground />
+      {!isTokenFactory && <BlindsAuroraBackground />}
 
       <header
         className={`topbar${scrolled ? " topbar--scrolled" : ""}${isDarkTheme ? " topbar--dark" : ""}`}
         id="topbar"
       >
-        <a className="brand" href="/" aria-label="Creatorial home">
+        <a className="brand" href="/" aria-label={t('Creatorial home')}>
           <img
             src={brandLogo}
             alt=""
@@ -128,7 +134,7 @@ function App() {
         <button
           className={`hamburger${menuOpen ? " is-open" : ""}`}
           onClick={() => setMenuOpen((v) => !v)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-label={t(menuOpen ? 'Close menu' : 'Open menu')}
           aria-expanded={menuOpen}
           id="hamburger-btn"
         >
@@ -139,34 +145,30 @@ function App() {
 
         <nav
           className={`topnav${menuOpen ? " topnav--open" : ""}`}
-          aria-label="Primary"
+          aria-label={t('Primary')}
         >
           {navItems.map((item, index) => (
             <a
               key={item}
-              href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-              className={index === 0 ? "is-active" : ""}
+              href={item === 'Token Factory' ? '/token-factory' : item === 'Home' ? '/' : `/#${item.toLowerCase().replace(/\s+/g, "-")}`}
+              className={(isTokenFactory ? item === 'Token Factory' : index === 0) ? "is-active" : ""}
               onClick={closeMenu}
             >
-              {item}
+              <T>{item}</T>
             </a>
           ))}
+          <LanguageSwitcher mobile />
         </nav>
 
         <div className="topbar-actions">
-          <a className="ghost-link" href="#language">
-            English
-            <span className="ghost-link__chevron" aria-hidden="true">
-              ▾
-            </span>
-          </a>
+          <LanguageSwitcher />
           <a className="solid-link solid-link--magenta group" href="#get-started" id="nav-cta">
             <span className="btn-arrow-left">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </span>
-            <span className="btn-text">Get Started</span>
+            <span className="btn-text"><T>{"Get Started"}</T></span>
             <span className="btn-arrow-right">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />
@@ -185,25 +187,17 @@ function App() {
         )}
       </header>
 
+      {isTokenFactory ? <TokenFactory /> : <>
       <section className="hero">
         <div className="hero-copy">
           <h1>
-            <span className="anim-fade-up" style={{ animationDelay: "0.1s", fontWeight: 700 }}>
-              Turn UGC Into Your
-            </span>
-            <span className="anim-fade-up" style={{ animationDelay: "0.2s", fontWeight: 700 }}>
-              Best-Performing Ads
-            </span>
+            <span className="anim-fade-up" style={{ animationDelay: "0.1s", fontWeight: 700 }}><T>{"Turn UGC Into Your"}</T></span>
+            <span className="anim-fade-up" style={{ animationDelay: "0.2s", fontWeight: 700 }}><T>{"Best-Performing Ads"}</T></span>
           </h1>
 
 
 
-          <p className="hero-body anim-fade-up" style={{ animationDelay: "0.4s" }}>
-            High-performing UGC that drives real growth.
-            <br />
-            Pay as you go or subscribe, with vetted creators and full usage
-            rights from the start.
-          </p>
+          <p className="hero-body anim-fade-up" style={{ animationDelay: "0.4s" }}><T>{"High-performing UGC that drives real growth."}</T><br /><T>{"Pay as you go or subscribe, with vetted creators and full usage rights from the start."}</T></p>
 
           <div className="hero-cta-row anim-fade-up" style={{ animationDelay: "0.55s" }}>
             <a className="hero-cta hero-cta--dark group" href="#get-started" id="hero-cta-start">
@@ -212,7 +206,7 @@ function App() {
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </span>
-              <span className="btn-text">Get Started</span>
+              <span className="btn-text"><T>{"Get Started"}</T></span>
               <span className="btn-arrow-right">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6" />
@@ -225,7 +219,7 @@ function App() {
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </span>
-              <span className="btn-text">Book A Demo</span>
+              <span className="btn-text"><T>{"Book A Demo"}</T></span>
               <span className="btn-arrow-right">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6" />
@@ -244,15 +238,19 @@ function App() {
               </div>
               <div className="hero-mockup-window-capsule" aria-hidden="true" />
               <SmoothCorners className="hero-mockup-image-wrapper" corners={{ radius: 16, smoothing: 0.6 }}>
-                <img
-                  src={polishedDashboard}
-                  alt="Creatorial brands dashboard mockup"
-                  className="hero-mockup-image"
-                  fetchPriority="high"
-                  loading="eager"
-                  width="1320"
-                  height="820"
-                />
+                <picture>
+                  <source media="(max-width: 640px)" srcSet={polishedDashboardMobile} />
+                  <img
+                    src={polishedDashboard}
+                    alt={t('Creatorial brands dashboard mockup')}
+                    className="hero-mockup-image"
+                    fetchPriority="high"
+                    loading="eager"
+                    decoding="async"
+                    width="1320"
+                    height="820"
+                  />
+                </picture>
               </SmoothCorners>
             </SmoothCorners>
           </div>
@@ -264,8 +262,9 @@ function App() {
       <ScaleUgc />
       <HowItWorks sectionRef={howItWorksRef} isActive={isHowItWorksInView} />
       <CreatorShowcase />
+      </>}
       <div className="ready-footer-wrap" data-theme="dark">
-        <ReadyToScale />
+        <ReadyToScale tokenFactory={isTokenFactory} />
         <Footer />
       </div>
     </main>

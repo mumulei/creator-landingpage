@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import { T } from '../i18n/locale';
+import { useEffect, useRef } from 'react';
 import { SmoothCorners } from '@lisse/react';
 import AnimatedContent from './ui/AnimatedContent';
 
@@ -75,8 +76,8 @@ export default function HowItWorks({ sectionRef, isActive = true }) {
   return (
     <section ref={sectionRef} className="how-works-section" id="how-it-works">
       <AnimatedContent className="how-header-container">
-        <h2 className="how-title">How it works ?</h2>
-        <p className="how-subtitle">From brief to content, without the chaos.</p>
+        <h2 className="how-title"><T>{"How it works ?"}</T></h2>
+        <p className="how-subtitle"><T>{"From brief to content, without the chaos."}</T></p>
       </AnimatedContent>
       <div className="how-steps-list">
         {STEPS.map((item, index) => (
@@ -96,8 +97,8 @@ export default function HowItWorks({ sectionRef, isActive = true }) {
                   >
                     {renderIcon(index)}
                   </SmoothCorners>
-                  <h3 className="how-step-title">{item.title}</h3>
-                  <p className="how-step-desc">{item.description}</p>
+                  <h3 className="how-step-title"><T>{item.title}</T></h3>
+                  <p className="how-step-desc"><T>{item.description}</T></p>
                 </div>
                 
                 {/* 右侧大图带白边框（换成视频） */}

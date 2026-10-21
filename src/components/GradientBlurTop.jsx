@@ -1,6 +1,4 @@
-import React from "react";
-
-const layers = [
+const defaultLayers = [
   {
     zIndex: 1,
     blur: "0.5px",
@@ -43,10 +41,46 @@ const layers = [
   }
 ];
 
+const iPhoneLayers = [
+  {
+    zIndex: 1,
+    blur: "1px",
+    mask: "linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 16%, rgba(0, 0, 0, 1) 48%, rgba(0, 0, 0, 0) 64%)"
+  },
+  {
+    zIndex: 2,
+    blur: "4px",
+    mask: "linear-gradient(to top, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, 1) 48%, rgba(0, 0, 0, 1) 72%, rgba(0, 0, 0, 0) 86%)"
+  },
+  {
+    zIndex: 3,
+    blur: "12px",
+    mask: "linear-gradient(to top, rgba(0, 0, 0, 0) 62%, rgba(0, 0, 0, 1) 76%, rgba(0, 0, 0, 1) 100%)"
+  }
+];
+
+function isIPhoneWebKit() {
+  if (typeof window === "undefined") return false;
+
+  const { navigator, screen } = window;
+  const ua = navigator.userAgent;
+  const isWebKit = /AppleWebKit/i.test(ua);
+  const isIPhoneUA = /iPhone|iPod/i.test(ua);
+  const isDesktopModeIPhone =
+    navigator.platform === "MacIntel" &&
+    navigator.maxTouchPoints > 1 &&
+    Math.min(screen.width, screen.height) <= 440;
+
+  return isWebKit && (isIPhoneUA || isDesktopModeIPhone);
+}
+
 export default function GradientBlurTop() {
+  const isIPhone = isIPhoneWebKit();
+  const activeLayers = isIPhone ? iPhoneLayers : defaultLayers;
+
   return (
-    <div className="gradient-blur-top">
-      {layers.map((layer) => {
+    <div className={`gradient-blur-top${isIPhone ? " gradient-blur-top--iphone" : ""}`}>
+      {activeLayers.map((layer) => {
         const style = {
           opacity: 1,
           position: "absolute",

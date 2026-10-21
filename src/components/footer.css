@@ -1,7 +1,7 @@
 .ready-footer-wrap {
   position: relative;
   width: 100%;
-  background-color: #050505;
+  background-color: #000;
   overflow: hidden;
 }
 
@@ -10,7 +10,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(72deg, #000 16.14%, rgba(0, 0, 0, 0.00) 60.09%), url('../assets/features/ascii-art.png') lightgray 50% / cover no-repeat;
+  background: linear-gradient(53.243deg, #000 16.135%, transparent 60.088%), url('../assets/footer/background.png') center / cover no-repeat;
   opacity: 1;
   pointer-events: none;
   z-index: 1;
@@ -18,6 +18,7 @@
 
 /* 融合设计稿的斜向紫色光晕 */
 .ready-footer-wrap::after {
+  display: none;
   content: "";
   position: absolute;
   inset: 0;
@@ -40,7 +41,7 @@
 }
 
 .footer-container {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 82px;
   display: flex;
@@ -72,10 +73,14 @@
 
 .footer-logo {
   height: 42px;
-  width: auto;
+  width: 42px;
+  position: relative;
   display: block;
-  filter: brightness(0) invert(1);
 }
+
+.footer-logo img { position: absolute; left: 2.18px; }
+.footer-logo-top { top: 1.67px; }
+.footer-logo-bottom { top: 17.327px; margin-left: .146px; }
 
 .footer-description {
   font-family: "Satoshi", sans-serif;
@@ -89,7 +94,7 @@
 
 .footer-links-grid {
   display: flex;
-  gap: 48px;
+  gap: 0;
 }
 
 .footer-col {
@@ -157,7 +162,7 @@
 
 .footer-socials {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
 }
 
@@ -177,14 +182,15 @@
 
 .footer-social-svg,
 .footer-social-icon {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 
 .footer-social-divider {
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 18px;
+  line-height: 24px;
   user-select: none;
 }
 
@@ -233,6 +239,8 @@
   .footer-col {
     width: 100%;
   }
+
+  .footer-col-links { align-items: center; }
 
   .footer-brand-info,
   .footer-col {

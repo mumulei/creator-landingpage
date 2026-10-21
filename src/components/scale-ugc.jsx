@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { T } from '../i18n/locale';
 import AnimatedContent from './ui/AnimatedContent';
 import { SmoothCorners } from '@lisse/react';
 
@@ -61,9 +61,9 @@ const ScaleMarketCard = ({ card }) => {
       <div className="scale-market-card-content">
         <div className="scale-card-header">
           <img src={card.headerIcon} className="scale-card-header-icon" alt="" />
-          <h3 className="scale-card-title">{card.title}</h3>
+          <h3 className="scale-card-title"><T>{card.title}</T></h3>
         </div>
-        <p className="scale-card-desc">{card.description}</p>
+        <p className="scale-card-desc"><T>{card.description}</T></p>
       </div>
 
       {/* 装饰图形 */}
@@ -79,7 +79,7 @@ export default function ScaleUgc() {
       <div className="scale-ugc-container">
         {/* 头部区域 */}
         <AnimatedContent className="scale-header-container">
-          <h2 className="scale-title">Scale UGC across markets</h2>
+          <h2 className="scale-title"><T>{"Scale UGC across markets"}</T></h2>
         </AnimatedContent>
 
         {/* 三栏卡片网格 */}

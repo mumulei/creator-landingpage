@@ -1,4 +1,4 @@
-import React from 'react';
+import { T } from '../i18n/locale';
 
 /* 引入动态三维地球组件 */
 import { GlobeInteractive } from './ui/cobe-globe';
@@ -32,7 +32,7 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
       <div className="key-features-container">
         <AnimatedContent distance={60} duration={1.0}>
           <header className="key-features-header">
-            <h2>Key Features</h2>
+            <h2><T>{"Key Features"}</T></h2>
           </header>
         </AnimatedContent>
 
@@ -51,8 +51,8 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
               {/* 内容层 */}
               <div className="feature-card-content-layer">
                 <div className="feature-card__content">
-                  <h3>Built for <strong>cross-border</strong> growth</h3>
-                  <p>Brief, review, and manage campaigns in your own language while working seamlessly with overseas creators.</p>
+                  <h3><T>{"Built for "}</T><strong><T>{"cross-border"}</T></strong><T>{" growth"}</T></h3>
+                  <p><T>{"Brief, review, and manage campaigns in your own language with overseas creators."}</T></p>
                 </div>
                 <div className="feature-card__illustration feature-card__illustration--globe">
                   {/* 三维动态旋转地球背景 */}
@@ -65,7 +65,7 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
                     <img src={avatar1} alt="" className="avatar-img" width="44" height="44" />
                     <div className="avatar-info">
                       <span className="avatar-name">Arya</span>
-                      <span className="avatar-loc"><LocIcon /> Texas, USA</span>
+                      <span className="avatar-loc"><LocIcon /><T>{" Texas, USA"}</T></span>
                     </div>
                   </div>
 
@@ -73,7 +73,7 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
                     <img src={avatar2} alt="" className="avatar-img" width="44" height="44" />
                     <div className="avatar-info">
                       <span className="avatar-name">Alex</span>
-                      <span className="avatar-loc"><LocIcon /> Peoria, AZ</span>
+                      <span className="avatar-loc"><LocIcon /><T>{" Peoria, AZ"}</T></span>
                     </div>
                   </div>
 
@@ -81,7 +81,7 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
                     <img src={avatar3} alt="" className="avatar-img" width="44" height="44" />
                     <div className="avatar-info">
                       <span className="avatar-name">Drake</span>
-                      <span className="avatar-loc"><LocIcon /> Paris, France</span>
+                      <span className="avatar-loc"><LocIcon /><T>{" Paris, France"}</T></span>
                     </div>
                   </div>
                 </div>
@@ -103,8 +103,8 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
               {/* 内容层 */}
               <div className="feature-card-content-layer">
                 <div className="feature-card__content">
-                  <h3><strong>Flexible</strong> pricing</h3>
-                  <p>Start with a single video or scale with a subscription. No minimum spend, long-term contracts, or bundled packages.</p>
+                  <h3><strong><T>{"Flexible"}</T></strong><T>{" pricing"}</T></h3>
+                  <p><T>{"Start with a single video or scale with a subscription. No minimum spend, long-term contracts, or bundled packages."}</T></p>
                 </div>
                 <div className="feature-card__illustration feature-card__illustration--pricing">
                   <div className="pricing-bars">
@@ -125,11 +125,11 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
                     </div>
                   </div>
                   <div className="pricing-progress">
-                    <span className="pricing-label">Start small</span>
+                    <span className="pricing-label"><T>{"Start small"}</T></span>
                     <div className="pricing-track">
                       <div className="pricing-fill"></div>
                     </div>
-                    <span className="pricing-label">Scale anytime</span>
+                    <span className="pricing-label"><T>{"Scale anytime"}</T></span>
                   </div>
                 </div>
               </div>
@@ -150,8 +150,8 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
               {/* 内容层 */}
               <div className="feature-card-content-layer">
                 <div className="feature-card__content">
-                  <h3>Launch Campaigns <strong>Faster</strong></h3>
-                  <p>Reduce production bottlenecks and get launch-ready UGC delivered in as little as 10 days.</p>
+                  <h3><T>{"Launch Campaigns "}</T><strong><T>{"Faster"}</T></strong></h3>
+                  <p><T>{"Reduce production bottlenecks and get launch-ready UGC delivered in as little as 10 days."}</T></p>
                 </div>
                 <div className="feature-card__illustration feature-card__illustration--social">
                   {/* YouTube 卡片 — 最小，最顶部 */}
@@ -162,18 +162,18 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
                       </div>
                       <div className="social-platform__name-group">
                         <span className="social-platform__name">YouTube</span>
-                        <span className="social-platform__sub">Global Video Sharing & Creator Hub</span>
+                        <span className="social-platform__sub"><T>{"Global Video Sharing & Creator Hub"}</T></span>
                       </div>
                     </div>
                     <div className="social-platform__placeholder-bar" style={{ width: 170 }}></div>
                     <div className="social-platform__stats">
                       <div className="stat-pill stat-pill--active">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                        <span>36 active</span>
+                        <span><T>{"36 active"}</T></span>
                       </div>
                       <div className="stat-pill">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
-                        <span>12 pending</span>
+                        <span><T>{"12 pending"}</T></span>
                       </div>
                     </div>
                   </div>
@@ -186,18 +186,18 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
                       </div>
                       <div className="social-platform__name-group">
                         <span className="social-platform__name">Facebook</span>
-                        <span className="social-platform__sub">Community & Social Networking</span>
+                        <span className="social-platform__sub"><T>{"Community & Social Networking"}</T></span>
                       </div>
                     </div>
                     <div className="social-platform__placeholder-bar" style={{ width: 220 }}></div>
                     <div className="social-platform__stats">
                       <div className="stat-pill stat-pill--active">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                        <span>54 active</span>
+                        <span><T>{"54 active"}</T></span>
                       </div>
                       <div className="stat-pill">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
-                        <span>8 pending</span>
+                        <span><T>{"8 pending"}</T></span>
                       </div>
                     </div>
                   </div>
@@ -210,18 +210,18 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
                       </div>
                       <div className="social-platform__name-group">
                         <span className="social-platform__name">Instagram</span>
-                        <span className="social-platform__sub">Visual Storytelling & Reels</span>
+                        <span className="social-platform__sub"><T>{"Visual Storytelling & Reels"}</T></span>
                       </div>
                     </div>
                     <div className="social-platform__placeholder-bar" style={{ width: 190 }}></div>
                     <div className="social-platform__stats">
                       <div className="stat-pill stat-pill--active">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                        <span>89 active</span>
+                        <span><T>{"89 active"}</T></span>
                       </div>
                       <div className="stat-pill">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
-                        <span>24 pending</span>
+                        <span><T>{"24 pending"}</T></span>
                       </div>
                     </div>
                   </div>
@@ -234,18 +234,18 @@ export default function KeyFeatures({ sectionRef, isActive = true }) {
                       </div>
                       <div className="social-platform__name-group">
                         <span className="social-platform__name">TikTok</span>
-                        <span className="social-platform__sub">Short-Form Mobile Video Leader</span>
+                        <span className="social-platform__sub"><T>{"Short-Form Mobile Video Leader"}</T></span>
                       </div>
                     </div>
                     <div className="social-platform__placeholder-bar" style={{ width: 260 }}></div>
                     <div className="social-platform__stats">
                       <div className="stat-pill stat-pill--active">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                        <span>142 active</span>
+                        <span><T>{"142 active"}</T></span>
                       </div>
                       <div className="stat-pill">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
-                        <span>45 pending</span>
+                        <span><T>{"45 pending"}</T></span>
                       </div>
                     </div>
                   </div>
