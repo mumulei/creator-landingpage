@@ -113,6 +113,14 @@ button, textarea {
   position: absolute;
 }
 
+.creatorial-hero-bg__mesh {
+  position: absolute;
+  inset: 0;
+  background: #ffadef;
+}
+.creatorial-hero-bg__mesh :where([data-paper-shader]) { width: 100%; height: 100%; }
+.creatorial-hero-bg__mesh canvas { display: block; }
+
 .creatorial-hero-bg__base {
   inset: 0;
   z-index: 0;
@@ -1268,6 +1276,41 @@ html:lang(zh-CN) .ready-scale-title { text-wrap: balance; }
 .feature-card__illustration {
   flex-grow: 1;
   position: relative;
+}
+
+.kf-campaigns { scroll-margin-top: 130px; }
+.kf-campaigns .key-features-header h2 { max-width: 1100px; text-wrap: balance; letter-spacing: 0; }
+.kf-campaign-card .feature-card__content { height: auto; }
+.kf-campaign-card .feature-card__content h3 { letter-spacing: 0; text-wrap: pretty; }
+.kf-creator-profile { justify-content: center; }
+.kf-creator-profile .social-platform__header { gap: 3cqw; }
+.kf-creator-profile .kf-creator-avatar { position: relative; width: 14cqw; height: 14cqw; border-radius: 50%; overflow: visible; }
+.kf-creator-avatar > .social-platform__logo { border-radius: 50%; }
+.kf-creator-platform { position: absolute; right: -1cqw; bottom: -.5cqw; width: 6cqw; height: 6cqw; background: white; border: .6cqw solid white; border-radius: 50%; display: grid; place-items: center; box-sizing: border-box; }
+.kf-creator-platform img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+.kf-creator-platform--x { background: #171717; }
+.kf-creator-platform--x img { width: 72%; height: 72%; border-radius: 0; filter: invert(1); }
+.kf-creator-name { display: flex; align-items: center; gap: 1.3cqw; }
+.kf-gender { width: 4cqw; height: 4cqw; stroke-width: 1.7; flex-shrink: 0; }
+.kf-gender--female { color: #f20093; }
+.kf-gender--male { color: #438fff; }
+.kf-creator-details { display: flex; align-items: center; gap: 1.5cqw; margin-top: 1.5cqw; font-size: 3.4cqw; line-height: 1.4; color: #969696; white-space: nowrap; }
+.kf-creator-details i { display: block; width: 1px; height: 3cqw; background: #eaeaea; }
+@media (prefers-reduced-motion: reduce) {
+  .kf-creator-profile:nth-child(1) { transform: translate(8.43cqw, 0) scale(.787); z-index: 1; }
+  .kf-creator-profile:nth-child(2) { transform: translate(5.3cqw, 20cqw) scale(.9); z-index: 2; }
+  .kf-creator-profile:nth-child(3) { transform: translateY(41.93cqw); z-index: 3; }
+  .kf-creator-profile:nth-child(4) { display: none; }
+}
+.kf-square-globe { width: 100%; height: 100%; aspect-ratio: 1; }
+.kf-square-globe canvas { aspect-ratio: 1; display: block; }
+.kf-capsule-name { display: flex; align-items: center; gap: 1.4cqw; }
+.kf-capsule-platform { width: 3.6cqw; height: 3.6cqw; object-fit: contain; flex-shrink: 0; }
+.kf-campaign-card--3 .feature-card__illustration--pricing { top: 48%; height: 46%; }
+.kf-campaign-card--3 .pricing-bars { flex: 1; min-height: 0; }
+.kf-campaign-card--3 .pricing-progress { flex-shrink: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .kf-campaign-card *, .kf-campaign-card *::before { animation: none !important; transition: none !important; }
 }
 
 /* Card 1: Built for cross-border growth - Globe Container */

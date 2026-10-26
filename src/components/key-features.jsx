@@ -1,262 +1,92 @@
 import { T } from '../i18n/locale';
-
-/* 引入动态三维地球组件 */
 import { GlobeInteractive } from './ui/cobe-globe';
 import AnimatedContent from './ui/AnimatedContent';
 import { SmoothCorners } from '@lisse/react';
-
-/* 从 Figma 导出的真实资源 */
+import { MapPin, Venus, Mars } from 'lucide-react';
 import avatar1 from '../assets/features/avatar-1.png';
 import avatar2 from '../assets/features/avatar-2.png';
 import avatar3 from '../assets/features/avatar-3.png';
 import pricingIcon1 from '../assets/features/pricing-icon-1.svg';
 import pricingIcon2 from '../assets/features/pricing-icon-2.svg';
 import pricingIcon3 from '../assets/features/pricing-icon-3.svg';
-import iconYoutube from '../assets/features/icon-youtube.svg';
-import iconFacebook from '../assets/features/icon-facebook.svg';
-import iconInstagram from '../assets/features/icon-instagram.svg';
-import iconTiktok from '../assets/features/icon-tiktok.svg';
+import youtube from '../assets/features/icon-youtube.svg';
+import instagram from '../assets/features/icon-instagram.svg';
+import tiktok from '../assets/features/icon-tiktok.svg';
+import ariaPortrait from '../assets/features/creator-profiles/aria.jpg';
+import liamPortrait from '../assets/features/creator-profiles/liam.jpg';
+import sofiaPortrait from '../assets/features/creator-profiles/sofia.jpg';
+import ninaPortrait from '../assets/features/creator-profiles/nina.jpg';
+import xLogo from '../assets/features/creator-profiles/x.svg';
 
-const LocIcon = () => (
-  <svg className="avatar-loc-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fillRule="evenodd" clipRule="evenodd" d="M2.1665 6.76211C2.1665 3.4961 4.76985 0.833252 7.99984 0.833252C11.2298 0.833252 13.8332 3.4961 13.8332 6.76211C13.8332 8.33885 13.3838 10.0319 12.5895 11.4945C11.7961 12.9553 10.6369 14.2247 9.18684 14.9025C8.43355 15.2546 7.56613 15.2546 6.81283 14.9025C5.36275 14.2247 4.20358 12.9553 3.41021 11.4945C2.61586 10.0319 2.1665 8.33885 2.1665 6.76211ZM7.99984 1.83325C5.33879 1.83325 3.1665 4.03157 3.1665 6.76211C3.1665 8.16016 3.56826 9.69019 4.28897 11.0172C5.01066 12.3461 6.03052 13.433 7.23627 13.9966C7.72121 14.2233 8.27847 14.2233 8.76341 13.9966C9.96916 13.433 10.989 12.3461 11.7107 11.0172C12.4314 9.69019 12.8332 8.16016 12.8332 6.76211C12.8332 4.03157 10.6609 1.83325 7.99984 1.83325ZM7.99984 5.16659C7.17141 5.16659 6.49984 5.83816 6.49984 6.66659C6.49984 7.49501 7.17141 8.16659 7.99984 8.16659C8.82826 8.16659 9.49984 7.49501 9.49984 6.66659C9.49984 5.83816 8.82826 5.16659 7.99984 5.16659ZM5.49984 6.66659C5.49984 5.28587 6.61913 4.16659 7.99984 4.16659C9.38055 4.16659 10.4998 5.28587 10.4998 6.66659C10.4998 8.0473 9.38055 9.16659 7.99984 9.16659C6.61913 9.16659 5.49984 8.0473 5.49984 6.66659Z" fill="#7B7B7B"/>
-  </svg>
-);
+const creators = [
+  { name: 'Arya', image: avatar1, category: 'Lifestyle', location: 'Texas, USA' },
+  { name: 'Alex', image: avatar2, category: 'Gaming', location: 'Peoria, AZ' },
+  { name: 'Drake', image: avatar3, category: 'Travel', location: 'Paris, France' },
+];
+const features = [
+  { title: '4,000+ in-platform human creators', copy: 'Browse and hire vetted creators directly on Creatorial across multiple markets, languages and content categories.' },
+  { title: 'Access to 14M+ influencers globally', copy: 'Tap into a much broader influencer network when you need specific markets, niches, or audience reach beyond our in-platform creator base.' },
+  { title: 'Flexible pricing for any campaign size', copy: 'Start with a single video or scale with a subscription. No minimum spend, long-term contracts, or bundled packages.' },
+];
 
-export default function KeyFeatures({ sectionRef, isActive = true }) {
-  return (
-    <section
-      ref={sectionRef}
-      className={`key-features-section${isActive ? "" : " is-paused"}`}
-    >
-      <div className="key-features-container">
-        <AnimatedContent distance={60} duration={1.0}>
-          <header className="key-features-header">
-            <h2><T>{"Key Features"}</T></h2>
-          </header>
-        </AnimatedContent>
-
-        <div className="key-features-grid">
-          {/* Card 1: Built for cross-border growth */}
-          <AnimatedContent className="feature-card-wrapper" delay={0.1} distance={80} duration={1.0}>
-            <div className="feature-card-shell cross-border">
-              {/* 基础背景层 */}
-              <div className="feature-card-bg-wrapper base-layer">
-                <SmoothCorners className="feature-card-bg-base" corners={{ radius: 16, smoothing: 0.6 }} />
-              </div>
-              {/* Hover 悬浮背景层 */}
-              <div className="feature-card-bg-wrapper hover-layer">
-                <SmoothCorners className="feature-card-bg-hover" corners={{ radius: 16, smoothing: 0.6 }} aria-hidden="true" />
-              </div>
-              {/* 内容层 */}
-              <div className="feature-card-content-layer">
-                <div className="feature-card__content">
-                  <h3><T>{"Built for "}</T><strong><T>{"cross-border"}</T></strong><T>{" growth"}</T></h3>
-                  <p><T>{"Brief, review, and manage campaigns in your own language with overseas creators."}</T></p>
-                </div>
-                <div className="feature-card__illustration feature-card__illustration--globe">
-                  {/* 三维动态旋转地球背景 */}
-                  <div className="globe-container">
-                    <GlobeInteractive className="cobe-globe-canvas" isActive={isActive} />
-                  </div>
-
-                  {/* 3 个 Avatar 标签 — 与设计稿完全一致 */}
-                  <div className="avatar-tag avatar-tag--1">
-                    <img src={avatar1} alt="" className="avatar-img" width="44" height="44" />
-                    <div className="avatar-info">
-                      <span className="avatar-name">Arya</span>
-                      <span className="avatar-loc"><LocIcon /><T>{" Texas, USA"}</T></span>
-                    </div>
-                  </div>
-
-                  <div className="avatar-tag avatar-tag--2">
-                    <img src={avatar2} alt="" className="avatar-img" width="44" height="44" />
-                    <div className="avatar-info">
-                      <span className="avatar-name">Alex</span>
-                      <span className="avatar-loc"><LocIcon /><T>{" Peoria, AZ"}</T></span>
-                    </div>
-                  </div>
-
-                  <div className="avatar-tag avatar-tag--3">
-                    <img src={avatar3} alt="" className="avatar-img" width="44" height="44" />
-                    <div className="avatar-info">
-                      <span className="avatar-name">Drake</span>
-                      <span className="avatar-loc"><LocIcon /><T>{" Paris, France"}</T></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </AnimatedContent>
-
-          {/* Card 2: Flexible pricing */}
-          <AnimatedContent className="feature-card-wrapper" delay={0.25} distance={80} duration={1.0}>
-            <div className="feature-card-shell pricing">
-              {/* 基础背景层 */}
-              <div className="feature-card-bg-wrapper base-layer">
-                <SmoothCorners className="feature-card-bg-base" corners={{ radius: 16, smoothing: 0.6 }} />
-              </div>
-              {/* Hover 悬浮背景层 */}
-              <div className="feature-card-bg-wrapper hover-layer">
-                <SmoothCorners className="feature-card-bg-hover" corners={{ radius: 16, smoothing: 0.6 }} aria-hidden="true" />
-              </div>
-              {/* 内容层 */}
-              <div className="feature-card-content-layer">
-                <div className="feature-card__content">
-                  <h3><strong><T>{"Flexible"}</T></strong><T>{" pricing"}</T></h3>
-                  <p><T>{"Start with a single video or scale with a subscription. No minimum spend, long-term contracts, or bundled packages."}</T></p>
-                </div>
-                <div className="feature-card__illustration feature-card__illustration--pricing">
-                  <div className="pricing-bars">
-                    <div className="pricing-bar pricing-bar--1">
-                      <div className="pricing-bar__icon">
-                        <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon1}")` }}></span>
-                      </div>
-                    </div>
-                    <div className="pricing-bar pricing-bar--2">
-                      <div className="pricing-bar__icon">
-                        <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon2}")` }}></span>
-                      </div>
-                    </div>
-                    <div className="pricing-bar pricing-bar--3">
-                      <div className="pricing-bar__icon">
-                        <span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${pricingIcon3}")` }}></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="pricing-progress">
-                    <span className="pricing-label"><T>{"Start small"}</T></span>
-                    <div className="pricing-track">
-                      <div className="pricing-fill"></div>
-                    </div>
-                    <span className="pricing-label"><T>{"Scale anytime"}</T></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </AnimatedContent>
-
-          {/* Card 3: Launch Campaigns Faster */}
-          <AnimatedContent className="feature-card-wrapper" delay={0.4} distance={80} duration={1.0}>
-            <div className="feature-card-shell speed">
-              {/* 基础背景层 */}
-              <div className="feature-card-bg-wrapper base-layer">
-                <SmoothCorners className="feature-card-bg-base" corners={{ radius: 16, smoothing: 0.6 }} />
-              </div>
-              {/* Hover 悬浮背景层 */}
-              <div className="feature-card-bg-wrapper hover-layer">
-                <SmoothCorners className="feature-card-bg-hover" corners={{ radius: 16, smoothing: 0.6 }} aria-hidden="true" />
-              </div>
-              {/* 内容层 */}
-              <div className="feature-card-content-layer">
-                <div className="feature-card__content">
-                  <h3><T>{"Launch Campaigns "}</T><strong><T>{"Faster"}</T></strong></h3>
-                  <p><T>{"Reduce production bottlenecks and get launch-ready UGC delivered in as little as 10 days."}</T></p>
-                </div>
-                <div className="feature-card__illustration feature-card__illustration--social">
-                  {/* YouTube 卡片 — 最小，最顶部 */}
-                  <div className="social-platform social-platform--yt">
-                    <div className="social-platform__header">
-                      <div className="social-platform__icon-wrap">
-                        <img src={iconYoutube} alt="" className="social-platform__logo" />
-                      </div>
-                      <div className="social-platform__name-group">
-                        <span className="social-platform__name">YouTube</span>
-                        <span className="social-platform__sub"><T>{"Global Video Sharing & Creator Hub"}</T></span>
-                      </div>
-                    </div>
-                    <div className="social-platform__placeholder-bar" style={{ width: 170 }}></div>
-                    <div className="social-platform__stats">
-                      <div className="stat-pill stat-pill--active">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                        <span><T>{"36 active"}</T></span>
-                      </div>
-                      <div className="stat-pill">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
-                        <span><T>{"12 pending"}</T></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Facebook 卡片 */}
-                  <div className="social-platform social-platform--fb">
-                    <div className="social-platform__header">
-                      <div className="social-platform__icon-wrap">
-                        <img src={iconFacebook} alt="" className="social-platform__logo" />
-                      </div>
-                      <div className="social-platform__name-group">
-                        <span className="social-platform__name">Facebook</span>
-                        <span className="social-platform__sub"><T>{"Community & Social Networking"}</T></span>
-                      </div>
-                    </div>
-                    <div className="social-platform__placeholder-bar" style={{ width: 220 }}></div>
-                    <div className="social-platform__stats">
-                      <div className="stat-pill stat-pill--active">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                        <span><T>{"54 active"}</T></span>
-                      </div>
-                      <div className="stat-pill">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
-                        <span><T>{"8 pending"}</T></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Instagram 卡片 */}
-                  <div className="social-platform social-platform--ig">
-                    <div className="social-platform__header">
-                      <div className="social-platform__icon-wrap">
-                        <img src={iconInstagram} alt="" className="social-platform__logo" />
-                      </div>
-                      <div className="social-platform__name-group">
-                        <span className="social-platform__name">Instagram</span>
-                        <span className="social-platform__sub"><T>{"Visual Storytelling & Reels"}</T></span>
-                      </div>
-                    </div>
-                    <div className="social-platform__placeholder-bar" style={{ width: 190 }}></div>
-                    <div className="social-platform__stats">
-                      <div className="stat-pill stat-pill--active">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                        <span><T>{"89 active"}</T></span>
-                      </div>
-                      <div className="stat-pill">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
-                        <span><T>{"24 pending"}</T></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* TikTok 卡片 — 最大，最底部 */}
-                  <div className="social-platform social-platform--tk">
-                    <div className="social-platform__header">
-                      <div className="social-platform__icon-wrap">
-                        <img src={iconTiktok} alt="" className="social-platform__logo" />
-                      </div>
-                      <div className="social-platform__name-group">
-                        <span className="social-platform__name">TikTok</span>
-                        <span className="social-platform__sub"><T>{"Short-Form Mobile Video Leader"}</T></span>
-                      </div>
-                    </div>
-                    <div className="social-platform__placeholder-bar" style={{ width: 260 }}></div>
-                    <div className="social-platform__stats">
-                      <div className="stat-pill stat-pill--active">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z"/></svg>
-                        <span><T>{"142 active"}</T></span>
-                      </div>
-                      <div className="stat-pill">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6V12L16 14"/></svg>
-                        <span><T>{"45 pending"}</T></span>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </AnimatedContent>
-
+function CreatorLibraryArt() {
+  const stack = [
+    { name: 'Aria Smith', image: ariaPortrait, country: 'United States', language: 'English', gender: 'female', platform: instagram, phase: 'yt' },
+    { name: 'Liam Chen', image: liamPortrait, country: 'Canada', language: 'French', gender: 'male', platform: tiktok, phase: 'fb' },
+    { name: 'Sofia Martinez', image: sofiaPortrait, country: 'Mexico', language: 'Spanish', gender: 'female', platform: youtube, phase: 'ig' },
+    { name: 'Nina Patel', image: ninaPortrait, country: 'India', language: 'Hindi', gender: 'female', platform: xLogo, phase: 'tt' },
+  ];
+  return <div className="feature-card__illustration feature-card__illustration--social kf-creator-stack" aria-hidden="true">
+    {stack.map((creator) => <div className={`social-platform social-platform--${creator.phase} kf-creator-profile`} key={creator.phase}>
+      <div className="social-platform__header">
+        <div className="social-platform__icon-wrap kf-creator-avatar">
+          <img className="social-platform__logo" src={creator.image} alt="" />
+          <span className={`kf-creator-platform${creator.platform === xLogo ? ' kf-creator-platform--x' : ''}`}><img src={creator.platform} alt="" /></span>
+        </div>
+        <div className="social-platform__name-group">
+          <span className="social-platform__name kf-creator-name">{creator.name}{creator.gender === 'female' ? <Venus className="kf-gender kf-gender--female" /> : <Mars className="kf-gender kf-gender--male" />}</span>
+          <span className="kf-creator-details"><T>{creator.country}</T><i /><T>{creator.language}</T></span>
         </div>
       </div>
-    </section>
-  );
+    </div>)}
+  </div>;
+}
+
+function NetworkArt({ isActive }) {
+  return <div className="feature-card__illustration feature-card__illustration--globe kf-original-globe" aria-hidden="true">
+    <div className="globe-container"><GlobeInteractive className="kf-square-globe" isActive={isActive} /></div>
+    {creators.map((creator, i) => <div className={`avatar-tag avatar-tag--${i + 1}`} key={creator.name}>
+      <img className="avatar-img" src={creator.image} alt="" />
+      <div className="avatar-info"><span className="avatar-name kf-capsule-name">{creator.name}<img className="kf-capsule-platform" src={[instagram, youtube, tiktok][i]} alt="" /></span><span className="avatar-loc"><MapPin className="avatar-loc-icon" /><T>{creator.location}</T></span></div>
+    </div>)}
+  </div>;
+}
+
+function PricingArt() {
+  return <div className="feature-card__illustration feature-card__illustration--pricing">
+    <div className="pricing-bars">{[pricingIcon1, pricingIcon2, pricingIcon3].map((icon, i) =>
+      <div className={`pricing-bar pricing-bar--${i + 1}`} key={icon}><div className="pricing-bar__icon"><span className="pricing-bar__icon-mask" style={{ '--mask-url': `url("${icon}")` }} /></div></div>)}
+    </div>
+    <div className="pricing-progress"><span className="pricing-label"><T>Start small</T></span><div className="pricing-track"><div className="pricing-fill" /></div><span className="pricing-label"><T>Scale anytime</T></span></div>
+  </div>;
+}
+
+export default function KeyFeatures({ sectionRef, isActive = true }) {
+  return <section id="key-features" ref={sectionRef} className={`key-features-section kf-campaigns${isActive ? '' : ' is-paused'}`}>
+    <div className="key-features-container">
+      <AnimatedContent distance={60} duration={1}><header className="key-features-header"><h2><T>One platform for all your creator marketing campaigns</T></h2></header></AnimatedContent>
+      <div className="key-features-grid">
+        {features.map((feature, i) => <AnimatedContent className="feature-card-wrapper" delay={0.1 + i * 0.15} distance={80} duration={1} key={feature.title}>
+          <div className={`feature-card-shell kf-campaign-card kf-campaign-card--${i + 1}`}>
+            <div className="feature-card-bg-wrapper base-layer"><SmoothCorners className="feature-card-bg-base" corners={{ radius: 16, smoothing: 0.6 }} /></div>
+            <div className="feature-card-bg-wrapper hover-layer"><SmoothCorners className="feature-card-bg-hover" corners={{ radius: 16, smoothing: 0.6 }} aria-hidden="true" /></div>
+            <div className="feature-card-content-layer">
+              <div className="feature-card__content"><h3><T>{feature.title}</T></h3><p><T>{feature.copy}</T></p></div>
+              {i === 0 ? <CreatorLibraryArt /> : i === 1 ? <NetworkArt isActive={isActive} /> : <PricingArt />}
+            </div>
+          </div>
+        </AnimatedContent>)}
+      </div>
+    </div>
+  </section>;
 }
